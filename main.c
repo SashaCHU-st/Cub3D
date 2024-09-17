@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/17 11:54:04 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:56:42 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)
 	{
+		open_close_file(argv);
 		if (check_args(argv[1]) != EXIT_SUCCESS)
 		{
 			printf("Error: Please provide a valid *.cub file.\n");
