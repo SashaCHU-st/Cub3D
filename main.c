@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/17 10:03:55 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:32:43 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,36 @@ void ft_hook(void* param)
 }
 
 // -----------------------------------------------------------------------------
-
-int32_t main(void)
+int	check_args(char *str)
 {
-	// char *map = argv[1];
-	// if (argc == 2)
-	// {
-		
-		mlx_t* mlx;
+	int	i;
 
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	if (i == 0)
+		return (EXIT_FAILURE);
+	if (str[i - 1] == 'b' && str[i - 2] == 'u' && \
+		str[i - 3] == 'c' && str[i - 4] == '.' && \
+		i - 4 != 0)
+		return (EXIT_SUCCESS);
+	else
+		return (EXIT_FAILURE);
+}
+
+
+int	main(int argc, char **argv)
+{
+	// char	*map;
+	mlx_t*	mlx;
+
+	if (argc == 2)
+	{
+		if (check_args(argv[1]) != EXIT_SUCCESS)
+		{
+			printf("Error: Please provide a valid *.cub file.\n");
+			return (EXIT_FAILURE);
+		}
 		if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 		{
 			puts(mlx_strerror(mlx_errno));
@@ -95,8 +116,8 @@ int32_t main(void)
 
 		mlx_loop(mlx);
 		mlx_terminate(mlx);
-//	}
-	// else
-	// 	printf("need to have 2 arguments");
+	}
+	else
+		printf("Error: Please provide only a valid *.cub file.\n");
 	return (EXIT_SUCCESS);
 }
