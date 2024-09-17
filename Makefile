@@ -5,6 +5,8 @@ LIBFT = ./libft/libft.a
 MLX42 = ./MLX42/build/libmlx42.a
 
 SRCS = main.c \
+		open.c \
+		
 
 
 CFLAGS =  -Wall -Wextra -Werror

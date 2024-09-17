@@ -6,22 +6,17 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/17 10:03:55 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:54:37 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-# include "MLX42/include/MLX42/MLX42.h"
+#include "cub3d.h"
 
 #define WIDTH 512
 #define HEIGHT 512
 
 static mlx_image_t* image;
 
-// -----------------------------------------------------------------------------
 
 int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
@@ -64,12 +59,12 @@ void ft_hook(void* param)
 
 // -----------------------------------------------------------------------------
 
-int32_t main(void)
+
+int main(int argc, char **argv)
 {
-	// char *map = argv[1];
-	// if (argc == 2)
-	// {
-		
+	if (argc == 2)
+	{
+		open_close_file(argv);
 		mlx_t* mlx;
 
 		if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
@@ -95,8 +90,8 @@ int32_t main(void)
 
 		mlx_loop(mlx);
 		mlx_terminate(mlx);
-//	}
-	// else
-	// 	printf("need to have 2 arguments");
+	}
+	else
+		printf("need to have 2 arguments");
 	return (EXIT_SUCCESS);
 }
