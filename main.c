@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/17 11:56:42 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:22:56 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	check_args(char *str)
 
 int	main(int argc, char **argv)
 {
-	// char	*map;
 	mlx_t*	mlx;
 
 	if (argc == 2)

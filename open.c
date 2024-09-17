@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/17 11:57:09 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:24:44 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void open_close_file(char **argv)
 {
-	//t_cub cub;
+	t_cub cub;
 	
 	int fd;
 	char buffer[256];
