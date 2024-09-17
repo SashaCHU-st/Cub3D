@@ -3,25 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/17 11:32:43 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/09/17 11:54:04 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-# include "MLX42/include/MLX42/MLX42.h"
+#include "cub3d.h"
 
 #define WIDTH 512
 #define HEIGHT 512
 
 static mlx_image_t* image;
 
-// -----------------------------------------------------------------------------
 
 int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
@@ -63,6 +58,7 @@ void ft_hook(void* param)
 }
 
 // -----------------------------------------------------------------------------
+
 int	check_args(char *str)
 {
 	int	i;
