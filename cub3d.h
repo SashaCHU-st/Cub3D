@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:45:25 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/18 11:22:56 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:08:23 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,33 @@ typedef struct s_cub
 
 typedef struct s_textures
 {
-	char *no;
-	char *so;
-	char *we;
-	char *ea;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	int		found_no;
+	int		found_so;
+	int		found_we;
+	int		found_ea;
+	int		found_f;
+	int		found_c;
+	int		found;
+	int		map_valid;
+	char	*floor_color;
+	char	*ceiling_color;
 } t_textures;
 
 
 
 void	open_close_file(char **argv);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-void	checking_textures(char *line);
+void	checking_textures(t_textures *textures, char *line);
 char	*ft_strdup(const char *src);
 char	*avoid_whitespace(char *str);
 int		check_space(char ch);
+void	checking_color(t_textures *textures, char *line);
+void	init(t_textures *textures);
+int		validation(t_textures *text);
 
 
 #endif

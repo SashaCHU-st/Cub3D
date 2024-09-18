@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:11:07 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/18 11:31:41 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:48:27 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,91 @@ char	*avoid_whitespace(char *str)
 	return (str);
 }
 
-void	checking_textures(char *line)
-{
-	t_textures	text;
+// void	checking_textures(t_textures *textures, char *line)
+// {
 
-	if (ft_strncmp(line, "NO", 2) == 0 && &check_space)
+// 	if (ft_strncmp(line, "NO", 2) == 0 && line[2] == ' ')
+// 	{
+// 		if(&check_space)
+// 		{
+// 			textures->found_no = 1;
+// 			textures->no = ft_strdup(avoid_whitespace(line + 2 + 1));
+// 			printf("NORTH: \n %s\n", textures->no);
+// 		}
+// 	}
+// 	else if (ft_strncmp(line, "SO", 2) == 0 && line[2] == ' ')
+// 	{
+// 		if(&check_space)
+// 		{
+// 			textures->found_so = 1;
+// 			textures->so = ft_strdup(avoid_whitespace(line + 2 + 1));
+// 			printf("SOUTH: \n %s\n", textures->so);
+// 		}
+// 	}
+// 	else if (ft_strncmp(line, "WE", 2) == 0 && line[2] == ' ')
+// 	{
+// 		if(&check_space)
+// 		{
+// 			textures->found_we = 1;
+// 			textures->we = ft_strdup(avoid_whitespace(line + 2 + 1));
+// 			printf("WEST : \n %s\n", textures->we);
+// 		}
+// 	}
+// 	else if (ft_strncmp(line, "EA", 2) == 0 && line[2] == ' ')
+// 	{
+// 		if(&check_space)
+// 		{
+// 			textures->found_ea = 1;
+// 			textures->ea = ft_strdup(avoid_whitespace(line + 2 + 1));
+// 			printf("EAST: \n %s\n", textures->ea);
+// 		}
+// 	}
+// }
+//&check_space
+void	checking_textures(t_textures *textures, char *line)
+{
+	if (ft_strncmp(line, "NO", 2) == 0 && check_space(line[2]))
 	{
-		text.no = ft_strdup(avoid_whitespace(line + 2 + 1));
-		printf("NORTH: \n %s\n", text.no);
+		textures->no = ft_strdup(avoid_whitespace(line + 2));
+		if(ft_strncmp(textures->no, "./", 2) == 0 )
+		{
+			textures->found_no = 1;
+			printf("NORTH: %s\n", textures->no);
+		}
+		else
+			printf("not valid");
 	}
-	if (ft_strncmp(line, "SO", 2) == 0 && &check_space)
+	else if (ft_strncmp(line, "SO", 2) == 0 && check_space(line[2]))
 	{
-		text.so = ft_strdup(avoid_whitespace(line + 2 + 1));
-		printf("SOUTH: \n %s\n", text.so);
+		textures->so = ft_strdup(avoid_whitespace(line + 2));
+		if(ft_strncmp(textures->so, "./", 2) == 0 )
+		{
+			textures->found_so = 1;
+			printf("SOUTH: %s\n", textures->so);
+		}
+		else
+			printf("not valid");
 	}
-	if (ft_strncmp(line, "WE", 2) == 0 && &check_space)
+	else if (ft_strncmp(line, "WE", 2) == 0 && check_space(line[2]))
 	{
-		text.we = ft_strdup(avoid_whitespace(line + 2 + 1));
-		printf("WEST : \n %s\n", text.we);
+		textures->we = ft_strdup(avoid_whitespace(line + 2));
+		if(ft_strncmp(textures->we, "./", 2) == 0 )
+		{
+			textures->found_we = 1;
+			printf("WEST: %s\n", textures->we);
+		}
+		else
+			printf("not valid");
 	}
-	if (ft_strncmp(line, "EA", 2) == 0 && &check_space)
+	else if (ft_strncmp(line, "EA", 2) == 0 && check_space(line[2]))
 	{
-		text.ea = ft_strdup(avoid_whitespace(line + 2 + 1));
-		printf("EAST: \n %s\n", text.ea);
+		textures->ea = ft_strdup(avoid_whitespace(line + 2));
+		if(ft_strncmp(textures->ea, "./", 2) == 0 )
+		{
+			textures->found_ea = 1;
+			printf("EAST: %s\n", textures->ea);
+		}
+		else
+			printf("not valid");
 	}
 }
