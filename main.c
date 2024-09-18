@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/17 12:22:56 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:06:34 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,33 @@ int	check_args(char *str)
 		return (EXIT_FAILURE);
 }
 
+int	initialise_mlx(mlx_t *mlx)
+{
+	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
+	{
+		perror(mlx_strerror(mlx_errno));
+		return(EXIT_FAILURE);
+	}
+	if (!(image = mlx_new_image(mlx, 128, 128)))
+	{
+		mlx_close_window(mlx);
+		perror(mlx_strerror(mlx_errno));
+		return(EXIT_FAILURE);
+	}
+	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
+	{
+		mlx_close_window(mlx);
+		perror(mlx_strerror(mlx_errno));
+		return(EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	print_er_int(char *str)
+{
+	printf("%s\n", str);
+	return (EXIT_FAILURE);
+}
 
 int	main(int argc, char **argv)
 {
@@ -83,37 +110,19 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)
 	{
+		if (check_args(argv[1]))
+			return (print_err_int("Error: Please provide a valid *.cub file."));
 		open_close_file(argv);
-		if (check_args(argv[1]) != EXIT_SUCCESS)
-		{
-			printf("Error: Please provide a valid *.cub file.\n");
-			return (EXIT_FAILURE);
-		}
-		if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-		{
-			puts(mlx_strerror(mlx_errno));
-			return(EXIT_FAILURE);
-		}
-		if (!(image = mlx_new_image(mlx, 128, 128)))
-		{
-			mlx_close_window(mlx);
-			puts(mlx_strerror(mlx_errno));
-			return(EXIT_FAILURE);
-		}
-		if (mlx_image_to_window(mlx, image, 0, 0) == -1)
-		{
-			mlx_close_window(mlx);
-			puts(mlx_strerror(mlx_errno));
-			return(EXIT_FAILURE);
-		}
+		if (initialise_mlx(mlx))
+			return (print_err_int("Error: Failed to init MLX."));
+
 		
 		mlx_loop_hook(mlx, ft_randomize, mlx);
 		mlx_loop_hook(mlx, ft_hook, mlx);
-
 		mlx_loop(mlx);
 		mlx_terminate(mlx);
 	}
 	else
-		printf("Error: Please provide only a valid *.cub file.\n");
+		return (print_err_int("Error: Please provide only a valid *.cub file."));
 	return (EXIT_SUCCESS);
 }
