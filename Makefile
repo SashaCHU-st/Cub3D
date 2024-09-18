@@ -8,6 +8,8 @@ SRCS = main.c \
 		open.c \
 		get_next_line.c \
 		get_next_line_utils.c \
+		textures.c \
+
 
 OBJ = $(SRCS:.c=.o)
 
