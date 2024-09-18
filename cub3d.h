@@ -10,6 +10,7 @@
 
 typedef struct s_cub
 {
+	
 	char **map;
 	size_t size;
 } t_cub;
