@@ -6,40 +6,76 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/19 10:40:22 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:11:53 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	parse_color_values(const char *color_string, int *values)
+int	is_valid_number(const char *str)
 {
-	char	**colors;
-	int		i;
+	int i = 0;
+	while (str[i] == ' ')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	if (!ft_isdigit(str[i]))
+		return 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return 0;
+		i++;
+	}
+	
+	return 1;
+}
+
+int parse_color_values(const char *color_string, int *values)
+{
+	char **colors;
+	int i;
 
 	i = 0;
 	colors = ft_split(color_string, ',');
 	if (!colors)
 	{
 		printf("Error: Failed to split the color string.\n");
-		return (0);
+		return 0;
 	}
 	while (colors[i] != NULL && i < 3)
 	{
-		values[i] = ft_atoi(colors[i]);
+		if (is_valid_number(colors[i]))
+		{
+			values[i] = ft_atoi(colors[i]);
+			if(values[i] > 255)
+			{
+				printf("Error\n");
+				exit(1);
+			}
+		}
+		else
+		{
+			for (int j = 0; colors[j] != NULL; j++)
+			{
+				free(colors[j]);
+			}
+			free(colors);
+			printf("Error\n");
+			exit(1);
+		}
 		i++;
 	}
-	i = 0;
-	while (colors[i] != NULL)
-	{
-		free(colors[i]);
-		i++;
-	}
+	for (int j = 0; colors[j] != NULL; j++)
+		free(colors[j]);
 	free(colors);
 	if (i == 3)
-		return (1);
+		return 1;
 	else
-		return (0);
+	{
+		printf("Error: Incorrect number of color values, expected 3.\n");
+		return 0;
+	}
 }
 
 void	parse_floor_color(const char *color_string, t_textures *textures, bool is_floor)
@@ -64,7 +100,7 @@ void	parse_floor_color(const char *color_string, t_textures *textures, bool is_f
 		}
 	}
 	else
-		printf("Error: Invalid color format, expected 3 values.\n");
+		error();
 }
 
 void	checking_color(t_textures *textures, char *line)

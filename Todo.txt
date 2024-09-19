@@ -1,0 +1,25 @@
+PARSING
+
+directions:
++ check exact words NO, SO, WE, EA
++ spaces in between
++ some other characters  => then not valid
++ that must starts with ./
++ permissions
++ no characters before NO, SO, WE, EA
++ nothing after the path(only spaces accepted)
+- nothing after ./
+
+
+colors:
++ put in array
++ split into r, g, b
++ check if it is only numbers
++ no spaces in between => mot valid
++ some other characters  => then not valid
++ not more then 255
++ zeros before number
+
+map:
+- count number of the lines
+- only specific chara (1,0, chacratter)
