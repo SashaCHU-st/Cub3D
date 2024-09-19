@@ -6,20 +6,15 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/19 10:19:56 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/19 10:29:42 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "cub3d.h"
 
-void parse_floor_color(const char *color_string, t_textures *textures, bool is_floor)
+void colors_here(char **colors, int i, int values[])
 {
-	char **colors;
-	int values[3];
-	int i = 0;
-
-	colors = ft_split(color_string, ',');
 	if (!colors)
 	{
 		printf("Error: Failed to split the color string.\n");
@@ -30,6 +25,26 @@ void parse_floor_color(const char *color_string, t_textures *textures, bool is_f
 		values[i] = ft_atoi(colors[i]);
 		i++;
 	}
+}
+
+void parse_floor_color(const char *color_string, t_textures *textures, bool is_floor)
+{
+	char **colors;
+	int values[3];
+	int i = 0;
+
+	colors = ft_split(color_string, ',');
+	colors_here(&colors, i, values);
+	// if (!colors)
+	// {
+	// 	printf("Error: Failed to split the color string.\n");
+	// 	return;
+	// }
+	// while (colors[i] != NULL && i < 3)
+	// {
+	// 	values[i] = ft_atoi(colors[i]);
+	// 	i++;
+	// }
 	if (i == 3)
 	{
 		if (is_floor)

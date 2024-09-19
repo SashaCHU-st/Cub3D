@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:45:25 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/19 10:18:05 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/19 10:29:58 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ char	*ft_strcpy(char *dest, const char *src);
 char	**ft_split(char const *s, char c);
 void	parse_floor_color(const char *color_string, t_textures *textures, bool is_floor);
 int		ft_atoi(const char *str);
+void	colors_here(char **colors, int i, int values[]);
 
 #endif
