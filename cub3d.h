@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:45:25 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/18 14:08:23 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/19 10:18:05 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_cub
 	size_t size;
 } t_cub;
 
+
 typedef struct s_textures
 {
 	char	*no;
@@ -41,14 +42,21 @@ typedef struct s_textures
 	int		found_f;
 	int		found_c;
 	int		found;
-	int		map_valid;
 	char	*floor_color;
 	char	*ceiling_color;
+	int		floor_r;
+	int		floor_g;
+	int		floor_b;
+	int		ceiling_r;
+	int		ceiling_g;
+	int		ceiling_b;
+	int		map_valid;
+	
 } t_textures;
 
 
-
-void	open_close_file(char **argv);
+int		check_args(char *str);
+void 	open_close_file(char **argv, t_textures *textures);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	checking_textures(t_textures *textures, char *line);
 char	*ft_strdup(const char *src);
@@ -57,6 +65,9 @@ int		check_space(char ch);
 void	checking_color(t_textures *textures, char *line);
 void	init(t_textures *textures);
 int		validation(t_textures *text);
-
+char	*ft_strcpy(char *dest, const char *src);
+char	**ft_split(char const *s, char c);
+void	parse_floor_color(const char *color_string, t_textures *textures, bool is_floor);
+int		ft_atoi(const char *str);
 
 #endif

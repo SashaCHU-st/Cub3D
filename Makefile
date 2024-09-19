@@ -5,12 +5,14 @@ LIBFT = ./libft/libft.a
 MLX42 = ./MLX42/build/libmlx42.a
 
 SRCS = main.c \
+		check_args.c \
 		open.c \
 		get_next_line.c \
 		get_next_line_utils.c \
 		textures.c \
 		color.c \
 		init.c \
+		utils.c
 
 
 OBJ = $(SRCS:.c=.o)
