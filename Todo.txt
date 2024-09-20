@@ -25,3 +25,5 @@ map:
 - count number of the lines
 - only specific chara (1,0, chacratter)
 - nk
+
+-hj
