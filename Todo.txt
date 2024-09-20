@@ -8,7 +8,8 @@ directions:
 + permissions
 + no characters before NO, SO, WE, EA
 + nothing after the path(only spaces accepted)
-- nothing after ./
++ nothing after ./
+- file png
 
 
 colors:
