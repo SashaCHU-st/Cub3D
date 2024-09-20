@@ -9,7 +9,8 @@ directions:
 + no characters before NO, SO, WE, EA
 + nothing after the path(only spaces accepted)
 + nothing after ./
-- file png
++ file png
++ not repeptevive
 
 
 colors:
@@ -22,8 +23,10 @@ colors:
 + zeros before number
 
 map:
-- count number of the lines
-- only specific chara (1,0, chacratter)
-- nk
-
--hj
+- if all directions and colors checked then we can start map, but also cannot be repeated
+- that it has to be last
+- count number of the lines => if there is 2 lines not valid
+- only specific chara (1,0, N or E or S or W chacratter)
+- if map closed
+- only one player
+- if it is empty in between => not valid

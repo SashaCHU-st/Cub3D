@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:45:25 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/19 14:15:04 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:44:08 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ typedef struct s_textures
 	int		ceiling_g;
 	int		ceiling_b;
 	int		map_valid;
-	
+	int		how_many_lines;
+	char	**map;
 } t_textures;
 
 
@@ -64,14 +65,17 @@ char	*avoid_whitespace(char *str);
 int		check_space(char ch);
 void	checking_color(t_textures *textures, char *line);
 void	init(t_textures *textures);
-int		validation(t_textures *text);
+void	validation(t_textures *text);
 char	*ft_strcpy(char *dest, const char *src);
 char	**ft_split(char const *s, char c);
 void	parse_floor_color(const char *color_string, t_textures *textures, bool is_floor);
 int		ft_atoi(const char *str);
 int		parse_color_values(const char *color_string, int *values);
-void	no_so(t_textures *textures, char *line);
-void	we_ea(t_textures *textures, char *line);
-void	error();
+void	no(t_textures *textures, char *line);
+void	so(t_textures *textures, char *line);
+void	ea(t_textures *textures, char *line);
+void	we(t_textures *textures, char *line);
+void	error_fun();
 int		ft_isdigit(int c);
+int		check_if_png(char *str);
 #endif

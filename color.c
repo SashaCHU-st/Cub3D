@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/19 13:11:53 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:21:55 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int parse_color_values(const char *color_string, int *values)
 		{
 			values[i] = ft_atoi(colors[i]);
 			if(values[i] > 255)
-			{
-				printf("Error\n");
-				exit(1);
-			}
+				error_fun();
 		}
 		else
 		{
@@ -61,8 +58,7 @@ int parse_color_values(const char *color_string, int *values)
 				free(colors[j]);
 			}
 			free(colors);
-			printf("Error\n");
-			exit(1);
+			error_fun();
 		}
 		i++;
 	}
@@ -100,7 +96,7 @@ void	parse_floor_color(const char *color_string, t_textures *textures, bool is_f
 		}
 	}
 	else
-		error();
+		error_fun();
 }
 
 void	checking_color(t_textures *textures, char *line)
@@ -109,16 +105,26 @@ void	checking_color(t_textures *textures, char *line)
 		return ;
 	if (ft_strncmp(line, "F", 1) == 0 && check_space(line[1]))
 	{
-		textures->found_f = 1;
+		textures->found += 1;
 		textures->floor_color = ft_strdup(avoid_whitespace(line + 2));
 		printf("FLOOR COLOR: %s\n", textures->floor_color);
 		parse_floor_color(textures->floor_color, textures, true);
 	}
 	else if (ft_strncmp(line, "C", 1) == 0 && check_space(line[1]))
 	{
-		textures->found_c = 1;
+		textures->found += 1;
 		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));
 		printf("CEILING COLOR: %s\n", textures->ceiling_color);
 		parse_floor_color(textures->ceiling_color, textures, false);
 	}
+	// if (textures->found == 6)
+	// 	printf("All good\n");
+	// else
+	// {
+	// 	printf(" Not good good\n");
+	// 	error_fun();
+	// }
+	// textures->map_valid = validation(textures);
+	// if (!textures->map_valid)
+	// 	error_fun();
 }

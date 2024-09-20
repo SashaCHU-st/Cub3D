@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:15:35 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/18 15:15:45 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/20 09:23:45 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,27 @@ char	*ft_strcpy(char *dest, const char *src)
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+int	check_space(char ch)
+{
+	if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || \
+		ch == '\f' || ch == '\v')
+		return (1);
+	return (0);
+}
+
+char	*avoid_whitespace(char *str)
+{
+	char	*end;
+
+	while (check_space((char)*str))
+		str++;
+	if (*str == '\0')
+		return (str);
+	end = str + ft_strlen(str) - 1;
+	while (end > str && check_space((char)*end))
+		end--;
+	*(end + 1) = '\0';
+	return (str);
 }

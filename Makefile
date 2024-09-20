@@ -12,7 +12,8 @@ SRCS = main.c \
 		textures.c \
 		color.c \
 		init.c \
-		utils.c
+		utils.c \
+		error.c \
 
 
 OBJ = $(SRCS:.c=.o)

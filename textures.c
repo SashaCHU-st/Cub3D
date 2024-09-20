@@ -6,143 +6,144 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:11:07 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/19 14:54:10 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:00:44 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_space(char ch)
-{
-	if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || \
-		ch == '\f' || ch == '\v')
-		return (1);
-	return (0);
-}
 
-char	*avoid_whitespace(char *str)
+void	ea(t_textures *textures, char *line)
 {
-	char	*end;
-
-	while (check_space((char)*str))
-		str++;
-	if (*str == '\0')
-		return (str);
-	end = str + ft_strlen(str) - 1;
-	while (end > str && check_space((char)*end))
-		end--;
-	*(end + 1) = '\0';
-	return (str);
-}
-
-void we_ea(t_textures *textures, char *line)
-{
-	int i = 0;
-	if (ft_strncmp(line, "WE", 2) == 0 && check_space(line[2]))
-	{
-		textures->we = ft_strdup(avoid_whitespace(line + 2));
-		i = 0;
-		while (textures->we[i] != '\0')
-		{
-			
-			if(check_space(textures->we[i]))
-			{
-				printf("Error\n");
-				exit(1);
-			}
-			i++;
-		}
-		if(ft_strncmp(textures->we, "./", 2) == 0 )
-		{
-			textures->found_we = 1;
-			printf("WEST: %s\n", textures->we);
-		}
-		else
-			error();
-	}
+	int i;
+	i =0;
 	if (ft_strncmp(line, "EA", 2) == 0 && check_space(line[2]))
 	{
 		textures->ea = ft_strdup(avoid_whitespace(line + 2));
-		i = 0;
-		while (textures->ea[i] != '\0')
+		if(check_if_png(textures->ea))
 		{
-			
-			if(check_space(textures->ea[i]))
+			while (textures->ea[i] != '\0')
 			{
-				printf("Error\n");
-				exit(1);
+				
+				if(check_space(textures->ea[i]))
+					error_fun();
+				i++;
 			}
-			i++;
-		}
-		if(ft_strncmp(textures->ea, "./", 2) == 0 )
-		{
-			textures->found_ea = 1;
-			printf("EAST: %s\n", textures->ea);
+			if(ft_strncmp(textures->ea, "./", 2) == 0 )
+			{
+				textures->found += 1;
+				printf("EAST: %s\n", textures->ea);
+			}
 		}
 		else
-			error();
+			error_fun();
 	}
 }
 
-void no_so(t_textures *textures, char *line)
+
+void	we(t_textures *textures, char *line)
+{
+	int i;
+	i = 0;
+	if (ft_strncmp(line, "WE", 2) == 0 && check_space(line[2]))
+	{
+		textures->we = ft_strdup(avoid_whitespace(line + 2));
+		if(check_if_png(textures->we))
+		{
+			while (textures->we[i] != '\0')
+			{
+				
+				if(check_space(textures->we[i]))
+					error_fun();
+				i++;
+			}
+			if(ft_strncmp(textures->we, "./", 2) == 0 )
+			{
+				textures->found += 1;
+				printf("WEST: %s\n", textures->we);
+			}
+		}
+		else
+			error_fun();
+	}
+}
+
+
+void	so(t_textures *textures, char *line)
+{
+	int i ;
+	i = 0;
+	if (ft_strncmp(line, "SO", 2) == 0 && check_space(line[2]))
+	{
+		textures->so = ft_strdup(avoid_whitespace(line + 2));
+		if(check_if_png(textures->so))
+		{
+			while (textures->so[i] != '\0')
+			{
+				
+				if(check_space(textures->so[i]))
+					error_fun();
+				i++;
+			}
+			if(ft_strncmp(textures->so, "./", 2) == 0 )
+			{
+				textures->found += 1;
+				printf("SOUTH: %s\n", textures->so);
+			}
+		}
+		else
+			error_fun();
+	}
+}
+
+void	no(t_textures *textures, char *line)
 {
 	int i = 0;
 	if (ft_strncmp(line, "NO", 2) == 0 && check_space(line[2]))
 	{
+		i = 0;
 		textures->no = ft_strdup(avoid_whitespace(line + 2));
-		i = 0;
-		while (textures->no[i] != '\0')
+		if(check_if_png(textures->no))
 		{
-			
-			if(check_space(textures->no[i]))
+			while (textures->no[i] != '\0')
 			{
-				printf("Error\n");
-				exit(1);
+				if(check_space(textures->no[i]))
+					error_fun();
+				i++;
 			}
-			i++;
-		}
-		if(ft_strncmp(textures->no, "./", 2) == 0 )
-		{
-			textures->found_no = 1;
-			printf("NORTH: %s\n", textures->no);
+			if(ft_strncmp(textures->no, "./", 2) == 0 )
+			{
+				textures->found += 1;
+				printf("NORTH: %s\n", textures->no);
+			}
 		}
 		else
-			error();
-	}
-	if (ft_strncmp(line, "SO", 2) == 0 && check_space(line[2]))
-	{
-		textures->so = ft_strdup(avoid_whitespace(line + 2));
-		i = 0;
-		while (textures->so[i] != '\0')
-		{
-			
-			if(check_space(textures->so[i]))
-			{
-				printf("Error\n");
-				exit(1);
-			}
-			i++;
-		}
-		if(ft_strncmp(textures->so, "./", 2) == 0 )
-		{
-			textures->found_so = 1;
-			printf("SOUTH: %s\n", textures->so);
-		}
-		else
-			error();
+			error_fun();
 	}
 }
 
 void	checking_textures(t_textures *textures, char *line)
 {
-	no_so(textures, line);
-	we_ea(textures, line);
-	// int i = 0;
-	// while (textures->no[i] != '\0')  // Loop until the end of the string
-	// {
-	// 	int hehe = check_space(textures->no[i]);
-	// 	printf("%d\n", hehe);  // Will print 1 if a space character is found, otherwise 0
-	// 	i++;
-	// }
+	no(textures, line);
+	so(textures, line);
+	we(textures, line);
+	ea(textures, line);
 
+}
+
+int	check_if_png(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	if (i == 0)
+		return (0);
+	if (str[i - 1] == 'g' && str[i - 2] == 'n' && \
+		str[i - 3] == 'p' && str[i - 4] == '.' && \
+		i - 4 != 0)
+		return (1);
+	else
+		return (0);
 }
