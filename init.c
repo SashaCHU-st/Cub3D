@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:05:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/20 14:16:21 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:17:55 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ void	init(t_textures *textures)
 	textures->ceiling_g = 0;
 	textures->ceiling_b = 0;
 	textures->how_many_lines = 0;
+	textures->player_found = 0;
 }

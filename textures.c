@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:11:07 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/20 14:00:44 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:42:24 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ea(t_textures *textures, char *line)
 			}
 			if(ft_strncmp(textures->ea, "./", 2) == 0 )
 			{
-				textures->found += 1;
+				textures->found_ea += 1;
 				printf("EAST: %s\n", textures->ea);
 			}
 		}
@@ -59,7 +59,7 @@ void	we(t_textures *textures, char *line)
 			}
 			if(ft_strncmp(textures->we, "./", 2) == 0 )
 			{
-				textures->found += 1;
+				textures->found_we += 1;
 				printf("WEST: %s\n", textures->we);
 			}
 		}
@@ -87,7 +87,7 @@ void	so(t_textures *textures, char *line)
 			}
 			if(ft_strncmp(textures->so, "./", 2) == 0 )
 			{
-				textures->found += 1;
+				textures->found_so += 1;
 				printf("SOUTH: %s\n", textures->so);
 			}
 		}
@@ -113,7 +113,8 @@ void	no(t_textures *textures, char *line)
 			}
 			if(ft_strncmp(textures->no, "./", 2) == 0 )
 			{
-				textures->found += 1;
+				textures->found_no += 1;
+				//textures->found += 1;
 				printf("NORTH: %s\n", textures->no);
 			}
 		}

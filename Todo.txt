@@ -21,12 +21,19 @@ colors:
 + some other characters  => then not valid
 + not more then 255
 + zeros before number
++ if empty space after
+- empty space before?
 
 map:
-- if all directions and colors checked then we can start map, but also cannot be repeated
-- that it has to be last
-- count number of the lines => if there is 2 lines not valid
-- only specific chara (1,0, N or E or S or W chacratter)
++ if all directions and colors checked then we can start map, but also cannot be repeated
++ that it has to be last
++ count number of the lines => if there is 2 lines not valid
++ only specific chara (1,0, N or E or S or W chacratter)
++ only one player
+- save it to new array **map
 - if map closed
-- only one player
 - if it is empty in between => not valid
+
+
+MAPPING
+

@@ -6,66 +6,59 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/20 15:53:20 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:04:02 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	validation(t_textures *text)
+
+void	map_last(t_textures *textures, char *line, int fd)
 {
-	if (text->found == 6)
-		printf("All good\n");
-	else
+	if (textures->found < 6)// esli zakonchilsya loop no ne vse nashlis'
 	{
-		printf(" Not good good\n");
+		close(fd);
 		error_fun();
 	}
-}
-
-
-int checking_map(t_textures *textures, char *line)
-{
-	int i = 0;
-	if(textures->found == 6)
+	while (line != NULL)
 	{
-		int h = 0;
-		while (line[i])
+		textures->map_valid = checking_map(textures, line);
+		if (!textures->map_valid)
 		{
-			if (line[i] != '1' && line[i] != '0' && line[i] != ' ' &&
-				(line[i] != 'N' || line[i] != 'S' || line[i] != 'E' || line[i] != 'W' ))
-				{
-					printf("HELLLLLOOO %d\n", h);
-					return (0);
-				}
-				h++;
-			i++;
+			printf("KUKU\n");
+			free(line);
+			close(fd);
+			error_fun();
 		}
+		count_lines(textures, line);
+		free(line);
+		line = get_next_line(fd);
 	}
-	return (1);
 }
 
-void	open_close_file(char **argv, t_textures *textures)
+void open_close_file(char **argv, t_textures *textures)
 {
 	int		fd;
 	char	*line;
-	
+
 	fd = open(argv[1], O_RDONLY);
-	line = get_next_line(fd);
 	if (fd < 0)
 		error_fun();
-	while (line != NULL)
+	line = get_next_line(fd);
+	while (line != NULL && textures->found < 6)
 	{
 		checking_textures(textures, line);
 		checking_color(textures, line);
-		checking_map(textures, line);
+		all_found(textures);
 		free(line);
 		line = get_next_line(fd);
-		textures->how_many_lines++;
 	}
-	// printf("!!!!!!%d\n", textures->how_many_lines);
-	// textures->map_valid = validation(textures);
-	// if (!textures->map_valid)
-	// 	error_fun();
+	map_last(textures,line, fd);
+	if(textures->how_many_lines < 3)
+	{
+		close(fd);		
+		error_fun();
+	}
+	printf("Number of map lines: %d\n", textures->how_many_lines);
 	close(fd);
 }
