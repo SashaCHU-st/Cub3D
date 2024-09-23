@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/23 11:53:24 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:24:29 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 void	all_found(t_textures *textures)
 {
-	int number = 0;
-	number = textures->found_no + textures->found_so + textures->found_we
-		 +textures->found_ea + textures->found_f +textures->found_c;
-	if(number == 6)
+	if(textures->found_no == 1 && textures->found_so == 1 && textures->found_we == 1 && textures->found_we == 1
+		&& textures->found_ea == 1 && textures->found_f == 1 && textures->found_c == 1)
 		textures->found = 6;
+	// number = textures->found_no + textures->found_so + textures->found_we
+	// 	 +textures->found_ea + textures->found_f +textures->found_c;
+	// if(number == 6)
 }
 
-int checking_map(t_textures *textures, char *line)
+int	checking_map(t_textures *textures, char *line)
 {
 	int i = 0;
 	(void)textures;
@@ -44,13 +45,13 @@ int checking_map(t_textures *textures, char *line)
 	return (1);
 }
 
-void count_lines(t_textures *textures, char *line)
+void	count_lines(t_textures *textures, char *line)
 {
 	int i = 0;
 	int is_empty = 1;
 	while (line[i] != '\0')
 	{
-		if (!check_space(line[i]) && line[i] != '\n')
+		if (line[0] != '\n' && !check_space(line[i]))
 		{
 			is_empty = 0;
 			break;

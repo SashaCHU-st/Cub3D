@@ -30,9 +30,9 @@ map:
 + count number of the lines => if there is 2 lines not valid
 + only specific chara (1,0, N or E or S or W chacratter)
 + only one player
-- save it to new array **map
++ save it to new array **map
 - if map closed
-- if it is empty in between => not valid
++ if it is empty in between => not valid
 
 
 MAPPING

@@ -1,0 +1,13 @@
+NO ./no_wall.png
+SO ./path_to_the_south_texture.png
+WE ./path_to_the_west_texture.png
+EA ./path_to_the_east_texture.png
+
+F 241,100,0
+C 225,30,0
+
+111111111
+100000001
+
+100000001
+111111111

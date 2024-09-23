@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:11:07 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/23 09:42:24 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:20:16 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void	no(t_textures *textures, char *line)
 			if(ft_strncmp(textures->no, "./", 2) == 0 )
 			{
 				textures->found_no += 1;
-				//textures->found += 1;
 				printf("NORTH: %s\n", textures->no);
 			}
 		}
