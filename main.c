@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/18 12:06:34 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:53:58 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,32 @@ int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
+//char **map;
+// map[0] = {1, 1, 1, 1};
+// map[1] = {1, 0, 0, 1};
+// map[2] = {1, 0, 0, 1};
+// map[4] = {1, 1, 1, 1};
+
 void ft_randomize(void* param)
 {
 	(void)param;
+	int	im_height = 4;
+	int	im_width = 4;
+	uint32_t	color;
+	int i = 0;
+	int y = 0;
+	int	square_count = 0;
+	int min_h = (HEIGHT - im_height * 25) / 2;
+	int max_h = HEIGHT - min_h;
+	int min_w = (WIDTH - im_width * 25) / 2;
+	int max_w = WIDTH - max_w;
+	
+	while (i < x || i > WIDTH - x)
+	{
+		if (i < x || i > WIDTH - x)
+			ft_pixel(189, 155, 25, 1);
+	}
+	
 	for (uint32_t i = 0; i < image->width; ++i)
 	{
 		for (uint32_t y = 0; y < image->height; ++y)
@@ -38,7 +61,7 @@ void ft_randomize(void* param)
 			);
 			mlx_put_pixel(image, i, y, color);
 		}
-	}
+	}	
 }
 
 void ft_hook(void* param)
@@ -72,8 +95,7 @@ int	check_args(char *str)
 		str[i - 3] == 'c' && str[i - 4] == '.' && \
 		i - 4 != 0)
 		return (EXIT_SUCCESS);
-	else
-		return (EXIT_FAILURE);
+	return (EXIT_FAILURE);
 }
 
 int	initialise_mlx(mlx_t *mlx)
@@ -81,18 +103,21 @@ int	initialise_mlx(mlx_t *mlx)
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
 		perror(mlx_strerror(mlx_errno));
+		mlx_terminate(mlx);
 		return(EXIT_FAILURE);
 	}
 	if (!(image = mlx_new_image(mlx, 128, 128)))
 	{
 		mlx_close_window(mlx);
 		perror(mlx_strerror(mlx_errno));
+		mlx_terminate(mlx);
 		return(EXIT_FAILURE);
 	}
 	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
 	{
 		mlx_close_window(mlx);
 		perror(mlx_strerror(mlx_errno));
+		mlx_terminate(mlx);
 		return(EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -115,8 +140,6 @@ int	main(int argc, char **argv)
 		open_close_file(argv);
 		if (initialise_mlx(mlx))
 			return (print_err_int("Error: Failed to init MLX."));
-
-		
 		mlx_loop_hook(mlx, ft_randomize, mlx);
 		mlx_loop_hook(mlx, ft_hook, mlx);
 		mlx_loop(mlx);

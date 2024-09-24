@@ -7,6 +7,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <errno.h>
+# include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_cub

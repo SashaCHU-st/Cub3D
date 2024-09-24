@@ -13,7 +13,7 @@ OBJ = $(SRCS:.c=.o)
 
 CFLAGS =  -Wall -Wextra -Werror
 
-MLX42FLAGS = -I include -lglfw -L"/Users/aheinane/.brew/opt/glfw/lib/"
+MLX42FLAGS = -I include -lglfw -L"/Users/aheinane/.brew/opt/glfw/lib/" -lm
 
 all: ${NAME}
 
