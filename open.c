@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/26 14:45:08 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:55:07 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void open_close_file(char **argv, t_textures *textures)
 	map_last(textures,line, fd);
 	if (map_closed(textures) == 0)
 		error_fun();
-	for (int i = 0; i < textures->how_many_lines; i++)
-		printf("Map line %d: %s", i, textures->map[i]);
 	if (textures->how_many_lines < 3)
 	{
 		close(fd);

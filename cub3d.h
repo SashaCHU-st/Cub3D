@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:45:25 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/26 14:43:26 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:24:57 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_textures
 	int		map_valid;
 	int		how_many_lines;
 	int		player_found;
+	int		map_index;
 	char	**map;
 } t_textures;
 
@@ -87,8 +88,13 @@ int		map_closed(t_textures *textures);
 void	flood_fill(t_textures *textures, int x, int y);
 int		map_closed(t_textures *textures);
 void	map_last(t_textures *textures, char *line, int fd);
+void	replacing_nl(t_textures *textures);
+void	if_new_line_in_middle(t_textures *textures);
+void	can_start_map(t_textures *textures, int fd);
+void	parsing_map(t_textures *textures, char *line, int fd);
 
-void	scan_the_map(t_textures *textures);
-int		check_space2(char ch);
-int		check_leading_space(char *line);
+// void	parsing_the_map(t_textures *textures, char *line, int map_started, int fd, int map_index);
+// void	scan_the_map(t_textures *textures);
+// int		check_space2(char ch);
+// int		check_leading_space(char *line);
 #endif

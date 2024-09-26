@@ -35,12 +35,8 @@ int map_closed(t_textures *textures)
 		for (int j = 0; j < ft_strlen(textures->map[i]); j++)
 		{
 			if (textures->map[i][j] == '0')
-			{
-				printf("Map is fully enclosed.\n");
 				return (1);
-			}
 		}
 	}
-	printf("Map is not fully enclosed\n");
 	return (0);
 }
