@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/26 11:06:14 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:54:01 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,25 @@ int	checking_map(t_textures *textures, char *line)
 {
 	int i = 0;
 	(void)textures;
+	printf("UKU3\n");
 	while (line[i])
 	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != ' ' && line[i] != '\n')
+		if (line[i] != '1' && line[i] != '0' && line[i] != ' ' && line[i] != '\n' && line[i] != '\t' )//&& line[i] != '\t'?????
 		{
+			printf("UKU4\n");
 			if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
 			{
+				printf("UKU5\n");
 				textures->player_found++;
 				printf("!!!!!!%d\n", textures->player_found);
 				if (textures->player_found > 1)
 					error_fun();
 			}
 			else
+			{
+				printf("UKU6\n");
 				error_fun();
+			}
 		}
 		i++;
 	}

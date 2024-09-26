@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:45:25 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/26 11:46:22 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:55:18 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ void	all_found(t_textures *textures);
 void	count_lines(t_textures *textures, char *line);
 int		checking_map(t_textures *textures, char *line);
 void	map_last(t_textures *textures, char *line, int fd);
+void	closing(char *line, int fd);
+
+
 void	scan_the_map(t_textures *textures);
 int		check_space2(char ch);
 int		check_leading_space(char *line);
