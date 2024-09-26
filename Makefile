@@ -15,6 +15,8 @@ SRCS = main.c \
 		utils.c \
 		error.c \
 		check_map.c \
+		map_closed.c \
+		map_last.c \
 
 
 OBJ = $(SRCS:.c=.o)
