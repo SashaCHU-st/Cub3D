@@ -10,15 +10,35 @@
 # include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 
+
+# define WIDTH 1080 
+# define HEIGHT 1080
+static mlx_image_t* image;
+
 typedef struct s_cub
-{
-	
-	char **map;
+{	
+	mlx_t   *mlx;
+	int 	**map;
 	size_t size;
 } t_cub;
 
+typedef struct s_intersection
+{
+    int x;
+    int y;
+    int v;
+    int h;
+    int angle;
+} t_intersection;
 
-void open_close_file(char **argv);
+typedef struct s_coll
+{
+    int     x;
+    int     y;
+    double  distance;
+} t_coll;
+
+// void open_close_file(char **argv);
 
 
 #endif
