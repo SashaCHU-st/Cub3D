@@ -2,3 +2,4 @@
 */*.o
 ./cub3d
 a.out
+.vscode/

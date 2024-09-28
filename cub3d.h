@@ -13,13 +13,24 @@
 
 # define WIDTH 1080 
 # define HEIGHT 1080
-static mlx_image_t* image;
+# define COL_WALL 0xffff64d9
+# define COL_BACK 0x9c0164
+
+typedef struct s_playa
+{
+    uint32_t x;
+    uint32_t y;
+    double x_i;
+    double y_i;
+} t_playa;
 
 typedef struct s_cub
 {	
 	mlx_t   *mlx;
+    mlx_image_t *image;
 	int 	**map;
 	size_t size;
+    t_playa play;
 } t_cub;
 
 typedef struct s_intersection
