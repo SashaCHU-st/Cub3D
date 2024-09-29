@@ -17,6 +17,7 @@ SRCS = main.c \
 		check_map.c \
 		map_closed.c \
 		map_last.c \
+		if_png.c \
 
 
 OBJ = $(SRCS:.c=.o)

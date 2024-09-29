@@ -11,6 +11,7 @@ directions:
 + nothing after ./
 + file png
 + not repeptevive
+- if just only .cub (without anything else)
 
 
 colors:
@@ -33,6 +34,10 @@ map:
 + save it to new array **map
 - if map closed
 + if it is empty in between => not valid
+- check if there is at least one player
+
+arguments
+- if file not exist
 
 
 MAPPING

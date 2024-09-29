@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/23 11:23:45 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/29 16:32:25 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_valid_number(const char *str)
 	return 1;
 }
 
-int parse_color_values(const char *color_string, int *values)
+int	parse_color_values(t_textures *textures,const char *color_string, int *values)
 {
 	char **colors;
 	int i;
@@ -40,7 +40,7 @@ int parse_color_values(const char *color_string, int *values)
 	colors = ft_split(color_string, ',');
 	if (!colors)
 	{
-		printf("Error: Failed to split the color string.\n");
+		printf("to split the color string.\n");
 		return 0;
 	}
 	while (colors[i] != NULL && i < 3)
@@ -48,8 +48,8 @@ int parse_color_values(const char *color_string, int *values)
 		if (is_valid_number(colors[i]))
 		{
 			values[i] = ft_atoi(colors[i]);
-			if(values[i] > 255)
-				error_fun();
+			if(values[i] > 255 || values[i] < 0)
+				error_fun(textures);
 		}
 		else
 		{
@@ -58,7 +58,7 @@ int parse_color_values(const char *color_string, int *values)
 				free(colors[j]);
 			}
 			free(colors);
-			error_fun();
+			error_fun(textures);
 		}
 		i++;
 	}
@@ -69,7 +69,8 @@ int parse_color_values(const char *color_string, int *values)
 		return 1;
 	else
 	{
-		printf("Error: Incorrect number of color values, expected 3.\n");
+		printf("expected 3.\n");
+		error_fun(textures);
 		return 0;
 	}
 }
@@ -78,7 +79,7 @@ void	parse_floor_color(const char *color_string, t_textures *textures, bool is_f
 {
 	int	values[3];
 
-	if (parse_color_values(color_string, values))
+	if (parse_color_values(textures, color_string, values))
 	{
 		if (is_floor)
 		{
@@ -96,7 +97,7 @@ void	parse_floor_color(const char *color_string, t_textures *textures, bool is_f
 		}
 	}
 	else
-		error_fun();
+		error_fun(textures);
 }
 
 void	checking_color(t_textures *textures, char *line)

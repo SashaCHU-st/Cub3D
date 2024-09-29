@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:11:07 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/23 12:20:16 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/29 17:45:03 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ea(t_textures *textures, char *line)
 			{
 				
 				if(check_space(textures->ea[i]))
-					error_fun();
+					error_fun(textures);;
 				i++;
 			}
 			if(ft_strncmp(textures->ea, "./", 2) == 0 )
@@ -36,7 +36,7 @@ void	ea(t_textures *textures, char *line)
 			}
 		}
 		else
-			error_fun();
+			error_fun(textures);;
 	}
 }
 
@@ -54,7 +54,7 @@ void	we(t_textures *textures, char *line)
 			{
 				
 				if(check_space(textures->we[i]))
-					error_fun();
+					error_fun(textures);;
 				i++;
 			}
 			if(ft_strncmp(textures->we, "./", 2) == 0 )
@@ -64,7 +64,7 @@ void	we(t_textures *textures, char *line)
 			}
 		}
 		else
-			error_fun();
+			error_fun(textures);;
 	}
 }
 
@@ -82,7 +82,7 @@ void	so(t_textures *textures, char *line)
 			{
 				
 				if(check_space(textures->so[i]))
-					error_fun();
+					error_fun(textures);;
 				i++;
 			}
 			if(ft_strncmp(textures->so, "./", 2) == 0 )
@@ -92,7 +92,7 @@ void	so(t_textures *textures, char *line)
 			}
 		}
 		else
-			error_fun();
+			error_fun(textures);;
 	}
 }
 
@@ -108,7 +108,7 @@ void	no(t_textures *textures, char *line)
 			while (textures->no[i] != '\0')
 			{
 				if(check_space(textures->no[i]))
-					error_fun();
+					error_fun(textures);;
 				i++;
 			}
 			if(ft_strncmp(textures->no, "./", 2) == 0 )
@@ -118,7 +118,7 @@ void	no(t_textures *textures, char *line)
 			}
 		}
 		else
-			error_fun();
+			error_fun(textures);;
 	}
 }
 
@@ -128,22 +128,5 @@ void	checking_textures(t_textures *textures, char *line)
 	so(textures, line);
 	we(textures, line);
 	ea(textures, line);
-
-}
-
-int	check_if_png(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	if (i == 0)
-		return (0);
-	if (str[i - 1] == 'g' && str[i - 2] == 'n' && \
-		str[i - 3] == 'p' && str[i - 4] == '.' && \
-		i - 4 != 0)
-		return (1);
-	else
-		return (0);
+	
 }

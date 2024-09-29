@@ -1,42 +1,62 @@
 
 #include "cub3d.h"
-void flood_fill(t_textures *textures, int x, int y)
+int flood_fill(char **map, int rows, int cols, int x, int y)
 {
-	if (x < 0 || x >= textures->how_many_lines || y < 0 || y >= ft_strlen(textures->map[x]))
-		return;
-	if (textures->map[x][y] == '1' || textures->map[x][y] == 'F')
-		return;
-	textures->map[x][y] = 'F';
-	flood_fill(textures, x + 1, y);
-	flood_fill(textures, x - 1, y);
-	flood_fill(textures, x, y + 1);
-	flood_fill(textures, x, y - 1);
+	if (x < 0 || x >= rows || y < 0 || y >= cols)
+		return 0;
+
+	if (map[x][y] == '1')
+		return 1;
+
+	if (map[x][y] == 'F')
+		return 1;
+
+	map[x][y] = 'F';
+
+	int up = flood_fill(map, rows, cols, x - 1, y);
+	int down = flood_fill(map, rows, cols, x + 1, y);
+	int left = flood_fill(map, rows, cols, x, y - 1);
+	int right = flood_fill(map, rows, cols, x, y + 1);
+	if (up == 0 || down == 0 || left == 0 || right == 0)
+		return (0);
+	return (1);
 }
+
 
 int map_closed(t_textures *textures)
 {
-	for (int i = 0; i < textures->how_many_lines; i++)
+	int rows = textures->how_many_lines;
+	int cols = ft_strlen(textures->map[0]);
+
+	int start_x = -1, start_y = -1;
+
+	int i =0;
+	while (i < rows)
 	{
-		int length = ft_strlen(textures->map[i]) - 1;
-		if (textures->map[i][0] == '0')
-			flood_fill(textures, i, 0);
-		if (textures->map[i][length] == '0')
-			flood_fill(textures, i, ft_strlen(textures->map[i]) - 1);
-	}
-	for (int j = 0; j < ft_strlen(textures->map[0]); j++)
-	{
-		if (textures->map[0][j] == '0')
-			flood_fill(textures, 0, j);
-		if (textures->map[textures->how_many_lines - 1][j] == '0')
-			flood_fill(textures, textures->how_many_lines - 1, j);
-	}
-	for (int i = 0; i < textures->how_many_lines; i++)
-	{
-		for (int j = 0; j < ft_strlen(textures->map[i]); j++)
+		int j = 0;
+		while( j < cols )
 		{
-			if (textures->map[i][j] == '0')
-				return (1);
+			if (textures->map[i][j] == 'S' || textures->map[i][j] == 'N' || textures->map[i][j] == 'W' || textures->map[i][j] == 'E')
+			{
+				start_x = i;
+				start_y = j;
+				break;
+			}
+			j++;
 		}
+		if (start_x != -1)
+		break;
+		i++;
 	}
-	return (0);
+	if (start_x == -1 || start_y == -1)
+	{
+		return 0;
+	}
+	if (!flood_fill(textures->map, rows, cols, start_x, start_y))
+	{
+		printf("kuku not closed!\n");
+		return (0);
+	}
+	printf("kuku closed!\n");
+	return (1);
 }

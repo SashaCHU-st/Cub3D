@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/26 14:57:17 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/29 17:04:22 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 void	all_found(t_textures *textures)
 {
+	printf("1 %d\n", textures->found_no);
+	printf("2 %d\n", textures->found_so);
+	printf("3 %d\n", textures->found_we);
+	printf("4 %d\n", textures->found_ea);
+	printf("5 %d\n", textures->found_f);
+	printf("6 %d\n", textures->found_c);
+	//textures->found = textures->found_no+textures->found_so+textures->found_we+textures->found_ea+textures->found_c + textures->found_f;
 	if(textures->found_no == 1 && textures->found_so == 1 && textures->found_we == 1 && textures->found_we == 1
 		&& textures->found_ea == 1 && textures->found_f == 1 && textures->found_c == 1)
-		textures->found = 6;
-	// number = textures->found_no + textures->found_so + textures->found_we
-	// 	 +textures->found_ea + textures->found_f +textures->found_c;
-	// if(number == 6)
+		textures->found = textures->found_no+textures->found_so+textures->found_we+textures->found_ea+textures->found_c + textures->found_f;
+	printf("HHHH %d\n", textures->found);
 }
 
 int	checking_map(t_textures *textures, char *line)
@@ -33,30 +38,17 @@ int	checking_map(t_textures *textures, char *line)
 			if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
 			{
 				textures->player_found++;
-				if (textures->player_found > 1)
-					error_fun();
+				if (textures->player_found > 1 || textures->player_found == 0)
+					error_fun(textures);;
 			}
 			else
-				error_fun();
+			{
+				
+			printf("HHHH\n");
+				error_fun(textures);;
+			}
 		}
 		i++;
 	}
 	return (1);
-}
-
-void	count_lines(t_textures *textures, char *line)
-{
-	int i = 0;
-	int is_empty = 1;
-	while (line[i] != '\0')
-	{
-		if (line[0] != '\n' && !check_space(line[i]))
-		{
-			is_empty = 0;
-			break;
-		}
-		i++;
-	}
-	if (!is_empty)
-		textures->how_many_lines++;
 }
