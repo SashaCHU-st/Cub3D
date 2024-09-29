@@ -11,17 +11,27 @@
 # include "MLX42/include/MLX42/MLX42.h"
 
 
-# define WIDTH 1080 
-# define HEIGHT 1080
+# define WIDTH 512 
+# define HEIGHT 512
 # define COL_WALL 0xffff64d9
 # define COL_BACK 0x9c0164
+# define FOV 320
+# define ANGL_INCREM 60 / 320
+# define CONVERT M_PI / 180
+
+# define THIRTY 30 * CONVERT
+# define NINETY 90 * CONVERT
+# define TWOSEVEN 270 * CONVERT
+# define THREESIX 360 * CONVERT
 
 typedef struct s_playa
 {
-    uint32_t x;
-    uint32_t y;
-    double x_i;
-    double y_i;
+    double x;
+    double y;
+    double  angle;
+    double  dir_ray;
+    double  min_ray;
+    double  max_ray;
 } t_playa;
 
 typedef struct s_cub
@@ -35,17 +45,17 @@ typedef struct s_cub
 
 typedef struct s_intersection
 {
-    int x;
-    int y;
-    int v;
-    int h;
-    int angle;
+    double x;
+    double y;
+    double v;
+    double h;
+    double dist;
 } t_intersection;
 
 typedef struct s_coll
 {
-    int     x;
-    int     y;
+    double     x;
+    double     y;
     double  distance;
 } t_coll;
 
