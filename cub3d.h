@@ -19,16 +19,65 @@
 #include <stdbool.h>
 #include <fcntl.h>
 #include <unistd.h>
+# include <errno.h>
+# include <math.h>
 #include "get_next_line.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
-typedef struct s_cub
+
+# define WIDTH 512 
+# define HEIGHT 512
+# define COL_WALL 0xffff64d9
+# define COL_BACK 0x9c0164
+# define ANGL_INCREM 60 / WIDTH
+# define CONVERT M_PI / 180
+
+# define THIRTY 30 * CONVERT
+# define NINETY 90 * CONVERT
+# define TWOSEVEN 270 * CONVERT
+# define THREESIX 360 * CONVERT
+
+
+typedef struct s_wall
 {
-	char **map;
+	double     x;
+    double     y;
+    double  distance;
+    double  height;
+	double  start;
+	double  end;
+} t_wall;
+
+typedef struct s_playa
+{
+    double x;
+    double y;
+    double  angle;
+    double  dir_ray;
+    double  min_ray;
+    double  max_ray;
+} t_playa;
+
+typedef struct s_cub
+{	
+	mlx_t   *mlx;
+    mlx_image_t *image;
+	int 	**map;
 	size_t size;
+    t_playa play;
 } t_cub;
 
+typedef struct s_intersection
+{
+    double x;
+    double y;
+    double v;
+    double h;
+    double dist;
+} t_intersection;
 
+
+// void open_close_file(char **argv);
 typedef struct s_textures
 {
 	char	*line;
@@ -95,7 +144,6 @@ void	print_map(t_textures *textures);
 void	*ft_memset(void *b, int c, size_t len);
 void	replacing_nl_with_zero(t_textures *textures);
 void	free_map(t_textures *textures);
-
 void	can_start_map(t_textures *textures, int fd);
 int		fill_outside(t_textures *textures);
 void	flood_fill_outside(t_textures *textures, int x, int y);
