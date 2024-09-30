@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/30 18:03:54 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/09/30 18:48:50 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int   check_coord(int x, int y, int **map)
 // }
 void get_horizontal(t_cub *data, t_intersection *hori, double angle)
 {
-	printf("checking the sin of the %f angle %f\n", angle, sin(angle));
 	if (sin(angle) >= 0) //from 0/360 until 181 or facing up
 	{
 		hori->y = floor(data->play.y / 64) * 64 - 1;
@@ -87,10 +86,8 @@ void get_horizontal(t_cub *data, t_intersection *hori, double angle)
 		hori->y = floor(data->play.y / 64) * 64 + 64;
 		hori->v = 64;
 	}
-	printf("check y %f\n", hori->y);
-	hori->x = data->play.x + (data->play.y - hori->y) / tan(angle);
-	hori->h = 64 / tan(angle);
-	printf("check x %f and hori->h %f\n", hori->x, hori->h);
+	hori->x = data->play.x - ((data->play.y - hori->y) / tan(angle));
+	hori->h = -(64 / tan(angle));
 	while(!check_coord((int)hori->x, (int)hori->y, data->map))
 	{
 		hori->x = hori->x + hori->h;
@@ -111,8 +108,8 @@ void	get_vertical(t_cub *data, t_intersection *vert, double angle)
 		vert->x = floor(data->play.x / 64) * 64 - 1;
 		vert->h = -64;
 	}
-	vert->y = data->play.y - (data->play.x - vert->x) / tan(angle);
-	vert->v = 64 * tan(angle);
+	vert->y = data->play.y - ((data->play.x - vert->x) / tan(angle));
+	vert->v = 64 / tan(angle);
 	while(!check_coord((int)vert->x, (int)vert->y, data->map))
 	{
 		vert->x = vert->x + vert->h;
