@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:15 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/30 13:00:03 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:54:14 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void free_map(t_textures *textures)
 {
-	if (textures->line) {
+	if (textures->line)
+	{
 		free(textures->line);
 		textures->line = NULL;
 	}
@@ -74,11 +75,7 @@ void error_fun(t_textures *textures)
 
 void closing(t_textures *textures, char *line, int fd)
 {
-	if (line)
-	{
-		free(line);
-		line = NULL;
-	}
+	(void)line;
 	close(fd);
 	error_fun(textures);
 }
