@@ -15,14 +15,24 @@
 # define HEIGHT 512
 # define COL_WALL 0xffff64d9
 # define COL_BACK 0x9c0164
-# define FOV 320
-# define ANGL_INCREM 60 / 320
+# define ANGL_INCREM 60 / WIDTH
 # define CONVERT M_PI / 180
 
 # define THIRTY 30 * CONVERT
 # define NINETY 90 * CONVERT
 # define TWOSEVEN 270 * CONVERT
 # define THREESIX 360 * CONVERT
+
+
+typedef struct s_wall
+{
+	double     x;
+    double     y;
+    double  distance;
+    double  height;
+	double  start;
+	double  end;
+} t_wall;
 
 typedef struct s_playa
 {
@@ -51,13 +61,6 @@ typedef struct s_intersection
     double h;
     double dist;
 } t_intersection;
-
-typedef struct s_coll
-{
-    double     x;
-    double     y;
-    double  distance;
-} t_coll;
 
 // void open_close_file(char **argv);
 
