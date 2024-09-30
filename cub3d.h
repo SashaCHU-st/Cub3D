@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:45:25 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/29 15:48:37 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:23:10 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_cub
 
 typedef struct s_textures
 {
+	char	*line;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -54,8 +55,6 @@ typedef struct s_textures
 	int		how_many_lines;
 	int		player_found;
 	int		map_index;
-	int		length;
-	int		max_line_length;
 	char	**map;
 } t_textures;
 
@@ -82,8 +81,6 @@ void	error_fun(t_textures *textures);
 int		ft_isdigit(int c);
 int		check_if_png(char *str);
 void	all_found(t_textures *textures);\
-//void	count_lines(char **argv, t_textures *textures);
-//void	count_lines(char **argv,t_textures *textures, int fd);
 void	count_lines(char **argv, t_textures *textures, int fd, char *line);
 int		checking_map(t_textures *textures, char *line);
 void	closing(t_textures *textures,char *line, int fd);
@@ -91,14 +88,15 @@ int		map_closed(t_textures *textures);
 int		map_closed(t_textures *textures);
 void	if_new_line_in_middle(t_textures *textures);
 char	*ft_strtrim(char *s1, char *set);
-void	can_start_map(t_textures *textures, int fd);
 void	replacing_spaces_with_one(t_textures *textures);
 int		map_closed(t_textures *textures);
 int		flood_fill(char **map, int rows, int cols, int x, int y);
 void	print_map(t_textures *textures);
 void	*ft_memset(void *b, int c, size_t len);
 void	replacing_nl_with_zero(t_textures *textures);
+void	free_map(t_textures *textures);
 
+void	can_start_map(t_textures *textures, int fd);
 int		fill_outside(t_textures *textures);
 void	flood_fill_outside(t_textures *textures, int x, int y);
 void	parsing_map(char **argv,t_textures *textures, int fd, char *line);
@@ -106,6 +104,8 @@ void	map_last(t_textures *textures, char *line, int fd);
 void	map_last(t_textures *textures, char *line, int fd);
 void	replacing_nl(t_textures *textures);
 
+//void	count_lines(char **argv, t_textures *textures);
+//void	count_lines(char **argv,t_textures *textures, int fd);
 // void	parsing_the_map(t_textures *textures, char *line, int map_started, int fd, int map_index);
 // void	scan_the_map(t_textures *textures);
 // int		check_space2(char ch);

@@ -1,13 +1,13 @@
-   WE                            ./no_wall.png
+   WE                            ./we_wall.png
 NO      ./no_wall.png
 
 
 
-SO ./no_wall.png
+SO ./so_wall.png
 
 F   69, 222, 199
 
-EA ./no_wall.png
+EA ./ea_wall.png
 
 
 

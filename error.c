@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:15 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/29 17:54:14 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:00:03 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,71 @@
 
 void free_map(t_textures *textures)
 {
+	if (textures->line) {
+		free(textures->line);
+		textures->line = NULL;
+	}
 	if (textures->map)
 	{
-		printf("Freeing map with %d lines\n", textures->map_index);
-		for (int i = 0; i < textures->map_index; i++)
+		for (int i = 0; i < textures->how_many_lines; i++)
 		{
-			if (textures->map[i])
-			{
-				printf("Freeing line %d: %s\n", i, textures->map[i]);
+			if (textures->map[i]) {
 				free(textures->map[i]);
+				textures->map[i] = NULL;
 			}
 		}
 		free(textures->map);
 		textures->map = NULL;
 	}
-	else
+	if (textures->ea)
 	{
-		printf("Nothing to free in the map\n");
+		free(textures->ea);
+		textures->ea = NULL;
+	}
+	if (textures->no)
+	{
+		free(textures->no);
+		textures->no = NULL;
+	}
+	if (textures->so)
+	{
+		free(textures->so);
+		textures->so = NULL;
+	}
+	if (textures->we)
+	{
+		free(textures->we);
+		textures->we = NULL;
+	}
+	if (textures->floor_color) 
+	{
+		free(textures->floor_color);
+		textures->floor_color = NULL;
+	}
+	if (textures->ceiling_color)
+	{
+		free(textures->ceiling_color);
+		textures->ceiling_color = NULL;
 	}
 }
-
 
 
 void error_fun(t_textures *textures)
 {
 	printf("Error\n");
-	if(textures)
-	{
-		printf("KUKUUUU\n");
-		//free_map(textures);
-	}
+	// (void)textures;
+	free_map(textures);
 	exit(1);
 }
 
-void closing(t_textures *textures,char *line, int fd)
+
+void closing(t_textures *textures, char *line, int fd)
 {
-	free(line);
+	if (line)
+	{
+		free(line);
+		line = NULL;
+	}
 	close(fd);
 	error_fun(textures);
 }

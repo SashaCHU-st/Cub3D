@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/29 17:31:59 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:10:58 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,24 @@ void	count_lines(char **argv, t_textures *textures, int fd, char *line)
 	close(fd);
 }
 
+
 void open_close_file(char **argv, t_textures *textures)
 {
 	int		fd;
-	char	*line;
+	// char	*line;
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error_fun(textures);
-	line = get_next_line(fd);
-	while (line != NULL && textures->found < 6)
+	textures->line = get_next_line(fd);
+	while (textures->line != NULL && textures->found < 6)
 	{
-		checking_textures(textures, line);
-		checking_color(textures, line);
+		checking_textures(textures, textures->line);
+		checking_color(textures, textures->line);
 		all_found(textures);
-		free(line);
-		line = NULL;
-		line = get_next_line(fd);
+		free(textures->line);
+		textures->line = NULL;
+		textures->line = get_next_line(fd);
 	}
 	if (textures->found != 6)
 	{
@@ -62,13 +63,14 @@ void open_close_file(char **argv, t_textures *textures)
 		printf("KUKU\n");
 		error_fun(textures);
 	}
-	count_lines(argv,textures,fd, line);
+	count_lines(argv,textures,fd, textures->line);
 
+	printf("HYHYHY\n");
 	//opening new fd
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error_fun(textures);
-	line = get_next_line(fd);
+	textures->line = get_next_line(fd);
  	int map_started = 0;
 	textures->map = malloc(sizeof(char*) * (textures->how_many_lines + 1));
 	if (!textures->map)
@@ -76,43 +78,43 @@ void open_close_file(char **argv, t_textures *textures)
 		close(fd);
 		error_fun(textures);
 	}
-	textures->map[textures->how_many_lines] = NULL;
-	line = get_next_line(fd);
-	while (line != NULL)
+	for(int i = 0; i < textures->how_many_lines; i++)
+		textures->map[i] = NULL;
+	while (textures->line  != NULL)
 	{
-		printf("Searching for map start, line: %s\n", line);
+		printf("line: %s\n", textures->line );
 		if (!map_started)
 		{
 			int i = 0;
-			while (line[i] && (line[i] == ' ' || line[i] == '\t'))
+			while (textures->line[i] && (textures->line[i] == ' ' || textures->line[i] == '\t'))
 				i++;
-			if (line[i] == '1' || line[i] == '0') 
+			if (textures->line[i] == '1' || textures->line[i] == '0') 
 				map_started = 1;
 		}
 		if (map_started)
 		{
-			if (*line =='\n')
-				closing(textures,line, fd);
-			if (*line != '\n')
+			if (*textures->line =='\n')
+				closing(textures,textures->line, fd);
+			if (*textures->line != '\n')
 			{
-				textures->map_valid = checking_map(textures, line);
+				textures->map_valid = checking_map(textures, textures->line);
 				if (!textures->map_valid)
-					closing(textures,line, fd);
+					closing(textures,textures->line, fd);
 				if (textures->map_index >= textures->how_many_lines)
 					error_fun(textures);
-				textures->map[textures->map_index] = ft_strdup(line);
+				textures->map[textures->map_index] = ft_strdup(textures->line);
 				if (!textures->map[textures->map_index])
 				{
-					free(line);
+					free(textures->line);
 					close(fd);
 					error_fun(textures);
 				}
 				textures->map_index++;
 			}
 		}
-		free(line);
-		line = NULL;
-		line = get_next_line(fd);
+		free(textures->line);
+		textures->line = NULL;
+		textures->line = get_next_line(fd);
 	}
 	textures->map[textures->map_index] = NULL;
 	if(textures->player_found == 0)
@@ -130,14 +132,16 @@ void open_close_file(char **argv, t_textures *textures)
 	printf("NEW\n");
 	for (int i = 0; i < textures->how_many_lines; i++)
 		printf("Map line %d: %s", i, textures->map[i]);
-	if_new_line_in_middle(textures);
+	//if_new_line_in_middle(textures);
 	printf("Map lines count -> %d\n", textures->how_many_lines);
 	if (!map_closed(textures))
 		error_fun(textures);
-	if (textures->how_many_lines < 3) {
+	if (textures->how_many_lines < 3)
+	{
+		free(textures->line);
 		close(fd);
 		error_fun(textures);
 	}
-	free(line);
+	free(textures->line);
 	close(fd);
 }

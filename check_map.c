@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/29 17:04:22 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:24:42 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,12 @@ int	checking_map(t_textures *textures, char *line)
 			{
 				textures->player_found++;
 				if (textures->player_found > 1 || textures->player_found == 0)
-					error_fun(textures);;
+					error_fun(textures);
 			}
 			else
 			{
-				
-			printf("HHHH\n");
-				error_fun(textures);;
+				printf("HHHH\n");
+				error_fun(textures);
 			}
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/29 16:32:25 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/30 10:04:42 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	parse_color_values(t_textures *textures,const char *color_string, int *value
 {
 	char **colors;
 	int i;
-
+	int j = 0;
 	i = 0;
 	colors = ft_split(color_string, ',');
 	if (!colors)
@@ -53,17 +53,23 @@ int	parse_color_values(t_textures *textures,const char *color_string, int *value
 		}
 		else
 		{
-			for (int j = 0; colors[j] != NULL; j++)
+			j = 0;
+			while (colors[j] != NULL)
 			{
 				free(colors[j]);
+				j++;
 			}
 			free(colors);
 			error_fun(textures);
 		}
 		i++;
 	}
-	for (int j = 0; colors[j] != NULL; j++)
+	j =0;
+	while (colors[j] != NULL)
+	{
 		free(colors[j]);
+		j++;
+	}
 	free(colors);
 	if (i == 3)
 		return 1;

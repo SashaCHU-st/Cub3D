@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/20 10:25:43 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:22:40 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int main(int argc, char **argv)
 
 		mlx_loop(mlx);
 		mlx_terminate(mlx);
+		free_map(&textures);
 	}
 	else
 		printf("Error: Please provide only a valid *.cub file.\n");
