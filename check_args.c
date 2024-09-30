@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 15:11:20 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/26 14:52:44 by aheinane         ###   ########.fr       */
+/*   Created: 2024/09/18 15:02:19 by aheinane          #+#    #+#             */
+/*   Updated: 2024/09/20 10:25:52 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub3d.h"
 
-size_t	ft_strlen(const char *str )
+int	check_args(char *str)
 {
-	size_t	i;
-	size_t	count;
+	int	i;
 
-	count = 0;
 	i = 0;
 	while (str[i] != '\0')
-	{
 		i++;
-		count++;
-	}
-	return (count);
+	if (i == 0)
+		return (EXIT_FAILURE);
+	if (str[i - 1] == 'b' && str[i - 2] == 'u' && \
+		str[i - 3] == 'c' && str[i - 4] == '.' && \
+		i - 4 != 0)
+		return (EXIT_SUCCESS);
+	else
+		return (EXIT_FAILURE);
 }

@@ -6,11 +6,15 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:17:19 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/18 09:17:57 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/30 12:01:41 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 char	*ft_exist(char *str)
 {
@@ -66,7 +70,11 @@ char	*ft_get_line(char *storage)
 		temp = malloc(i + 2);
 	i = 0;
 	if (!temp)
+	{
+		free(storage);
+		free(temp);	
 		return (NULL);
+	}
 	while (storage[i] && storage[i] != '\n')
 	{
 		temp[i] = storage[i];
@@ -123,3 +131,19 @@ char	*get_next_line(int fd)
 	}
 	return (line);
 }
+
+
+// int main(int argc, char **argv)
+// {
+// 	int fd = open(argv[1], O_RDONLY);
+// 	if (fd < 0)
+// 		return (1);
+// 	char *line = get_next_line(fd);
+// 	while (line  != NULL)
+// 	{
+// 		printf("%s", line);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }

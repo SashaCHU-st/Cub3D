@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/17 12:22:56 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:22:40 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static mlx_image_t* image;
 
 int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 void ft_randomize(void* param)
@@ -57,38 +57,21 @@ void ft_hook(void* param)
 		image->instances[0].x += 5;
 }
 
-// -----------------------------------------------------------------------------
-
-int	check_args(char *str)
+int main(int argc, char **argv)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	if (i == 0)
-		return (EXIT_FAILURE);
-	if (str[i - 1] == 'b' && str[i - 2] == 'u' && \
-		str[i - 3] == 'c' && str[i - 4] == '.' && \
-		i - 4 != 0)
-		return (EXIT_SUCCESS);
-	else
-		return (EXIT_FAILURE);
-}
-
-
-int	main(int argc, char **argv)
-{
-	mlx_t*	mlx;
+	mlx_t *mlx;
+	t_textures textures;
+	init(&textures);
 
 	if (argc == 2)
 	{
-		open_close_file(argv);
 		if (check_args(argv[1]) != EXIT_SUCCESS)
 		{
 			printf("Error: Please provide a valid *.cub file.\n");
 			return (EXIT_FAILURE);
 		}
+		open_close_file(argv, &textures);
+		//printf("%d\n", textures.floor_r);
 		if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 		{
 			puts(mlx_strerror(mlx_errno));
@@ -112,6 +95,7 @@ int	main(int argc, char **argv)
 
 		mlx_loop(mlx);
 		mlx_terminate(mlx);
+		free_map(&textures);
 	}
 	else
 		printf("Error: Please provide only a valid *.cub file.\n");
