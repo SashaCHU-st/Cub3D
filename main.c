@@ -245,21 +245,6 @@ void ft_draw_map(t_cub *data)
 
 // -----------------------------------------------------------------------------
 
-int	check_args(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	if (i == 0)
-		return (EXIT_FAILURE);
-	if (str[i - 1] == 'b' && str[i - 2] == 'u' && \
-		str[i - 3] == 'c' && str[i - 4] == '.' && \
-		i - 4 != 0)
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
-}
 
 int	initialise_mlx(t_cub *data)
 {
