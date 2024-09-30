@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/30 12:30:15 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/09/30 15:52:32 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,67 +44,95 @@ double get_rgba(int32_t r, int32_t g, int32_t b, int32_t a)
 // // {
 int   check_coord(int x, int y, int **map)
 {
-    return (map[y / 32][x / 32]);
+	printf("map here at x %d and y %d is %d\n", x, y, map[x / 32][y / 32]);
+    return (map[x / 32][y / 32]);
 }	
 // // }
 
-t_intersection get_horizontal(t_cub *data)
+// void get_horizontal(t_cub *data, t_intersection *hori, double angle)
+// {
+// 	double	specific_x = data->play.x * 32 + 32 / 2;
+// 	double	specific_y = data->play.y * 32 + 32 / 2;
+// 	printf("checking the sin of the %f angle %f\n", angle, sin(angle));
+// 	if (sin(angle) >= 0) //from 0/360 until 181 or facing up
+// 	{
+// 		hori->y = floor(specific_y / 32) * 32 - 1;
+// 		printf("check y %f\n", hori->y);
+// 		hori->v = -32;
+// 	}
+// 	else
+// 	{
+// 		hori->y = ceil(specific_y / 32) * 32 + 32;
+// 		hori->v = 32;
+// 	}
+// 	hori->x = specific_x + (specific_y - hori->y) / tan(angle);
+// 	hori->h = 32 / tan(angle);
+// 	while(!check_coord((int)hori->x, (int)hori->y, data->map))
+// 	{
+// 		hori->x = hori->x + hori->h;
+// 		hori->y = hori->y + hori->v;
+// 	}
+// 	hori->dist = sqrt(pow((specific_x - hori->x), 2) + pow((specific_y - hori->y), 2));
+// }
+void get_horizontal(t_cub *data, t_intersection *hori, double angle)
 {
-	t_intersection hori;
-
-	if (sin(data->play.angle) >= 0) //from 0/360 until 181 or facing up
+	double	specific_x = data->play.x * 32 + 32 / 2;
+	double	specific_y = data->play.y * 32 + 32 / 2;
+	printf("checking the sin of the %f angle %f\n", angle, sin(angle));
+	if (sin(angle) >= 0) //from 0/360 until 181 or facing up
 	{
-		hori.y = floor(data->play.y / 32) * 32 - 1;
-		hori.v = -32;
+		hori->y = floor(specific_y / 32) * 32 - 1;
+		printf("check y %f\n", hori->y);
+		hori->v = -32;
 	}
 	else
 	{
-		hori.y = ceil(data->play.y / 32) * 32 + 32;
-		hori.v = 32;
+		hori->y = ceil(specific_y / 32) * 32 + 32;
+		hori->v = 32;
 	}
-	hori.x = data->play.x + ((data->play.y * 32) - hori.y) / tan(data->play.angle);
-	hori.h = 32 / tan(data->play.angle);
-	while(!check_coord((int)hori.x, (int)hori.y, data->map))
+	hori->x = specific_x + (specific_y - hori->y) / tan(angle);
+	hori->h = 32 / tan(angle);
+	while(!check_coord((int)hori->x, (int)hori->y, data->map))
 	{
-		hori.x = hori.x + hori.h;
-		hori.y = hori.y + hori.v;
+		hori->x = hori->x + hori->h;
+		hori->y = hori->y + hori->v;
 	}
-	hori.dist = sqrt(pow(((data->play.x * 32) - hori.x), 2) + pow(((data->play.y * 32) - hori.y), 2));
-	return (hori);
+	hori->dist = sqrt(pow((specific_x - hori->x), 2) + pow((specific_y - hori->y), 2));
 }
 
-t_intersection	get_vertical(t_cub *data)
+void	get_vertical(t_cub *data, t_intersection *vert, double angle)
 {
-	t_intersection vert;
-
-	if (cos(data->play.angle) >= 0) //from 90 until 270 or facing right
+	double	specific_x = data->play.x * 32 + 32 / 2;
+	double	specific_y = data->play.y * 32 + 32 / 2;
+	
+	if (cos(angle) >= 0) //from 90 until 270 or facing right
 	{
-		vert.x = ceil(data->play.x / 32) * 32 + 32;
-		vert.h = 32;
+		vert->x = ceil(specific_x / 32) * 32 + 32;
+		vert->h = 32;
 	}
 	else
 	{
-		vert.x = floor(data->play.x / 32) * 32 - 1;
-		vert.h = -32;
+		vert->x = floor(specific_x / 32) * 32 - 1;
+		vert->h = -32;
 	}
-	vert.y = data->play.y - ((data->play.x * 32) - vert.x) / tan(data->play.angle);
-	vert.v = 32 * tan(data->play.angle);
-	while(!check_coord((int)vert.x, (int)vert.y, data->map))
+	vert->y = specific_y - (specific_x - vert->x) / tan(angle);
+	vert->v = 32 * tan(angle);
+	while(!check_coord((int)vert->x, (int)vert->y, data->map))
 	{
-		vert.x = vert.x + vert.h;
-		vert.y = vert.y + vert.v;
+		vert->x = vert->x + vert->h;
+		vert->y = vert->y + vert->v;
 	}
-	vert.dist = sqrt(pow(((data->play.x * 32) - vert.x), 2) + pow(((data->play.y * 32) - vert.y), 2));
-	return (vert);
+	vert->dist = sqrt(pow((specific_x - vert->x), 2) + pow((specific_y - vert->y), 2));
 }
 
-void	get_collision(t_cub *data, t_wall *wall) //or a double pointer for wall?
+void	get_collision(t_cub *data, t_wall *wall, double angle) //or a double pointer for wall?
 {
 	t_intersection hori;
 	t_intersection vert;
 
-	hori = get_horizontal(data);
-	vert = get_vertical(data);
+	get_horizontal(data, &hori, angle);
+	printf("hori coordinates are %f and %f\n", hori.x, hori.y);
+	get_vertical(data, &vert, angle);
 	if (vert.dist > hori.dist)
 		wall->distance = hori.dist;
 	else
@@ -127,8 +155,9 @@ void ft_draw_map(t_cub *data)
 	max_angl = (data->play.angle + 60 / 2);
 	while (i < WIDTH)
 	{
-		angle = min_angl + i * ANGL_INCREM; // get the cur angle until you go through all of them (depends on the width)
-		get_collision(data, &cur); //get the closest wall grid coordinates dpeending on which way the player is facing
+		angle = (min_angl + i * ANGL_INCREM) * CONVERT; // get the cur angle until you go through all of them (depends on the width)
+		printf("cur angle is %f\n", angle);
+		get_collision(data, &cur, angle); //get the closest wall grid coordinates dpeending on which way the player is facing
 		distance = cur.distance / cos(angle - data->play.angle); //get the distance to the wall depending on the curangle
 		cur.height = HEIGHT / (distance * cos(angle)); //correction to get the fishbowl effect
 		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
@@ -234,20 +263,20 @@ int	check_args(char *str)
 
 int	initialise_mlx(t_cub *data)
 {
-	if (!(data->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
+	if (!(data->mlx = mlx_init(512, 512, "MLX42", true)))
 	{
 		perror(mlx_strerror(mlx_errno));
 		mlx_terminate(data->mlx);
 		return(EXIT_FAILURE);
 	}
-	if (!(data->image = mlx_new_image(data->mlx, 256, 256)))
+	if (!(data->image = mlx_new_image(data->mlx, WIDTH, HEIGHT)))
 	{
 		mlx_close_window(data->mlx);
 		perror(mlx_strerror(mlx_errno));
 		mlx_terminate(data->mlx);
 		return(EXIT_FAILURE);
 	}
-	if (mlx_image_to_window(data->mlx, data->image, (WIDTH / 2) - (data->image->width / 2), (HEIGHT / 2) - (data->image->height / 2)) == -1)
+	if (mlx_image_to_window(data->mlx, data->image, (512 / 2) - (data->image->width / 2), (512 / 2) - (data->image->height / 2)) == -1)
 	{
 		mlx_close_window(data->mlx);
 		perror(mlx_strerror(mlx_errno));
@@ -283,6 +312,7 @@ int *set_map(int i, int *map)
 			j++;
 		}
 	}
+
 	return (map);
 }
 
@@ -356,6 +386,7 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	set_the_player(&param, 'N');
+	printf("map space check %d\n", param.map[3][3]);
 	if (argc == 2)
 	{
 		if (check_args(argv[1]))
