@@ -6,10 +6,20 @@ MLX42 = ./MLX42/build/libmlx42.a
 
 # HEADER = ./cub3d.h
 
-SRCS = main.c 
-		# open.c \
-		# get_next_line.c \
-		# get_next_line_utils.c \
+SRCS = main.c \
+		check_args.c \
+		open.c \
+		get_next_line.c \
+		get_next_line_utils.c \
+		textures.c \
+		color.c \
+		init.c \
+		utils.c \
+		error.c \
+		check_map.c \
+		map_closed.c \
+		map_last.c \
+		if_png.c \
 
 OBJ = $(SRCS:.c=.o)
 

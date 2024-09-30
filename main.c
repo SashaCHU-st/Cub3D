@@ -366,6 +366,8 @@ void	set_the_player(t_cub *data, char c)
 int	main(int argc, char **argv)
 {
 	t_cub param;
+  t_textures textures;
+	init(&textures);
 	int i = 0;
 
 	param = (t_cub){0};
@@ -391,7 +393,7 @@ int	main(int argc, char **argv)
 	{
 		if (check_args(argv[1]))
 			return (print_err_int("Error: Please provide a valid *.cub file."));
-		// open_close_file(argv);
+		open_close_file(argv, &textures);
 		if (initialise_mlx(&param))
 			return (print_err_int("Error: Failed to init MLX."));
 		// mlx_loop_hook(param.mlx, ft_randomize, &param);
@@ -399,6 +401,7 @@ int	main(int argc, char **argv)
 		ft_draw_map(&param);
 		mlx_loop(param.mlx);
 		mlx_terminate(param.mlx);
+    free_map(&textures);
 		i = 7;
 		while (i > -1)
 			free(param.map[i--]);
