@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/30 13:10:58 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:37:29 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,62 @@ void	count_lines(char **argv, t_textures *textures, int fd, char *line)
 	textures->how_many_lines = line_count;
 	printf("Map lines count -> %d\n", textures->how_many_lines);
 	close(fd);
+}
+int map_closed(t_textures *textures)
+{
+	int i = 0;
+	int j;
+	while (textures->map[0][i])
+	{
+		if (textures->map[0][i] != '1')
+			return 0;
+		i++;
+	}
+	i = 0;
+	while (textures->map[textures->how_many_lines - 1][i])
+	{
+		if (textures->map[textures->how_many_lines - 1][i] != '1')
+			return 0;
+		i++;
+	}
+	i = 0;
+	while (i < textures->how_many_lines - 1)
+	{
+		int first = ft_strlen(textures->map[i]);
+		int next = ft_strlen(textures->map[i + 1]);
+		if (textures->map[i][0] != '1')
+			return 0;
+		if (textures->map[i][first - 1] != '1')
+			return 0;
+		if (first < next)
+		{
+			if (textures->map[i + 1][first - 1] != '1')
+				return 0;
+			j = first;
+			while (j < next)
+			{
+				if (textures->map[i + 1][j] != '1')
+					return 0;
+				j++;
+			}
+		}
+		else if (first > next)
+		{
+			if (textures->map[i + 1][next - 1] != '1')
+				return 0;
+			j = next;
+			while (j < first)
+			{
+				if (textures->map[i][j] != '1')
+					return 0;
+				j++;
+			}
+		}
+		
+		i++;
+	}
+
+	return 1;
 }
 
 
