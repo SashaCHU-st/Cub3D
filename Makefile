@@ -4,31 +4,22 @@ LIBFT = ./libft/libft.a
 
 MLX42 = ./MLX42/build/libmlx42.a
 
-SRCS = main.c \
-		check_args.c \
-		open.c \
-		get_next_line.c \
-		get_next_line_utils.c \
-		textures.c \
-		color.c \
-		init.c \
-		utils.c \
-		error.c \
-		check_map.c \
-		map_closed.c \
-		map_last.c \
-		if_png.c \
+# HEADER = ./cub3d.h
 
+SRCS = main.c 
+		# open.c \
+		# get_next_line.c \
+		# get_next_line_utils.c \
 
 OBJ = $(SRCS:.c=.o)
 
-CFLAGS =  -Wall -Wextra -Werror
+CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g
 
-MLX42FLAGS = -I include -lglfw
+MLX42FLAGS = -lglfw -lm
 
 all: ${NAME}
 
-${NAME}: ${SRCS} $(LIBFT) $(MLX42) $(OBJ)
+${NAME}: $(LIBFT) $(MLX42) $(OBJ)
 	cc $(CFLAGS) $(OBJ) $(LIBFT) $(MLX42) $(MLX42FLAGS) -o $(NAME)
 
 $(LIBFT):
@@ -49,7 +40,6 @@ clean:
 
 fclean: clean
 	make fclean -C libft
-	make clean -C MLX42/build
 	rm -f $(NAME)
 
 re: fclean all
