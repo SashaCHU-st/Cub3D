@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/30 15:52:32 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/09/30 18:48:50 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,29 @@ double get_rgba(int32_t r, int32_t g, int32_t b, int32_t a)
 // // {
 int   check_coord(int x, int y, int **map)
 {
-	printf("map here at x %d and y %d is %d\n", x, y, map[x / 32][y / 32]);
-    return (map[x / 32][y / 32]);
+	printf("map here at x %d and y %d is %d\n", x / 64, y / 64, map[x / 64][y / 64]);
+    return (map[x / 64][y / 64]);
 }	
 // // }
 
 // void get_horizontal(t_cub *data, t_intersection *hori, double angle)
 // {
-// 	double	specific_x = data->play.x * 32 + 32 / 2;
-// 	double	specific_y = data->play.y * 32 + 32 / 2;
+// 	double	specific_x = data->play.x * 64+ 64/ 2;
+// 	double	specific_y = data->play.y * 64+ 64/ 2;
 // 	printf("checking the sin of the %f angle %f\n", angle, sin(angle));
 // 	if (sin(angle) >= 0) //from 0/360 until 181 or facing up
 // 	{
-// 		hori->y = floor(specific_y / 32) * 32 - 1;
+// 		hori->y = floor(specific_y / 32) * 64- 1;
 // 		printf("check y %f\n", hori->y);
 // 		hori->v = -32;
 // 	}
 // 	else
 // 	{
-// 		hori->y = ceil(specific_y / 32) * 32 + 32;
+// 		hori->y = ceil(specific_y / 32) * 64+ 32;
 // 		hori->v = 32;
 // 	}
 // 	hori->x = specific_x + (specific_y - hori->y) / tan(angle);
-// 	hori->h = 32 / tan(angle);
+// 	hori->h = 64/ tan(angle);
 // 	while(!check_coord((int)hori->x, (int)hori->y, data->map))
 // 	{
 // 		hori->x = hori->x + hori->h;
@@ -76,53 +76,46 @@ int   check_coord(int x, int y, int **map)
 // }
 void get_horizontal(t_cub *data, t_intersection *hori, double angle)
 {
-	double	specific_x = data->play.x * 32 + 32 / 2;
-	double	specific_y = data->play.y * 32 + 32 / 2;
-	printf("checking the sin of the %f angle %f\n", angle, sin(angle));
 	if (sin(angle) >= 0) //from 0/360 until 181 or facing up
 	{
-		hori->y = floor(specific_y / 32) * 32 - 1;
-		printf("check y %f\n", hori->y);
-		hori->v = -32;
+		hori->y = floor(data->play.y / 64) * 64 - 1;
+		hori->v = -64;
 	}
 	else
 	{
-		hori->y = ceil(specific_y / 32) * 32 + 32;
-		hori->v = 32;
+		hori->y = floor(data->play.y / 64) * 64 + 64;
+		hori->v = 64;
 	}
-	hori->x = specific_x + (specific_y - hori->y) / tan(angle);
-	hori->h = 32 / tan(angle);
+	hori->x = data->play.x - ((data->play.y - hori->y) / tan(angle));
+	hori->h = -(64 / tan(angle));
 	while(!check_coord((int)hori->x, (int)hori->y, data->map))
 	{
 		hori->x = hori->x + hori->h;
 		hori->y = hori->y + hori->v;
 	}
-	hori->dist = sqrt(pow((specific_x - hori->x), 2) + pow((specific_y - hori->y), 2));
+	hori->dist = sqrt(pow((data->play.x - hori->x), 2) + pow((data->play.y - hori->y), 2));
 }
 
 void	get_vertical(t_cub *data, t_intersection *vert, double angle)
 {
-	double	specific_x = data->play.x * 32 + 32 / 2;
-	double	specific_y = data->play.y * 32 + 32 / 2;
-	
 	if (cos(angle) >= 0) //from 90 until 270 or facing right
 	{
-		vert->x = ceil(specific_x / 32) * 32 + 32;
-		vert->h = 32;
+		vert->x = floor(data->play.x / 64) * 64 + 64;
+		vert->h = 64;
 	}
 	else
 	{
-		vert->x = floor(specific_x / 32) * 32 - 1;
-		vert->h = -32;
+		vert->x = floor(data->play.x / 64) * 64 - 1;
+		vert->h = -64;
 	}
-	vert->y = specific_y - (specific_x - vert->x) / tan(angle);
-	vert->v = 32 * tan(angle);
+	vert->y = data->play.y - ((data->play.x - vert->x) / tan(angle));
+	vert->v = 64 / tan(angle);
 	while(!check_coord((int)vert->x, (int)vert->y, data->map))
 	{
 		vert->x = vert->x + vert->h;
 		vert->y = vert->y + vert->v;
 	}
-	vert->dist = sqrt(pow((specific_x - vert->x), 2) + pow((specific_y - vert->y), 2));
+	vert->dist = sqrt(pow((data->play.x - vert->x), 2) + pow((data->play.y - vert->y), 2));
 }
 
 void	get_collision(t_cub *data, t_wall *wall, double angle) //or a double pointer for wall?
@@ -199,7 +192,7 @@ void ft_draw_map(t_cub *data)
 // 		}
 // 		y = y + 32;
 // 	}
-	// mlx_put_pixel(data->image, (data->play.x * 32) + (32 / 2), (data->play.y * 32) + (32 / 2), COL_WALL);
+	// mlx_put_pixel(data->image, (data->play.x * 32) + (64/ 2), (data->play.y * 32) + (64/ 2), COL_WALL);
 	// printf("check %d and %d and %d\n", param->map[1][4], image->width, image->height);
 	// for (double i = 0; i < image->width; ++i)
 	// {
@@ -225,15 +218,15 @@ void ft_draw_map(t_cub *data)
 // 		mlx_close_window(data->mlx);
 // 	if ((mlx_is_key_down(data->mlx, MLX_KEY_UP) || mlx_is_key_down(data->mlx, MLX_KEY_W)) && data->map[(int)data->play.x][(int)data->play.y - 1] != 1)
 // 	{
-// 		mlx_put_pixel(data->image, (data->play.x * 32) + (32 / 2), (data->play.y * 32) + (32 / 2), COL_BACK);
+// 		mlx_put_pixel(data->image, (data->play.x * 32) + (64/ 2), (data->play.y * 32) + (64/ 2), COL_BACK);
 // 		data->play.y -= 1; //wont work with the angles; use the middle ray to move in accordance
-// 		mlx_put_pixel(data->image, (data->play.x * 32) + (32 / 2), (data->play.y * 32) + (32 / 2), COL_WALL);
+// 		mlx_put_pixel(data->image, (data->play.x * 32) + (64/ 2), (data->play.y * 32) + (64/ 2), COL_WALL);
 // 	}
 // 	if ((mlx_is_key_down(data->mlx, MLX_KEY_DOWN) || mlx_is_key_down(data->mlx, MLX_KEY_S)) && data->map[(int)data->play.x][(int)data->play.y + 1] != 1)
 // 	{
-// 		mlx_put_pixel(data->image, (data->play.x * 32) + (32 / 2), (data->play.y * 32) + (32 / 2), COL_BACK);
+// 		mlx_put_pixel(data->image, (data->play.x * 32) + (64/ 2), (data->play.y * 32) + (64/ 2), COL_BACK);
 // 		data->play.y += 1;
-// 		mlx_put_pixel(data->image, (data->play.x * 32) + (32 / 2), (data->play.y * 32) + (32 / 2), COL_WALL);
+// 		mlx_put_pixel(data->image, (data->play.x * 32) + (64/ 2), (data->play.y * 32) + (64/ 2), COL_WALL);
 // 	}
 	// if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
 	// 	image->instances[0].y += 5;
@@ -261,7 +254,7 @@ int	initialise_mlx(t_cub *data)
 		mlx_terminate(data->mlx);
 		return(EXIT_FAILURE);
 	}
-	if (mlx_image_to_window(data->mlx, data->image, (512 / 2) - (data->image->width / 2), (512 / 2) - (data->image->height / 2)) == -1)
+	if (mlx_image_to_window(data->mlx, data->image, 0, 0) == -1)
 	{
 		mlx_close_window(data->mlx);
 		perror(mlx_strerror(mlx_errno));
@@ -308,16 +301,16 @@ void	set_the_player(t_cub *data, char c)
 	// double	wall_y;
 
 
-	data->play.x = 3;
-	data->play.y = 3;
+	data->play.x = 256;
+	data->play.y = 256;
 	if (c == 'N')
 	{
 		data->play.angle = 90.00;
 		// wall_x = data->play.x;
 		// wall_y = data->play.y * 32;
 		// while (data->map[(int)wall_x][(int)wall_y / 32] != 1)
-		// 	wall_y = wall_y - 32 / 2 * sin(NINETY);
-		// data->play.dir_ray = (data->play.y * 32 + 32 / 2) - wall_y;
+		// 	wall_y = wall_y - 64/ 2 * sin(NINETY);
+		// data->play.dir_ray = (data->play.y * 64+ 64/ 2) - wall_y;
 	}
 	else if (c == 'S')
 	{
@@ -325,34 +318,32 @@ void	set_the_player(t_cub *data, char c)
 		// wall_x = data->play.x;
 		// wall_y = data->play.y * 32;
 		// while (data->map[(int)wall_x][(int)wall_y / 32] != 1)
-		// 	wall_y = wall_y + 32 / 2 * sin(TWOSEVEN);
-		// data->play.dir_ray = (data->play.y * 32 + 32 / 2) + wall_y;
+		// 	wall_y = wall_y + 64/ 2 * sin(TWOSEVEN);
+		// data->play.dir_ray = (data->play.y * 64+ 64/ 2) + wall_y;
 	}
 	else if (c == 'W')
-	{
-		data->play.angle = 360.00;
-		// wall_x = data->play.x * 32;
-		// wall_y = data->play.y;
-		// while (data->map[(int)wall_x / 32][(int)wall_y] != 1)
-		// 	wall_x = wall_x - 32 / 2 * sin(THREESIX);
-		// data->play.dir_ray = (data->play.x * 32 + 32 / 2) - wall_x;
-	}
-	else
 	{
 		data->play.angle = 180.00;
 		// wall_x = data->play.x * 32;
 		// wall_y = data->play.y;
 		// while (data->map[(int)wall_x / 32][(int)wall_y] != 1)
-		// 	wall_x = wall_x + 32 / 2 * M_PI;
-		// data->play.dir_ray = (data->play.x * 32 + 32 / 2) + wall_x;
+		// 	wall_x = wall_x - 64/ 2 * sin(THREESIX);
+		// data->play.dir_ray = (data->play.x * 64+ 64/ 2) - wall_x;
+	}
+	else
+	{
+		data->play.angle = 360.00;
+		// wall_x = data->play.x * 32;
+		// wall_y = data->play.y;
+		// while (data->map[(int)wall_x / 32][(int)wall_y] != 1)
+		// 	wall_x = wall_x + 64/ 2 * M_PI;
+		// data->play.dir_ray = (data->play.x * 64+ 64/ 2) + wall_x;
 	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_cub param;
-  t_textures textures;
-	init(&textures);
 	int i = 0;
 
 	param = (t_cub){0};
@@ -378,7 +369,7 @@ int	main(int argc, char **argv)
 	{
 		if (check_args(argv[1]))
 			return (print_err_int("Error: Please provide a valid *.cub file."));
-		open_close_file(argv, &textures);
+		// open_close_file(argv);
 		if (initialise_mlx(&param))
 			return (print_err_int("Error: Failed to init MLX."));
 		// mlx_loop_hook(param.mlx, ft_randomize, &param);
@@ -386,7 +377,6 @@ int	main(int argc, char **argv)
 		ft_draw_map(&param);
 		mlx_loop(param.mlx);
 		mlx_terminate(param.mlx);
-    free_map(&textures);
 		i = 7;
 		while (i > -1)
 			free(param.map[i--]);
