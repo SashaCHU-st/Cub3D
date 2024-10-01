@@ -6,32 +6,29 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/01 14:37:29 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:51:24 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-void	count_lines(char **argv, t_textures *textures, int fd, char *line)
+#include "get_next_line.h"
+
+void open_close_file(char **argv)
 {
-	int line_count = 0;
-	int map_started = 0;
-	(void)argv;
-	while (line != NULL && textures->found == 6)
+	int fd;
+	char *line;
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
 	{
-		int i = 0;
-		while (line[i] && check_space(line[i]))
-			i++;
-		if (!map_started && (line[i] == '1' || line[i] == '0'))
-			map_started = 1;
-		if (map_started)
-		{
-			if (line[i] != '\0' && line[i] != '\n')
-				line_count++;
-		}
-		free(line);
-		line = NULL;
-		line = get_next_line(fd);
+		printf("ERROR: Could not open the file.\n");
+		return;
 	}
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line);
+		free(line);
+	}
+
 	textures->how_many_lines = line_count;
 	printf("Map lines count -> %d\n", textures->how_many_lines);
 	close(fd);

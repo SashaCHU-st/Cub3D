@@ -6,13 +6,13 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 13:51:09 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/26 13:16:16 by aheinane         ###   ########.fr       */
+/*   Updated: 2023/12/28 12:15:26 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
