@@ -1,0 +1,44 @@
+PARSING
+
+directions:
++ check exact words NO, SO, WE, EA
++ spaces in between
++ some other characters  => then not valid
++ that must starts with ./
++ permissions
++ no characters before NO, SO, WE, EA
++ nothing after the path(only spaces accepted)
++ nothing after ./
++ file png
++ not repeptevive
++ if just only .cub (without anything else)
+- grabige information (smth else)
+
+colors:
++ put in array
++ split into r, g, b
++ check if it is only numbers
++ no spaces in between => mot valid
++ some other characters  => then not valid
++ not more then 255
++ zeros before number
++ if empty space after
+- empty space before?
+
+map:
++ if all directions and colors checked then we can start map, but also cannot be repeated
++ that it has to be last
++ count number of the lines => if there is 2 lines not valid
++ only specific chara (1,0, N or E or S or W chacratter)
++ only one player
++ save it to new array **map
+- if map closed
++ if it is empty in between => not valid
+- check if there is at least one player
+
+arguments
+- if file not exist
+
+
+MAPPING
+
