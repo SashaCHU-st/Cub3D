@@ -6,16 +6,17 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/03 14:59:35 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:08:56 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int get_rgba(int r, int g, int b)
+uint32_t get_rgba(int r, int g, int b)
 {
-    return (r << 24 | g << 16 | b << 8 | 255);
+    return ((r << 24) | (g << 16) | (b << 8) | 255);
 }
+
 
 //char **map;
 // map[0] = {1, 1, 1, 1};
