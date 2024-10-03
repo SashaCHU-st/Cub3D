@@ -140,6 +140,6 @@ void	replacing_nl_with_zero(t_textures *textures);
 void	free_map(t_textures *textures);
 int	checking_map(t_textures *textures, char *line, int number);
 
-int get_rgba(int r, int g, int b);
+uint32_t get_rgba(int r, int g, int b);
 
 #endif
