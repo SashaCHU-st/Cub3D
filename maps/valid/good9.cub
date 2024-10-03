@@ -1,13 +1,13 @@
-   WE                            ./we_wall.png
-NO      ./no_wall.png
+WE                            textures/we_wall.png
+NO      textures/no_wall.png
 
 
 
-SO ./so_wall.png
+SO textures/so_wall.png
 
 F   69, 222, 199
 
-EA ./ea_wall.png
+EA textures/ea_wall.png
 
 
 

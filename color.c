@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/01 11:23:29 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:56:06 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ int	parse_color_values(t_textures *textures,const char *color_string, int *value
 		//printf("to split the color string.\n");
 		return 0;
 	}
-	while (colors[i] != NULL && i < 3)
+	while (colors[i] != NULL)
 	{
+		printf("UUUU %s\n", colors[i]);
 		if (is_valid_number(colors[i]))
 		{
 			values[i] = ft_atoi(colors[i]);
@@ -92,13 +93,17 @@ void	parse_floor_color(const char *color_string, t_textures *textures, bool is_f
 			textures->floor_r = values[0];
 			textures->floor_g = values[1];
 			textures->floor_b = values[2];
-		//	printf("floor color: R = %d, G = %d, B = %d\n", textures->floor_r, textures->floor_g, textures->floor_b);
+			printf("floor color: R = %d, G = %d, B = %d\n", textures->floor_r, textures->floor_g, textures->floor_b);
+			textures->floor = get_rgba(values[0], values[1], values[2]);
+			printf("floor %d", textures->floor);
 		}
 		else
 		{
 			textures->ceiling_r = values[0];
 			textures->ceiling_g = values[1];
 			textures->ceiling_b = values[2];
+			textures->ceiling = (textures->ceiling_r << 16) | (textures->ceiling_g << 8) | textures->ceiling_b;
+			printf("Ceiling COLOR   %d\n", textures->ceiling);
 		//	printf("ceiling color: R = %d, G = %d, B = %d\n", textures->ceiling_r, textures->ceiling_g, textures->ceiling_b);
 		}
 	}
@@ -122,4 +127,5 @@ void	checking_color(t_textures *textures, char *line)
 		//printf("CEILING COLOR: %s\n", textures->ceiling_color);
 		parse_floor_color(textures->ceiling_color, textures, false);
 	}
+	printf("wwwwwww %d\n", textures->floor);
 }

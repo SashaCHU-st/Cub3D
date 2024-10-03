@@ -23,7 +23,7 @@ colors:
 + not more then 255
 + zeros before number
 + if empty space after
-- empty space before?
++ empty space before?
 
 map:
 + if all directions and colors checked then we can start map, but also cannot be repeated
@@ -37,7 +37,7 @@ map:
 - check if there is at least one player
 
 arguments
-- if file not exist
++ if file not exist
 
 
 MAPPING

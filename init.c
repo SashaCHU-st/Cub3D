@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:05:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/30 10:26:51 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/03 09:23:46 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,7 @@ void	init(t_textures *textures)
 	textures->map_index = 0;
 	textures->line = NULL;
 	textures->map = NULL;
+	textures->ceiling = 0;
+	textures->floor = 0;
+	
 }

@@ -16,8 +16,11 @@
 # define HEIGHT 512
 # define COL_WALL 0xffff64d9
 # define COL_BACK 0x9c0164
-# define ANGL_INCREM 60 / WIDTH
+# define ANGL_INCREM 60/ WIDTH
+//# define ANGL_INCREM 60 / WIDTH
 # define CONVERT M_PI / 180
+#define EPSILON 0.0001
+
 
 # define THIRTY 30 * CONVERT
 # define NINETY 90 * CONVERT
@@ -83,6 +86,8 @@ typedef struct s_textures
 	int		player_found;
 	int		map_index;
 	char	**map;
+	int		ceiling;
+	int		floor;
 	t_playa	play;
 } t_textures;
 
@@ -120,19 +125,21 @@ int		ft_isdigit(int c);
 int		check_if_png(char *str);
 void	all_found(t_textures *textures);\
 void	count_lines(char **argv, t_textures *textures, int fd, char *line);
-int		checking_map(t_textures *textures, char *line, int number);
 void	closing(t_textures *textures,char *line, int fd);
 int		map_closed(t_textures *textures);
 int		map_closed(t_textures *textures);
 void	if_new_line_in_middle(t_textures *textures);
 char	*ft_strtrim(char *s1, char *set);
 void	replacing_spaces_with_one(t_textures *textures);
+//void replacing_spaces_with_one_or_two(t_textures *textures);
 int		map_closed(t_textures *textures);
 int		flood_fill(char **map, int rows, int cols, int x, int y);
 void	print_map(t_textures *textures);
 void	*ft_memset(void *b, int c, size_t len);
 void	replacing_nl_with_zero(t_textures *textures);
 void	free_map(t_textures *textures);
+int	checking_map(t_textures *textures, char *line, int number);
 
+int get_rgba(int r, int g, int b);
 
 #endif
