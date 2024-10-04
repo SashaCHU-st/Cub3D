@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/03 10:15:29 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:13:55 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,10 @@ int	checking_map(t_textures *textures, char *line, int number)
 		{
 			if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
 			{
-				textures->play.x = i*64;
-				textures->play.y = number*64;
+				textures->play.x = i*32;
+				textures->play.y = number*32;
 				printf("I =>%d\n", i *64);
 				printf("number =>%d\n", number*64);
-				printf("5 Before first function call, floor_r: %d, floor_g: %d, floor_b: %d, floor: %d\n", textures->floor_r, textures->floor_g, textures->floor_b, textures->floor);
-
 				textures->player_found++;
 				if (textures->player_found > 1 || textures->player_found == 0)
 					error_fun(textures);

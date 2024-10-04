@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/03 15:08:56 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/04 14:47:11 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 uint32_t get_rgba(int r, int g, int b)
 {
-    return ((r << 24) | (g << 16) | (b << 8) | 255);
+    return ((uint32_t)r << 24) | ((uint32_t)g << 16) | ((uint32_t)b << 8) | 255;
 }
 
 
@@ -75,48 +75,50 @@ int   check_coord(int x, int y, int **map)
 // 	}
 // 	hori->dist = sqrt(pow((specific_x - hori->x), 2) + pow((specific_y - hori->y), 2));
 // }
-void get_horizontal(t_cub *data, t_intersection *hori, double angle)
+void get_horizontal(t_cub *data, t_intersection *hori, double angle,t_textures *texture)
 {
+	data->texture = texture;
 	if (sin(angle) >= 0) //from 0/360 until 181 or facing up
 	{
-		hori->y = floor(data->play.y / 64) * 64 - 1;
+		hori->y = floor(data->texture->play.y / 64) * 64 - 1;
 		hori->v = -64;
 	}
 	else
 	{
-		hori->y = floor(data->play.y / 64) * 64 + 64;
+		hori->y = floor(data->texture->play.y / 64) * 64 + 64;
 		hori->v = 64;
 	}
-	hori->x = data->play.x - ((data->play.y - hori->y) / tan(angle));
+	hori->x = data->play.x - ((data->texture->play.y - hori->y) / tan(angle));///!!!!! cannot be here 0, so no angle 90 or 0
 	hori->h = -(64 / tan(angle));
 	while(!check_coord((int)hori->x, (int)hori->y, data->map))
 	{
 		hori->x = hori->x + hori->h;
 		hori->y = hori->y + hori->v;
 	}
-	hori->dist = sqrt(pow((data->play.x - hori->x), 2) + pow((data->play.y - hori->y), 2));
+	hori->dist = sqrt(pow((data->play.x - hori->x), 2) + pow((data->texture->play.y - hori->y), 2));
 }
 
-void	get_vertical(t_cub *data, t_intersection *vert, double angle)
+void	get_vertical(t_cub *data, t_intersection *vert, double angle, t_textures *texture)
 {
+	data->texture = texture;
 	if (cos(angle) >= 0) //from 90 until 270 or facing right
 	{
-		vert->x = floor(data->play.x / 64) * 64 + 64;
+		vert->x = floor(data->texture->play.x / 64) * 64 + 64;
 		vert->h = 64;
 	}
 	else
 	{
-		vert->x = floor(data->play.x / 64) * 64 - 1;
+		vert->x = floor(data->texture->play.x / 64) * 64 - 1;
 		vert->h = -64;
 	}
-	vert->y = data->play.y - ((data->play.x - vert->x) / tan(angle));
+	vert->y = data->texture->play.y - ((data->texture->play.x - vert->x) / tan(angle));///!!!!! cannot be here 0
 	vert->v = 64 / tan(angle);
 	while(!check_coord((int)vert->x, (int)vert->y, data->map))
 	{
 		vert->x = vert->x + vert->h;
 		vert->y = vert->y + vert->v;
 	}
-	vert->dist = sqrt(pow((data->play.x - vert->x), 2) + pow((data->play.y - vert->y), 2));
+	vert->dist = sqrt(pow((data->texture->play.x - vert->x), 2) + pow((data->texture->play.y - vert->y), 2));
 }
 
 // void	get_collision(t_cub *data, t_wall *wall, double angle) //or a double pointer for wall?
@@ -133,18 +135,19 @@ void	get_vertical(t_cub *data, t_intersection *vert, double angle)
 // 		wall->distance = vert.dist;
 // }
 
-void get_collision(t_cub *data, t_wall *wall, double angle) //or a double pointer for wall?
+void get_collision(t_cub *data, t_wall *wall, double angle, t_textures *texture) //or a double pointer for wall?
 {
 	t_intersection hori;
 	t_intersection vert;
 	
+	data->texture = texture;
 	//FILE *file = fopen("output.txt", "a");
 	//FILE *file1 = fopen("output1.txt", "a");
 	// FILE *file2 = fopen("output2.txt", "a");
 	// FILE *file3 = fopen("output3.txt", "a");
-	get_horizontal(data, &hori, angle);
+	get_horizontal(data, &hori, angle, texture);
 	//printf("hori coordinates are %f and %f\n", hori.x, hori.y);
-	get_vertical(data, &vert, angle);
+	get_vertical(data, &vert, angle, texture);
 	///printf( "hori coordinates are %f and %f\n", hori.x, hori.y);
 	//fprintf(file1, "vert coordinates are %f and %f\n", vert.x, vert.y);
 	// printf("ver dist are %f\n",vert.dist);
@@ -174,21 +177,18 @@ void ft_draw_map(t_cub *data, t_textures *texture)
 	data->texture = texture;
 	FILE *file = fopen("output.txt", "a");
 	FILE *file2 = fopen("output2.txt", "a");
-		FILE *file3 = fopen("output3.txt", "a");
+	FILE *file3 = fopen("output3.txt", "a");
 	FILE *file4 = fopen("output4.txt", "a");
 	FILE *file5 = fopen("output5.txt", "a");
 
 
-printf(" FLOOR 1 %d\n",data->texture->floor);
 	min_angl = (data->play.angle - 60 / 2);
 	max_angl = (data->play.angle + 60 / 2);
-	printf("Min angle %f\n", min_angl);
-	printf("Max agnle %f\n", max_angl);
 	while (i < WIDTH)
 	{
 		angle = (min_angl + i * ANGL_INCREM) * CONVERT; // get the cur angle until you go through all of them (depends on the width)
 		//printf("cur angle is %f\n", angle);
-		get_collision(data, &cur, angle); //get the closest wall grid coordinates dpeending on which way the player is facing
+		get_collision(data, &cur, angle, texture); //get the closest wall grid coordinates dpeending on which way the player is facing
 		//distance = cur.distance / cos(angle - data->play.angle); //get the distance to the wall depending on the curangle
 		//distance = cur.distance / cos (angle - (data->play.angle * CONVERT)); Milica
 		cos_diff = cos(angle - (data->play.angle * CONVERT));
@@ -198,27 +198,35 @@ printf(" FLOOR 1 %d\n",data->texture->floor);
 		if (distance > 0) 
 			cur.height = HEIGHT / distance; //correction to get the fishbowl effect
 		else
-			cur.height = 0;
-		// /cur.height = HEIGHT / (distance * cos(angle)); //correction to get the fishbowl effect
+			cur.height = fabs(HEIGHT / distance);/// or 0?
+		//cur.height = HEIGHT / (distance * cos(angle)); //correction to get the fishbowl effect
 		fprintf(file5, "CUR HEIGHT %d: %d\n", i, (int)cur.height);
 		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
 		cur.end = HEIGHT / 2 + cur.height / 2; // get where the wall ends
-		if (cur.start < 0) cur.start = 0;
-		if (cur.end >= HEIGHT) cur.end = HEIGHT - 1;
+		if (cur.start < 0)
+			cur.start = 0;
+		if (cur.end >= HEIGHT)
+			cur.end = HEIGHT - 1;
 		fprintf(file3, " start %d: %d\n", i, (int)cur.start);
 		fprintf(file4, "end  %d: %d\n", i, (int)cur.end);
 		counter = 0; //technically a y or a pixel of the slice
 		while (counter < HEIGHT)
 		{
-			if (counter >= (int) cur.start && counter <= (int)cur.end)
+			if (counter >= (int) cur.start && counter <= (int)cur.end &&
+					i > 128 && i < 384 )// in th midddle hve to be the length of the wall*64
 			{
 				fprintf(file,"I => %d, y =>%d\n", i, counter);
 				mlx_put_pixel(data->image, i, counter, COL_WALL);
 			}
-			else
+			else if( counter <=cur.start)
 			{
 				fprintf(file2,"I => %d, y =>%d\n", i, counter);
-				mlx_put_pixel(data->image, i, counter, COL_BACK);
+				mlx_put_pixel(data->image, i, counter, data->texture->floor);
+			}
+			else if(counter >= cur.end)
+			{
+				fprintf(file2,"I => %d, y =>%d\n", i, counter);
+				mlx_put_pixel(data->image, i, counter, data->texture->ceiling);
 			}
 			counter++;
 		}
@@ -318,7 +326,7 @@ printf(" FLOOR 1 %d\n",data->texture->floor);
 
 int	initialise_mlx(t_cub *data)
 {
-	if (!(data->mlx = mlx_init(512, 512, "MLX42", true)))
+	if (!(data->mlx = mlx_init(512, 512, "CUB3D", true)))
 	{
 		perror(mlx_strerror(mlx_errno));
 		mlx_terminate(data->mlx);
@@ -379,8 +387,25 @@ void	set_the_player(t_cub *data, char c, t_textures *texture)
 
 	data->texture = texture;
 
-	data->play.x = 100;
-	data->play.y = 1;
+	// data->play.x = 256;
+	// data->play.y = 70;
+
+
+
+	// printf("X1 =>%f\n", data->play.x);
+	// printf("Y1 =>%f\n", data->play.y);
+	
+	printf("X =>%f\n", data->texture->play.x);
+	printf("Y =>%f\n", data->texture->play.y);
+	
+	//////GOOOD for SO && NO
+	data->texture->play.x = 100;
+	data->texture->play.y = 10;
+
+	//////GOOOD for WE && EA
+	data->texture->play.x = 256;
+	data->texture->play.y = 100;
+	
 	if (c == 'N')
 	{
 		data->play.angle = 90.00;
@@ -453,8 +478,8 @@ int	main(int argc, char **argv)
 		if (initialise_mlx(&param))
 			return (print_err_int("Error: Failed to init MLX."));
 		// mlx_loop_hook(param.mlx, ft_randomize, &param);
+		
 		// mlx_key_hook(param.mlx, &ft_hook, &param);
-		printf(" FLOOR 2 %d\n", textures.floor);
 		ft_draw_map(&param, &textures);
 		mlx_loop(param.mlx);
 		mlx_terminate(param.mlx);

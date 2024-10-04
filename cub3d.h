@@ -88,6 +88,7 @@ typedef struct s_textures
 	char	**map;
 	int		ceiling;
 	int		floor;
+	int		length;
 	t_playa	play;
 } t_textures;
 
@@ -141,5 +142,4 @@ void	free_map(t_textures *textures);
 int	checking_map(t_textures *textures, char *line, int number);
 
 uint32_t get_rgba(int r, int g, int b);
-
 #endif

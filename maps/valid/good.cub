@@ -3,15 +3,15 @@ SO textures/so_wall.png
 WE textures/we_wall.png
 EA textures/ea_wall.png
 
-F 240, 192, 192
-C 2,30,0
+F 240, 192, 100
+C 204,255,229
 
 
 11111111
 10000001
 10000001
-11111111
 1000N001
+10000001
 10000001
 10000001
 11111111

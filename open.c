@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/03 10:14:41 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:26:04 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,32 +146,23 @@ void open_close_file(char **argv, t_textures *textures)
 	}
 	for(int i = 0; i < textures->how_many_lines; i++)
 		textures->map[i] = NULL;
-	printf("1 Before first function call, floor_r: %d, floor_g: %d, floor_b: %d, floor: %d\n", textures->floor_r, textures->floor_g, textures->floor_b, textures->floor);
-
 	while (textures->line  != NULL)
 	{
 		if (!map_started)
 		{
-			printf("2 Before first function call, floor_r: %d, floor_g: %d, floor_b: %d, floor: %d\n", textures->floor_r, textures->floor_g, textures->floor_b, textures->floor);
-
 			int i = 0;
 			while (textures->line[i] && (textures->line[i] == ' ' || textures->line[i] == '\t'))
 				i++;
 			if (textures->line[i] == '1' || textures->line[i] == '0') 
 				map_started = 1;
 		}
-		
 		if (map_started)
 		{
-			printf("3 Before first function call, floor_r: %d, floor_g: %d, floor_b: %d, floor: %d\n", textures->floor_r, textures->floor_g, textures->floor_b, textures->floor);
-
 			if (*textures->line =='\n')
 				closing(textures,textures->line, fd);
 			if (*textures->line != '\n')
 			{
 				textures->map_valid = checking_map(textures, textures->line, textures->map_index);
-				printf("4Before first function call, floor_r: %d, floor_g: %d, floor_b: %d, floor: %d\n", textures->floor_r, textures->floor_g, textures->floor_b, textures->floor);
-
 				if (!textures->map_valid)
 					closing(textures,textures->line, fd);
 				if (textures->map_index >= textures->how_many_lines)
