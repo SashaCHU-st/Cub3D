@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/08 20:30:31 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/08 20:36:05 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void get_horizontal(t_cub *data, t_intersection *hori, double angle)
 		hori->h = -(64 / tan(angle));
 	}
 	printf("hori->x is %f\n", hori->x);
-	while(hori->x < 512 && hori->y < 512 && !check_coord((int)hori->x, (int)hori->y, data))
+	while(hori->x >= 0 && hori->x < 512 && hori->y >= 0 && hori->y < 512 && !check_coord((int)hori->x, (int)hori->y, data))
 	{
 		hori->x = hori->x + hori->h;
 		hori->y = hori->y + hori->v;
@@ -92,7 +92,7 @@ void	get_vertical(t_cub *data, t_intersection *vert, double angle)
 		vert->y = data->texture.play.y + ((data->texture.play.x - vert->x) / tan(angle));///!!!!! cannot be here 0
 		vert->v = 64 / tan(angle);
 	}
-	while(!check_coord((int)vert->x, (int)vert->y, data))
+	while(vert->x >= 0 && vert->x < 512 && vert->y >= 0 && vert->y < 512 && !check_coord((int)vert->x, (int)vert->y, data))
 	{
 		vert->x = vert->x + vert->h;
 		vert->y = vert->y + vert->v;
