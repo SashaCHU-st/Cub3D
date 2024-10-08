@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 
 LIBFT = ./libft/libft.a
 
@@ -28,8 +28,7 @@ SRCS = main.c \
 
 OBJ = $(SRCS:.c=.o)
 
-CFLAGS =  -Wall -Wextra -Werror 
-#-fsanitize=address -g
+CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g
 
 MLX42FLAGS = -lglfw -lm
 

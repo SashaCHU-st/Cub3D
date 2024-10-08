@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/07 09:20:06 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:10:14 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	all_found(t_textures *textures)
 int	checking_map(t_textures *textures, char *line, int number)
 {
 	int i = 0;
-	(void)textures;
-	(void)number;
+	// (void)textures;
+	// (void)number;
 	while (line[i])
 	{
 		if (line[i] != '1' && line[i] != '0' && line[i] != ' ' && line[i] != '\n' && line[i] != '\t' )//&& line[i] != '\t'?????
@@ -39,17 +39,29 @@ int	checking_map(t_textures *textures, char *line, int number)
 			if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
 			{
 				if(line[i] == 'N')
+				{
 					textures->sides = 'N';
+					textures->play.angle = 90;
+				}
 				if(line[i] == 'S')
+				{
 					textures->sides = 'S';
+					textures->play.angle = 270;
+				}
 				if(line[i] == 'W')
+				{
 					textures->sides = 'W';
+					textures->play.angle = 180;
+				}
 				if(line[i] == 'E')
+				{
 					textures->sides = 'E';
-				textures->play.x = i*32;
-				textures->play.y = number*32;
-				printf("I =>%d\n", i *64);
-				printf("number =>%d\n", number*64);
+					textures->play.angle = 360;
+				}
+				textures->play.x = i * 64 + 32; //can this be > width/height?
+				textures->play.y = number * 64 + 32;
+				printf("I(%d) =>%d\n", i, i * 64 + 32);
+				printf("number(%d) =>%d\n", number, number * 64 + 32);
 				textures->player_found++;
 				if (textures->player_found > 1 || textures->player_found == 0)
 					error_fun(textures);

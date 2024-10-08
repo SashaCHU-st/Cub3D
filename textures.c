@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:11:07 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/01 11:24:57 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:04:37 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void we(t_textures *textures, char *line)
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
-	printf("1\n");
+	// printf("1\n");
 	if (ft_strncmp(&line[i], "WE", 2) == 0 && check_space(line[i + 2]))
 	{
-		printf("2\n");
+		// printf("2\n");
 		i += 2;
 		textures->we = ft_strdup(avoid_whitespace(line + i));
 		if(!textures->we)
@@ -147,7 +147,7 @@ void no(t_textures *textures, char *line)
 	{
 		i += 2;
 		textures->no = ft_strdup(avoid_whitespace(line + i));
-		printf("%s\n", textures->no);
+		// printf("%s\n", textures->no);
 		if(!textures->no)
 			error_fun(textures);
 		permission = open(textures->no, O_RDONLY );

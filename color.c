@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/04 08:57:36 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:04:51 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	parse_color_values(t_textures *textures,const char *color_string, int *value
 	}
 	while (colors[i] != NULL)
 	{
-		printf("UUUU %s\n", colors[i]);
+		// printf("UUUU %s\n", colors[i]);
 		if (is_valid_number(colors[i]))
 		{
 			values[i] = ft_atoi(colors[i]);
@@ -93,9 +93,9 @@ void	parse_floor_color(const char *color_string, t_textures *textures, bool is_f
 			textures->floor_r = values[0];
 			textures->floor_g = values[1];
 			textures->floor_b = values[2];
-			printf("floor color: R = %d, G = %d, B = %d\n", textures->floor_r, textures->floor_g, textures->floor_b);
+			// printf("floor color: R = %d, G = %d, B = %d\n", textures->floor_r, textures->floor_g, textures->floor_b);
 			textures->floor = get_rgba(values[0], values[1], values[2]);
-			printf("COLORRRRR %u\n", textures->floor);
+			// printf("COLORRRRR %u\n", textures->floor);
 
 		}
 		else
@@ -104,9 +104,9 @@ void	parse_floor_color(const char *color_string, t_textures *textures, bool is_f
 			textures->ceiling_g = values[1];
 			textures->ceiling_b = values[2];
 			textures->ceiling = (textures->ceiling_r << 16) | (textures->ceiling_g << 8) | textures->ceiling_b;
-			printf("Ceiling COLOR   %d\n", textures->ceiling);
+			// printf("Ceiling COLOR   %d\n", textures->ceiling);
 			textures->ceiling = get_rgba(values[0], values[1], values[2]);
-			printf("CCEILING %u\n", textures->ceiling);
+			// printf("CCEILING %u\n", textures->ceiling);
 		}
 	}
 	else
@@ -129,5 +129,5 @@ void	checking_color(t_textures *textures, char *line)
 		//printf("CEILING COLOR: %s\n", textures->ceiling_color);
 		parse_floor_color(textures->ceiling_color, textures, false);
 	}
-	printf("wwwwwww %d\n", textures->floor);
+	// printf("wwwwwww %d\n", textures->floor);
 }

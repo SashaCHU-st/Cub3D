@@ -8,7 +8,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <math.h>
-#include "get_next_line.h"
+# include "get_next_line.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
 
@@ -16,10 +16,9 @@
 # define HEIGHT 512
 # define COL_WALL 0xffff64d9
 # define COL_BACK 0x9c0164
-# define ANGL_INCREM 60/ WIDTH
-//# define ANGL_INCREM 60 / WIDTH
+# define ANGL_INCREM 60 / WIDTH
 # define CONVERT M_PI / 180
-#define EPSILON 0.0001
+# define EPSILON 0.0001
 
 
 # define THIRTY 30 * CONVERT
@@ -97,10 +96,7 @@ typedef struct s_cub
 {	
 	mlx_t   *mlx;
     mlx_image_t *image;
-	int 	**map;
-	size_t size;
-    t_playa play;
-	t_textures *texture;
+	t_textures texture;
 } t_cub;
 // void open_close_file(char **argv);
 

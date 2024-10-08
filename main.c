@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/08 14:03:27 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/08 20:30:31 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,181 +17,160 @@ uint32_t get_rgba(int r, int g, int b)
     return ((uint32_t)r << 24) | ((uint32_t)g << 16) | ((uint32_t)b << 8) | 255;
 }
 
-
-//char **map;
-// map[0] = {1, 1, 1, 1};
-// map[1] = {1, 0, 0, 1};
-// map[2] = {1, 0, 0, 1};
-// map[4] = {1, 1, 1, 1};
-
-// void	draw_sqr(double x, double y, double color, t_cub *data)
-// {
-// 	double max_x = x + 32;
-// 	double max_y = y + 32;
-// 	double	start_x = x;
-
-// 	while (y < max_y - 1)
-// 	{
-// 		x = start_x;
-// 		while (x < max_x - 1)
-// 		{
-// 			mlx_put_pixel(data->image, x, y, color);
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
-// // void ft_start(t_cub *data);
-// // {
-int   check_coord(int x, int y, int **map)
+int   check_coord(int x, int y, t_cub *data)
 {
-//	printf("map here at x %d and y %d is %d\n", x / 64, y / 64, map[x / 64][y / 64]);
-    return (map[x / 64][y / 64]);
+	printf("map here at x %d and y %d\n", x / 64, y / 64);
+	printf("map space is %c\n",data->texture.map[y / 64][x / 64]);
+    if (data->texture.map[y / 64][x / 64] == '1')
+	{
+		printf("wall found at %d and %d\n", x / 64, y / 64);
+		return (1);
+	}
+	else
+	{
+		printf("no wall\n");
+	 	return (0);
+	}
 }	
-// // }
 
-// void get_horizontal(t_cub *data, t_intersection *hori, double angle)
-// {
-// 	double	specific_x = data->play.x * 64+ 64/ 2;
-// 	double	specific_y = data->play.y * 64+ 64/ 2;
-// 	printf("checking the sin of the %f angle %f\n", angle, sin(angle));
-// 	if (sin(angle) >= 0) //from 0/360 until 181 or facing up
-// 	{
-// 		hori->y = floor(specific_y / 32) * 64- 1;
-// 		printf("check y %f\n", hori->y);
-// 		hori->v = -32;
-// 	}
-// 	else
-// 	{
-// 		hori->y = ceil(specific_y / 32) * 64+ 32;
-// 		hori->v = 32;
-// 	}
-// 	hori->x = specific_x + (specific_y - hori->y) / tan(angle);
-// 	hori->h = 64/ tan(angle);
-// 	while(!check_coord((int)hori->x, (int)hori->y, data->map))
-// 	{
-// 		hori->x = hori->x + hori->h;
-// 		hori->y = hori->y + hori->v;
-// 	}
-// 	hori->dist = sqrt(pow((specific_x - hori->x), 2) + pow((specific_y - hori->y), 2));
-// }
-void get_horizontal(t_cub *data, t_intersection *hori, double angle,t_textures *texture)
-{
-	data->texture = texture;
+void get_horizontal(t_cub *data, t_intersection *hori, double angle)
+{	
+	double tangens;
+
+	tangens = tan(angle); //0/360/180 == 0; 90/180 == infinity
+	printf("tangens of the angle is %f\n", tangens);
 	if (sin(angle) >= 0) //from 0/360 until 181 or facing up
 	{
-		hori->y = floor(data->texture->play.y / 64) * 64 - 1;
+		hori->y = floor(data->texture.play.y / 64) * 64 - 1;
 		hori->v = -64;
 	}
 	else
 	{
-		hori->y = floor(data->texture->play.y / 64) * 64 + 64;
+		hori->y = floor(data->texture.play.y / 64) * 64 + 64;
 		hori->v = 64;
 	}
-	hori->x = data->play.x - ((data->texture->play.y - hori->y) / tan(angle));///!!!!! cannot be here 0, so no angle 90 or 0
-	hori->h = -(64 / tan(angle));
-	while(!check_coord((int)hori->x, (int)hori->y, data->map))
+	printf("hori->y is %f\n", hori->y);
+	if (cos(angle) >= 0)
+	{
+		hori->x = data->texture.play.x + ((data->texture.play.y - hori->y) / tan(angle));///!!!!! cannot be here 0, so no angle 90 or 0
+		hori->h = 64 / tan(angle);
+	}
+	else
+	{
+		hori->x = data->texture.play.x - ((data->texture.play.y - hori->y) / tan(angle));///!!!!! cannot be here 0, so no angle 90 or 0
+		hori->h = -(64 / tan(angle));
+	}
+	printf("hori->x is %f\n", hori->x);
+	while(hori->x < 512 && hori->y < 512 && !check_coord((int)hori->x, (int)hori->y, data))
 	{
 		hori->x = hori->x + hori->h;
 		hori->y = hori->y + hori->v;
 	}
-	hori->dist = sqrt(pow((data->play.x - hori->x), 2) + pow((data->texture->play.y - hori->y), 2));
+	printf("hori->x and y are %f and %f\n", hori->x, hori->y);
+	hori->dist = sqrt(pow((data->texture.play.x - hori->x), 2) + pow((data->texture.play.y - hori->y), 2));
 }
 
-void	get_vertical(t_cub *data, t_intersection *vert, double angle, t_textures *texture)
+void	get_vertical(t_cub *data, t_intersection *vert, double angle)
 {
-	data->texture = texture;
 	if (cos(angle) >= 0) //from 90 until 270 or facing right
 	{
-		vert->x = floor(data->texture->play.x / 64) * 64 + 64;
+		vert->x = floor(data->texture.play.x / 64) * 64 + 64;
 		vert->h = 64;
 	}
 	else
 	{
-		vert->x = floor(data->texture->play.x / 64) * 64 - 1;
+		vert->x = floor(data->texture.play.x / 64) * 64 - 1;
 		vert->h = -64;
 	}
-	vert->y = data->texture->play.y - ((data->texture->play.x - vert->x) / tan(angle));///!!!!! cannot be here 0
-	vert->v = 64 / tan(angle);
-	while(!check_coord((int)vert->x, (int)vert->y, data->map))
+	if (sin(angle) >= 0)
+	{
+		vert->y = data->texture.play.y - ((data->texture.play.x - vert->x) / tan(angle));///!!!!! cannot be here 0
+		vert->v = -(64 / tan(angle));
+	}
+	else
+	{
+		vert->y = data->texture.play.y + ((data->texture.play.x - vert->x) / tan(angle));///!!!!! cannot be here 0
+		vert->v = 64 / tan(angle);
+	}
+	while(!check_coord((int)vert->x, (int)vert->y, data))
 	{
 		vert->x = vert->x + vert->h;
 		vert->y = vert->y + vert->v;
 	}
-	vert->dist = sqrt(pow((data->texture->play.x - vert->x), 2) + pow((data->texture->play.y - vert->y), 2));
+	vert->dist = sqrt(pow((data->texture.play.x - vert->x), 2) + pow((data->texture.play.y - vert->y), 2));
 }
 
-// void	get_collision(t_cub *data, t_wall *wall, double angle) //or a double pointer for wall?
-// {
-// 	t_intersection hori;
-// 	t_intersection vert;
-
-// 	get_horizontal(data, &hori, angle);
-// 	printf("hori coordinates are %f and %f\n", hori.x, hori.y);
-// 	get_vertical(data, &vert, angle);
-// 	if (vert.dist > hori.dist)
-// 		wall->distance = hori.dist;
-// 	else
-// 		wall->distance = vert.dist;
-// }
-
-void get_collision(t_cub *data, t_wall *wall, double angle, t_textures *texture) //or a double pointer for wall?
+void get_collision(t_cub *data, t_wall *wall, double angle) //or a double pointer for wall?
 {
 	t_intersection hori;
 	t_intersection vert;
-	
-	data->texture = texture;
+
+	vert = (t_intersection){0};
+	hori = (t_intersection){0};
 	//FILE *file = fopen("output.txt", "a");
 	//FILE *file1 = fopen("output1.txt", "a");
 	// FILE *file2 = fopen("output2.txt", "a");
 	// FILE *file3 = fopen("output3.txt", "a");
-	get_horizontal(data, &hori, angle, texture);
+	if (angle != 0 || angle != M_PI || angle != 2 * M_PI)
+		get_horizontal(data, &hori, angle);
 	//printf("hori coordinates are %f and %f\n", hori.x, hori.y);
-	get_vertical(data, &vert, angle, texture);
-	///printf( "hori coordinates are %f and %f\n", hori.x, hori.y);
+	if (angle != 3 * M_PI / 2 || angle != M_PI / 2)
+		get_vertical(data, &vert, angle);
+	//printf( "hori coordinates are %f and %f\n", hori.x, hori.y);
 	//fprintf(file1, "vert coordinates are %f and %f\n", vert.x, vert.y);
-	// printf("ver dist are %f\n",vert.dist);
-	// printf("hor dist are %f\n",hori.dist);
+	printf("ver dist is %f\n",vert.dist);
+	printf("hor dist is %f\n",hori.dist);
 	// fprintf(file2, "ver dist are %f\n",vert.dist);
 	// fprintf(file3, "hor dist are %f\n",hori.dist);
-	if (vert.dist > hori.dist)
+	if (vert.dist == 0 || (hori.dist != 0 && vert.dist > hori.dist))
 		wall->distance = hori.dist;
 	else
 		wall->distance = vert.dist;
 //	fclose(file);
 }
 
+double	get_angle(double angle, int i)
+{
+	double	min;
+	double	cur;
 
+	if (angle > 330)
+	{
+		min = 30 - (360 - angle);
+	}
+	else
+		min = angle - 60 / 2;
+	cur = min + i * ANGL_INCREM;
+	if (cur > 360)
+		cur = cur - 360;
+	printf("angle atm is %f\n", cur);
+	return (cur * CONVERT);
+}
 
-void ft_draw_map(t_cub *data, t_textures *texture)
+void ft_draw_map(t_cub *data)
 {
 // 	int	c = 0;
-	double	min_angl;
-	double	max_angl;
 	double	distance;
 	double cos_diff;
 	double	angle;
 	t_wall cur;
-	int i = 0;
-	int counter;
-	data->texture = texture;
+	int px_x = 0;
+	int px_y;
 	FILE *file = fopen("output.txt", "a");
 	FILE *file2 = fopen("output2.txt", "a");
 	FILE *file3 = fopen("output3.txt", "a");
 	FILE *file4 = fopen("output4.txt", "a");
 	FILE *file5 = fopen("output5.txt", "a");
-
-
-	min_angl = (data->play.angle - 60 / 2);
-	max_angl = (data->play.angle + 60 / 2);
-	while (i < WIDTH)
+	printf("entered ft_draw_map\n");
+	printf("checking data %d, %f, %c\n", data->texture.found, data->texture.play.angle, data->texture.map[2][5]);
+	while (px_x < WIDTH)
 	{
-		angle = (min_angl + i * ANGL_INCREM) * CONVERT; // get the cur angle until you go through all of them (depends on the width)
-		//printf("cur angle is %f\n", angle);
-		get_collision(data, &cur, angle, texture); //get the closest wall grid coordinates dpeending on which way the player is facing
+		angle = get_angle(data->texture.play.angle, px_x); // get the cur angle until you go through all of them (depends on the width)
+		printf("cur angle is %f\n", angle); //check if it being 0 creates issues
+		get_collision(data, &cur, angle); //get the closest wall grid coordinates dpeending on which way the player is facing
 		//distance = cur.distance / cos(angle - data->play.angle); //get the distance to the wall depending on the curangle
 		//distance = cur.distance / cos (angle - (data->play.angle * CONVERT)); Milica
-		cos_diff = cos(angle - (data->play.angle * CONVERT));
+		cos_diff = cos(angle - (data->texture.play.angle * CONVERT));
 		if (fabs(cos_diff) < EPSILON)
 			cos_diff = EPSILON;
 		//double distance_projected =64/distance*277;/// projecting as not fish eye
@@ -201,36 +180,36 @@ void ft_draw_map(t_cub *data, t_textures *texture)
 		else
 			cur.height = fabs(HEIGHT / distance);/// or 0?
 		//cur.height = HEIGHT / (distance * cos(angle)); //correction to get the fishbowl effect
-		fprintf(file5, "CUR HEIGHT %d: %d\n", i, (int)cur.height);
+		fprintf(file5, "CUR HEIGHT %d: %d\n", px_x, (int)cur.height);
 		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
 		cur.end = HEIGHT / 2 + cur.height / 2; // get where the wall ends
 		// if (cur.start < 0)
 		// 	cur.start = 0;
 		// if (cur.end >= HEIGHT)
 		// 	cur.end = HEIGHT - 1;
-		fprintf(file3, " start %d: %d\n", i, (int)cur.start);
-		fprintf(file4, "end  %d: %d\n", i, (int)cur.end);
-		counter = 0; //technically a y or a pixel of the slice
-		while (counter < HEIGHT)
+		fprintf(file3, " start %d: %d\n", px_x, (int)cur.start);
+		fprintf(file4, "end  %d: %d\n", px_x, (int)cur.end);
+		px_y = 0; //technically a y or a pixel of the slice
+		while (px_y < HEIGHT)
 		{
-			if (counter >= (int) cur.start && counter <= (int)cur.end)// in th midddle hve to be the length of the wall*64
+			if (px_y >= (int) cur.start && px_y <= (int)cur.end)// in th midddle hve to be the length of the wall*64
 			{
-				fprintf(file,"I => %d, y =>%d\n", i, counter);
-				mlx_put_pixel(data->image, i, counter, COL_WALL);
+				fprintf(file,"x => %d, y =>%d\n", px_x, px_y);
+				mlx_put_pixel(data->image, px_x, px_y, COL_WALL);
 			}
-			else if( counter <=cur.start)
+			else if(px_y <=cur.start)
 			{
-				fprintf(file2,"I => %d, y =>%d\n", i, counter);
-				mlx_put_pixel(data->image, i, counter, data->texture->floor);
+				fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
+				mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
 			}
-			else if(counter >= cur.end)
+			else if(px_y >= cur.end)
 			{
-				fprintf(file2,"I => %d, y =>%d\n", i, counter);
-				mlx_put_pixel(data->image, i, counter, data->texture->ceiling);
+				fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
+				mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
 			}
-			counter++;
+			px_y++;
 		}
-		i++;
+		px_x++;
 	}
 	fclose(file2);
 	fclose(file);
@@ -326,7 +305,7 @@ void ft_draw_map(t_cub *data, t_textures *texture)
 
 int	initialise_mlx(t_cub *data)
 {
-	if (!(data->mlx = mlx_init(512, 512, "CUB3D", true)))
+	if (!(data->mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true)))
 	{
 		perror(mlx_strerror(mlx_errno));
 		mlx_terminate(data->mlx);
@@ -355,140 +334,72 @@ int	print_err_int(char *str)
 	return (EXIT_FAILURE);
 }
 
-int *set_map(int i, int *map)
-{
-	int j = 0;
+// int *set_map(int i, int *map)
+// {
+// 	int j = 0;
 
-	if (i == 0 || i == 7)
-	{
-		while (j < 8)
-			map[j++] = 1;
-	}
-	else
-	{
-		while(j < 8)
-		{
-			if (j == 0 || j == 7)
-				map[j] = 1;
-			else
-				map[j] = 0;
-			j++;
-		}
-	}
+// 	if (i == 0 || i == 7)
+// 	{
+// 		while (j < 8)
+// 			map[j++] = 1;
+// 	}
+// 	else
+// 	{
+// 		while(j < 8)
+// 		{
+// 			if (j == 0 || j == 7)
+// 				map[j] = 1;
+// 			else
+// 				map[j] = 0;
+// 			j++;
+// 		}
+// 	}
 
-	return (map);
-}
+// 	return (map);
+// }
 
-
-void	set_the_player(t_cub *data, t_textures *texture)
-{
-	// double	wall_x;
-	// double	wall_y;
-
-	data->texture = texture;
-
-	// data->play.x = 256;
-	// data->play.y = 70;
-
-
-
-	// printf("X1 =>%f\n", data->play.x);
-	// printf("Y1 =>%f\n", data->play.y);
-	
-	printf("X =>%f\n", data->texture->play.x);
-	printf("Y =>%f\n", data->texture->play.y);
-	
-	//////GOOOD for SO && NO
-	data->texture->play.x = 256;
-	data->texture->play.y = 40;
-
-	//////GOOOD for WE && EA
-	// data->texture->play.x = 256;
-	// data->texture->play.y = 100;
-	
-	if (texture->sides == 'N')
-	{
-		printf("Hello from north\n");
-		data->play.angle = 90.00;
-		// wall_x = data->play.x;
-		// wall_y = data->play.y * 32;
-		// while (data->map[(int)wall_x][(int)wall_y / 32] != 1)
-		// 	wall_y = wall_y - 64/ 2 * sin(NINETY);
-		// data->play.dir_ray = (data->play.y * 64+ 64/ 2) - wall_y;
-	}
-	else if (texture->sides == 'S')
-	{
-		printf("Hello from south\n");
-		data->play.angle = 270.00;
-		// wall_x = data->play.x;
-		// wall_y = data->play.y * 32;
-		// while (data->map[(int)wall_x][(int)wall_y / 32] != 1)
-		// 	wall_y = wall_y + 64/ 2 * sin(TWOSEVEN);
-		// data->play.dir_ray = (data->play.y * 64+ 64/ 2) + wall_y;
-	}
-	else if (texture->sides == 'W')
-	{
-		data->play.angle = 180.00;
-		// wall_x = data->play.x * 32;
-		// wall_y = data->play.y;
-		// while (data->map[(int)wall_x / 32][(int)wall_y] != 1)
-		// 	wall_x = wall_x - 64/ 2 * sin(THREESIX);
-		// data->play.dir_ray = (data->play.x * 64+ 64/ 2) - wall_x;
-	}
-	else
-	{
-		data->play.angle = 360.00;
-		// wall_x = data->play.x * 32;
-		// wall_y = data->play.y;
-		// while (data->map[(int)wall_x / 32][(int)wall_y] != 1)
-		// 	wall_x = wall_x + 64/ 2 * M_PI;
-		// data->play.dir_ray = (data->play.x * 64+ 64/ 2) + wall_x;
-	}
-}
 
 int	main(int argc, char **argv)
 {
 	t_cub param;
-	t_textures textures;
-	init(&textures);
-	int i = 0;
 
 	param = (t_cub){0};
-	param.map = malloc(sizeof(int *) * 8);
-	if (!param.map)
-		return (1);
-	while (i < 8)
-	{
-		param.map[i] = malloc(sizeof(int) * 8);
-		if (!param.map[i])
-		{
-			while (i != -1)
-				free(param.map[i--]);
-			free(param.map);
-			return (1);
-		}
-		param.map[i] = set_map (i, param.map[i]);
-		i++;
-	}
-	printf("map space check %d\n", param.map[3][3]);
+	param.texture = (t_textures){0};
+	param.texture.play = (t_playa){0};
+	// printf("check if set: param %zu, text %d, play %f\n", param.size, param.texture.found, param.texture.play.angle);
+	// param.map = malloc(sizeof(int *) * 8);
+	// if (!param.map)
+	// 	return (1);
+	// while (i < 8)
+	// {
+	// 	param.map[i] = malloc(sizeof(int) * 8);
+	// 	if (!param.map[i])
+	// 	{
+	// 		while (i != -1)
+	// 			free(param.map[i--]);
+	// 		free(param.map);
+	// 		return (1);
+	// 	}
+	// 	param.map[i] = set_map (i, param.map[i]);
+	// 	i++;
+	// }
+	// printf("map space check %d\n", param.map[3][3]);
 	if (argc == 2)
 	{
 		if (check_args(argv[1]))
 			return (print_err_int("Error: Please provide a valid *.cub file."));
-		open_close_file(argv, &textures);
-		set_the_player(&param, &textures);
+		open_close_file(argv, &param.texture);
 		if (initialise_mlx(&param))
 			return (print_err_int("Error: Failed to init MLX."));
 		// mlx_loop_hook(param.mlx, ft_randomize, &param);
-		
 		// mlx_key_hook(param.mlx, &ft_hook, &param);
-		ft_draw_map(&param, &textures);
+		ft_draw_map(&param);
 		mlx_loop(param.mlx);
 		mlx_terminate(param.mlx);
-		i = 7;
-		while (i > -1)
-			free(param.map[i--]);
-		free(param.map);
+		// i = 7;
+		// while (i > -1)
+		// 	free(param.map[i--]);
+		// free(param.map);
 	}
 	else
 		return (print_err_int("Error: Please provide only a valid *.cub file."));
