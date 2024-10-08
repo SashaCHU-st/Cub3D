@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/08 14:03:27 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:35:47 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,7 +399,7 @@ void	set_the_player(t_cub *data, t_textures *texture)
 	printf("Y =>%f\n", data->texture->play.y);
 	
 	//////GOOOD for SO && NO
-	data->texture->play.x = 256;
+	data->texture->play.x = 100;
 	data->texture->play.y = 40;
 
 	//////GOOOD for WE && EA
