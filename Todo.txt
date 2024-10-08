@@ -32,13 +32,20 @@ map:
 + only specific chara (1,0, N or E or S or W chacratter)
 + only one player
 + save it to new array **map
-- if map closed
++ if map closed
 + if it is empty in between => not valid
-- check if there is at least one player
++ check if there is at least one player
+- limit for th map
+- few nl after the map
 
 arguments
 + if file not exist
 
 
 MAPPING
+- Draw the map according the map
+- Calcualte the distance to the the wall
+- rotate
+- move
+
 

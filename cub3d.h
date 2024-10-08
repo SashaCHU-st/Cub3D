@@ -73,6 +73,7 @@ typedef struct s_textures
 	int		found_f;
 	int		found_c;
 	int		found;
+	char	sides;
 	char	*floor_color;
 	char	*ceiling_color;
 	int		floor_r;

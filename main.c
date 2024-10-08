@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/04 14:47:11 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:03:27 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ void ft_draw_map(t_cub *data, t_textures *texture)
 		cos_diff = cos(angle - (data->play.angle * CONVERT));
 		if (fabs(cos_diff) < EPSILON)
 			cos_diff = EPSILON;
+		//double distance_projected =64/distance*277;/// projecting as not fish eye
 		distance = cur.distance / cos_diff; 
 		if (distance > 0) 
 			cur.height = HEIGHT / distance; //correction to get the fishbowl effect
@@ -203,17 +204,16 @@ void ft_draw_map(t_cub *data, t_textures *texture)
 		fprintf(file5, "CUR HEIGHT %d: %d\n", i, (int)cur.height);
 		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
 		cur.end = HEIGHT / 2 + cur.height / 2; // get where the wall ends
-		if (cur.start < 0)
-			cur.start = 0;
-		if (cur.end >= HEIGHT)
-			cur.end = HEIGHT - 1;
+		// if (cur.start < 0)
+		// 	cur.start = 0;
+		// if (cur.end >= HEIGHT)
+		// 	cur.end = HEIGHT - 1;
 		fprintf(file3, " start %d: %d\n", i, (int)cur.start);
 		fprintf(file4, "end  %d: %d\n", i, (int)cur.end);
 		counter = 0; //technically a y or a pixel of the slice
 		while (counter < HEIGHT)
 		{
-			if (counter >= (int) cur.start && counter <= (int)cur.end &&
-					i > 128 && i < 384 )// in th midddle hve to be the length of the wall*64
+			if (counter >= (int) cur.start && counter <= (int)cur.end)// in th midddle hve to be the length of the wall*64
 			{
 				fprintf(file,"I => %d, y =>%d\n", i, counter);
 				mlx_put_pixel(data->image, i, counter, COL_WALL);
@@ -380,7 +380,7 @@ int *set_map(int i, int *map)
 }
 
 
-void	set_the_player(t_cub *data, char c, t_textures *texture)
+void	set_the_player(t_cub *data, t_textures *texture)
 {
 	// double	wall_x;
 	// double	wall_y;
@@ -399,15 +399,16 @@ void	set_the_player(t_cub *data, char c, t_textures *texture)
 	printf("Y =>%f\n", data->texture->play.y);
 	
 	//////GOOOD for SO && NO
-	data->texture->play.x = 100;
-	data->texture->play.y = 10;
+	data->texture->play.x = 256;
+	data->texture->play.y = 40;
 
 	//////GOOOD for WE && EA
-	data->texture->play.x = 256;
-	data->texture->play.y = 100;
+	// data->texture->play.x = 256;
+	// data->texture->play.y = 100;
 	
-	if (c == 'N')
+	if (texture->sides == 'N')
 	{
+		printf("Hello from north\n");
 		data->play.angle = 90.00;
 		// wall_x = data->play.x;
 		// wall_y = data->play.y * 32;
@@ -415,8 +416,9 @@ void	set_the_player(t_cub *data, char c, t_textures *texture)
 		// 	wall_y = wall_y - 64/ 2 * sin(NINETY);
 		// data->play.dir_ray = (data->play.y * 64+ 64/ 2) - wall_y;
 	}
-	else if (c == 'S')
+	else if (texture->sides == 'S')
 	{
+		printf("Hello from south\n");
 		data->play.angle = 270.00;
 		// wall_x = data->play.x;
 		// wall_y = data->play.y * 32;
@@ -424,7 +426,7 @@ void	set_the_player(t_cub *data, char c, t_textures *texture)
 		// 	wall_y = wall_y + 64/ 2 * sin(TWOSEVEN);
 		// data->play.dir_ray = (data->play.y * 64+ 64/ 2) + wall_y;
 	}
-	else if (c == 'W')
+	else if (texture->sides == 'W')
 	{
 		data->play.angle = 180.00;
 		// wall_x = data->play.x * 32;
@@ -474,7 +476,7 @@ int	main(int argc, char **argv)
 		if (check_args(argv[1]))
 			return (print_err_int("Error: Please provide a valid *.cub file."));
 		open_close_file(argv, &textures);
-		set_the_player(&param, 'S', &textures);
+		set_the_player(&param, &textures);
 		if (initialise_mlx(&param))
 			return (print_err_int("Error: Failed to init MLX."));
 		// mlx_loop_hook(param.mlx, ft_randomize, &param);
