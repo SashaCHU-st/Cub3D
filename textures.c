@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:11:07 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/01 11:24:57 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/09 10:30:21 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void ea(t_textures *textures, char *line)
 				if (ft_strncmp(textures->ea, "textures/", 2) == 0)
 				{
 					textures->found_ea += 1;
-			//		printf("eastt: %s\n", textures->ea);
+					printf("eastt: %s\n", textures->ea);
 				}
 			}
 		}
@@ -86,7 +86,7 @@ void we(t_textures *textures, char *line)
 				if (ft_strncmp(textures->we, "textures/", 2) == 0)
 				{
 					textures->found_we += 1;
-				//	printf("westt: %s\n", textures->we);
+					printf("westt: %s\n", textures->we);
 				}
 			}
 		}
@@ -125,7 +125,7 @@ void so(t_textures *textures, char *line)
 				if (ft_strncmp(textures->so, "textures/", 2) == 0)
 				{
 					textures->found_so += 1;
-					//printf("Soutth: %s\n", textures->so);
+					printf("Soutth: %s\n", textures->so);
 				}
 			}
 		}
@@ -167,7 +167,7 @@ void no(t_textures *textures, char *line)
 				if (ft_strncmp(textures->no, "textures/", 2) == 0)
 				{
 					textures->found_no += 1;
-				//	printf("NORTH: %s\n", textures->no);
+					printf("NORTH: %s\n", textures->no);
 				}
 			}
 		}

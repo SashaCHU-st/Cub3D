@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/07 09:20:06 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/09 09:10:51 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ void	all_found(t_textures *textures)
 	if(textures->found_no == 1 && textures->found_so == 1 && textures->found_we == 1 && textures->found_we == 1
 		&& textures->found_ea == 1 && textures->found_f == 1 && textures->found_c == 1)
 		textures->found = textures->found_no+textures->found_so+textures->found_we+textures->found_ea+textures->found_c + textures->found_f;
-	//printf("HHHH %d\n", textures->found);
+	else
+	{
+		printf("some rubish\n");
+		error_fun(textures);
+	}
+	printf("HHHH %d\n", textures->found);
 }
 
 int	checking_map(t_textures *textures, char *line, int number)
@@ -56,7 +61,7 @@ int	checking_map(t_textures *textures, char *line, int number)
 			}
 			else
 			{
-		//		printf("HHHH\n");
+				printf("HHHH\n");
 				error_fun(textures);
 			}
 		}

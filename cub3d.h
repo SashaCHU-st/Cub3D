@@ -104,7 +104,6 @@ typedef struct s_cub
 } t_cub;
 // void open_close_file(char **argv);
 
-int		check_args(char *str);
 void 	open_close_file(char **argv, t_textures *textures);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	checking_textures(t_textures *textures, char *line);
@@ -126,7 +125,7 @@ void	error_fun(t_textures *textures);
 int		ft_isdigit(int c);
 int		check_if_png(char *str);
 void	all_found(t_textures *textures);\
-void	count_lines(char **argv, t_textures *textures, int fd, char *line);
+void	count_lines(char **argv, t_textures *textures, int fd);
 void	closing(t_textures *textures,char *line, int fd);
 int		map_closed(t_textures *textures);
 int		map_closed(t_textures *textures);
@@ -135,12 +134,14 @@ char	*ft_strtrim(char *s1, char *set);
 void	replacing_spaces_with_one(t_textures *textures);
 //void replacing_spaces_with_one_or_two(t_textures *textures);
 int		map_closed(t_textures *textures);
-int		flood_fill(char **map, int rows, int cols, int x, int y);
-void	print_map(t_textures *textures);
 void	*ft_memset(void *b, int c, size_t len);
 void	replacing_nl_with_zero(t_textures *textures);
 void	free_map(t_textures *textures);
-int	checking_map(t_textures *textures, char *line, int number);
+int		checking_map(t_textures *textures, char *line, int number);
+int		some_rubish_fun(t_textures *textures);
 
+int		flood_fill(char **map, int rows, int cols, int x, int y);
+void	print_map(t_textures *textures);
+int		check_args(char *str);
 uint32_t get_rgba(int r, int g, int b);
 #endif

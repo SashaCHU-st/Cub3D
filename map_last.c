@@ -27,23 +27,58 @@ void	replacing_nl_with_zero(t_textures *textures)
 }
  //replacing with once everything befor
 
+// void replacing_spaces_with_one(t_textures *textures)
+// {
+// 	for (int i = 0; i <= textures->how_many_lines; i++)
+// 	{
+// 		if (textures->map[i])
+// 		{
+// 			int length = ft_strlen(textures->map[i]);
+// 			for (int j = 0; j < length; j++)
+// 			{
+// 				if (textures->map[i][j] == ' ')
+// 					textures->map[i][j] = '1';
+// 			}
+// 		}
+// 	}
+// }
 void replacing_spaces_with_one(t_textures *textures)
 {
+	// printf("HOW MANY LINES %d\n", textures->how_many_lines);
+	// printf("!!!!textures->map[0] %s\n", textures->map[0]);
+	// printf("!!!!textures->map[12] %s\n", textures->map[12]);
+	// printf("!!!!textures->map[13] %s\n", textures->map[13]);
 	for (int i = 0; i < textures->how_many_lines; i++)
 	{
 		if (textures->map[i])
 		{
 			int length = ft_strlen(textures->map[i]);
+
 			for (int j = 0; j < length; j++)
 			{
 				if (textures->map[i][j] == ' ')
-				{
 					textures->map[i][j] = '1';
-				}
 			}
 		}
 	}
+	int length2 = ft_strlen(textures->map[textures->how_many_lines ]);
+	printf("LENGTH2 %d\n", length2);
+	if(textures->map[textures->how_many_lines])
+	{
+		for (int j = 0; j < length2; j++)
+			{
+				if (textures->map[textures->how_many_lines][j] == ' ')
+				{
+					textures->map[textures->how_many_lines][j] = '1';
+				}
+			}
+	}
+	
+
 }
+
+
+
 // void replacing_spaces_with_one_or_two(t_textures *textures)
 // {
 // 	int i, j;
