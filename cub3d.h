@@ -12,13 +12,14 @@
 # include "MLX42/include/MLX42/MLX42.h"
 
 
-# define WIDTH 512 
-# define HEIGHT 512
+# define WIDTH 1080 
+# define HEIGHT 1080
 # define COL_WALL 0xffff64d9
 # define COL_BACK 0x9c0164
 # define ANGL_INCREM 60 / WIDTH
 # define CONVERT M_PI / 180
 # define EPSILON 0.0001
+# define DIST (WIDTH / 2) / tan(THIRTY)
 
 
 # define THIRTY 30 * CONVERT
@@ -35,6 +36,7 @@ typedef struct s_wall
     double  height;
 	double  start;
 	double  end;
+	double	offset;
 } t_wall;
 
 typedef struct s_playa

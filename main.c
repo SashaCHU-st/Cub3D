@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/08 20:36:05 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/09 18:00:30 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,27 @@ uint32_t get_rgba(int r, int g, int b)
     return ((uint32_t)r << 24) | ((uint32_t)g << 16) | ((uint32_t)b << 8) | 255;
 }
 
+int   check_length(int x, int y, t_cub *data)
+{
+	int	len;
+	int strlen;
+
+	len = 0;
+	while (data->texture.map[len] != NULL)
+		len++;
+	if (y / 64 >= len)
+		return (1);
+	strlen = ft_strlen(data->texture.map[y / 64]);
+	if (x / 64 >= strlen)
+		return (1);
+	return (0);	
+}
+
+
 int   check_coord(int x, int y, t_cub *data)
 {
-	printf("map here at x %d and y %d\n", x / 64, y / 64);
-	printf("map space is %c\n",data->texture.map[y / 64][x / 64]);
+	if (check_length(x, y, data))
+		return (1);
     if (data->texture.map[y / 64][x / 64] == '1')
 	{
 		printf("wall found at %d and %d\n", x / 64, y / 64);
@@ -52,12 +69,12 @@ void get_horizontal(t_cub *data, t_intersection *hori, double angle)
 	printf("hori->y is %f\n", hori->y);
 	if (cos(angle) >= 0)
 	{
-		hori->x = data->texture.play.x + ((data->texture.play.y - hori->y) / tan(angle));///!!!!! cannot be here 0, so no angle 90 or 0
+		hori->x = data->texture.play.x + (fabs(data->texture.play.y - hori->y) / tan(angle));///!!!!! cannot be here 0, so no angle 90 or 0
 		hori->h = 64 / tan(angle);
 	}
 	else
 	{
-		hori->x = data->texture.play.x - ((data->texture.play.y - hori->y) / tan(angle));///!!!!! cannot be here 0, so no angle 90 or 0
+		hori->x = data->texture.play.x - (fabs(data->texture.play.y - hori->y) / tan(angle));///!!!!! cannot be here 0, so no angle 90 or 0
 		hori->h = -(64 / tan(angle));
 	}
 	printf("hori->x is %f\n", hori->x);
@@ -72,7 +89,7 @@ void get_horizontal(t_cub *data, t_intersection *hori, double angle)
 
 void	get_vertical(t_cub *data, t_intersection *vert, double angle)
 {
-	if (cos(angle) >= 0) //from 90 until 270 or facing right
+	if (cos(angle) >= 0) //from 270 to 90 or facing right
 	{
 		vert->x = floor(data->texture.play.x / 64) * 64 + 64;
 		vert->h = 64;
@@ -82,20 +99,23 @@ void	get_vertical(t_cub *data, t_intersection *vert, double angle)
 		vert->x = floor(data->texture.play.x / 64) * 64 - 1;
 		vert->h = -64;
 	}
+	printf("vert->x is %f\n", vert->x);
 	if (sin(angle) >= 0)
 	{
-		vert->y = data->texture.play.y - ((data->texture.play.x - vert->x) / tan(angle));///!!!!! cannot be here 0
+		vert->y = data->texture.play.y - (fabs(data->texture.play.x - vert->x) / tan(angle));///!!!!! cannot be here 0
 		vert->v = -(64 / tan(angle));
 	}
 	else
 	{
-		vert->y = data->texture.play.y + ((data->texture.play.x - vert->x) / tan(angle));///!!!!! cannot be here 0
+		vert->y = data->texture.play.y + (fabs(data->texture.play.x - vert->x) / tan(angle));///!!!!! cannot be here 0
 		vert->v = 64 / tan(angle);
 	}
+	printf("vert->y is %f\n", vert->y);
 	while(vert->x >= 0 && vert->x < 512 && vert->y >= 0 && vert->y < 512 && !check_coord((int)vert->x, (int)vert->y, data))
 	{
 		vert->x = vert->x + vert->h;
 		vert->y = vert->y + vert->v;
+		printf("vert->y is %f\n", vert->y);
 	}
 	vert->dist = sqrt(pow((data->texture.play.x - vert->x), 2) + pow((data->texture.play.y - vert->y), 2));
 }
@@ -123,9 +143,15 @@ void get_collision(t_cub *data, t_wall *wall, double angle) //or a double pointe
 	// fprintf(file2, "ver dist are %f\n",vert.dist);
 	// fprintf(file3, "hor dist are %f\n",hori.dist);
 	if (vert.dist == 0 || (hori.dist != 0 && vert.dist > hori.dist))
+	{
 		wall->distance = hori.dist;
+		wall->offset = (int)hori.dist % 64;
+	}
 	else
+	{
 		wall->distance = vert.dist;
+		wall->offset = (int)vert.dist % 64;
+	}
 //	fclose(file);
 }
 
@@ -139,10 +165,13 @@ double	get_angle(double angle, int i)
 		min = 30 - (360 - angle);
 	}
 	else
-		min = angle - 60 / 2;
-	cur = min + i * ANGL_INCREM;
+		min = angle + 30;
+	cur = min - i * ANGL_INCREM;
+	printf("angle atm is %f\n", cur);
 	if (cur > 360)
 		cur = cur - 360;
+	else if (cur < 0)
+		cur = 360 + cur;
 	printf("angle atm is %f\n", cur);
 	return (cur * CONVERT);
 }
@@ -150,7 +179,7 @@ double	get_angle(double angle, int i)
 void ft_draw_map(t_cub *data)
 {
 // 	int	c = 0;
-	double	distance;
+	// double	distance;
 	double cos_diff;
 	double	angle;
 	t_wall cur;
@@ -170,25 +199,27 @@ void ft_draw_map(t_cub *data)
 		get_collision(data, &cur, angle); //get the closest wall grid coordinates dpeending on which way the player is facing
 		//distance = cur.distance / cos(angle - data->play.angle); //get the distance to the wall depending on the curangle
 		//distance = cur.distance / cos (angle - (data->play.angle * CONVERT)); Milica
-		cos_diff = cos(angle - (data->texture.play.angle * CONVERT));
+		cos_diff = cur.distance * cos(fabs(angle - (data->texture.play.angle * CONVERT)));
+		// cos_diff = cos(angle - (data->texture.play.angle * CONVERT));
 		if (fabs(cos_diff) < EPSILON)
 			cos_diff = EPSILON;
-		//double distance_projected =64/distance*277;/// projecting as not fish eye
-		distance = cur.distance / cos_diff; 
-		if (distance > 0) 
-			cur.height = HEIGHT / distance; //correction to get the fishbowl effect
-		else
-			cur.height = fabs(HEIGHT / distance);/// or 0?
+		// //double distance_projected =64/distance*277;/// projecting as not fish eye
+		// distance = cur.distance / cos_diff; 
+		// if (distance > 0) 
+		// 	cur.height = HEIGHT / distance; //correction to get the fishbowl effect
+		// else
+		// 	cur.height = fabs(HEIGHT / distance);/// or 0?
 		//cur.height = HEIGHT / (distance * cos(angle)); //correction to get the fishbowl effect
-		fprintf(file5, "CUR HEIGHT %d: %d\n", px_x, (int)cur.height);
+		cur.height = ceil(64 / cos_diff * DIST);
+		fprintf(file5, "CUR HEIGHT %d: %f\n", px_x, cur.height);
 		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
 		cur.end = HEIGHT / 2 + cur.height / 2; // get where the wall ends
 		// if (cur.start < 0)
 		// 	cur.start = 0;
 		// if (cur.end >= HEIGHT)
 		// 	cur.end = HEIGHT - 1;
-		fprintf(file3, " start %d: %d\n", px_x, (int)cur.start);
-		fprintf(file4, "end  %d: %d\n", px_x, (int)cur.end);
+		fprintf(file3, " start %d: %f\n", px_x, cur.start);
+		fprintf(file4, "end  %d: %f\n", px_x, cur.end);
 		px_y = 0; //technically a y or a pixel of the slice
 		while (px_y < HEIGHT)
 		{
