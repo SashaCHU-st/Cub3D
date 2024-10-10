@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:15 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/30 14:54:14 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:21:33 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void free_map(t_textures *textures)
 	{
 		for (int i = 0; i < textures->how_many_lines; i++)
 		{
-			if (textures->map[i]) {
+			if (textures->map[i])
+			{
 				free(textures->map[i]);
 				textures->map[i] = NULL;
 			}

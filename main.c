@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/08 14:36:37 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:04:03 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -408,7 +408,6 @@ void	set_the_player(t_cub *data, t_textures *texture)
 	
 	if (texture->sides == 'N')
 	{
-		printf("Hello from north\n");
 		data->play.angle = 90.00;
 		// wall_x = data->play.x;
 		// wall_y = data->play.y * 32;
@@ -418,7 +417,6 @@ void	set_the_player(t_cub *data, t_textures *texture)
 	}
 	else if (texture->sides == 'S')
 	{
-		printf("Hello from south\n");
 		data->play.angle = 270.00;
 		// wall_x = data->play.x;
 		// wall_y = data->play.y * 32;
@@ -470,7 +468,6 @@ int	main(int argc, char **argv)
 		param.map[i] = set_map (i, param.map[i]);
 		i++;
 	}
-	printf("map space check %d\n", param.map[3][3]);
 	if (argc == 2)
 	{
 		if (check_args(argv[1]))
@@ -485,6 +482,7 @@ int	main(int argc, char **argv)
 		ft_draw_map(&param, &textures);
 		mlx_loop(param.mlx);
 		mlx_terminate(param.mlx);
+		free_map(&textures);
 		i = 7;
 		while (i > -1)
 			free(param.map[i--]);
