@@ -12,7 +12,7 @@ directions:
 + file png
 + not repeptevive
 + if just only .cub (without anything else)
-- grabige information (smth else)
++ grabige information (smth else)
 
 colors:
 + put in array
