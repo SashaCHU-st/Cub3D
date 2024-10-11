@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/12 01:57:17 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/12 02:05:52 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ double	get_angle(double angle, int i)
 
 	adjust_angle = 2 * (double)i / (double)WIDTH - 1;
 	// adjust_angle = 1 - 2 * (double)i / (double)WIDTH;
-	cur = angle + 30 * adjust_angle; //the range of the camera view is -1 to 1 and this translates it to that
+	cur = angle + (30 * CONVERT) * adjust_angle; //the range of the camera view is -1 to 1 and this translates it to that
 	printf("angle atm is %f\n", cur);
 	return (cur * CONVERT);
 }
