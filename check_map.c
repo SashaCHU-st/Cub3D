@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/08 19:10:14 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/12 00:24:39 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ int	checking_map(t_textures *textures, char *line, int number)
 					textures->sides = 'E';
 					textures->play.angle = 360;
 				}
-				textures->play.x = i * 64 + 32; //can this be > width/height?
-				textures->play.y = number * 64 + 32;
-				printf("I(%d) =>%d\n", i, i * 64 + 32);
-				printf("number(%d) =>%d\n", number, number * 64 + 32);
+				textures->play.x = i + 0.5; //can this be > width/height?
+				textures->play.y = number + 0.5;
+				printf("I(%d) =>%f\n", i, i + 0.5);
+				printf("number(%d) =>%f\n", number, number + 0.5);
 				textures->player_found++;
 				if (textures->player_found > 1 || textures->player_found == 0)
 					error_fun(textures);
