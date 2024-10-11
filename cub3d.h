@@ -19,7 +19,7 @@
 # define ANGL_INCREM 60 / WIDTH
 # define CONVERT M_PI / 180
 # define EPSILON 0.0001
-# define DIST (WIDTH / 2) / tan(THIRTY)
+# define PLANE tan(THIRTY)
 
 
 # define THIRTY 30 * CONVERT
@@ -37,11 +37,13 @@ typedef struct s_vector
 typedef struct s_wall
 {
 	t_vector	map;
+	t_vector	dir;
 	t_vector	ray_dir;
+	t_vector	camera;
     double  distance;
-    double  height;
-	double  start;
-	double  end;
+    int  height;
+	int  start;
+	int  end;
 	char	side;	
 } t_wall;
 

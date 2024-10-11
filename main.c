@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/12 00:36:56 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/12 01:57:17 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,24 @@ void	do_dda(t_cub *data, t_collision *cur, t_wall *wall)
 	}
 }
 
-void get_collision(t_cub *data, t_wall *wall, double angle) //or a double pointer for wall?
+void	set_wall(t_cub *data, t_wall *wall, double angle, int i)
+{
+	double	adjust_angle;
+
+	adjust_angle = 2 * (double)i / (double)WIDTH - 1;
+	wall->map.x = (int)data->texture.play.x;
+	wall->map.y = (int)data->texture.play.y;
+	printf("wall starting position are x and y %f and %f\n", wall->map.x, wall->map.y);
+	//calculate the direction of the ray on x and y axis
+	wall->dir.x = cos(angle); //check if 0
+	wall->dir.y = sin(angle);//check if 0
+	wall->camera.x = -(wall->dir.y) * PLANE;
+	wall->camera.y = wall->dir.x * PLANE;
+	wall->ray_dir.x = wall->dir.x + wall->camera.x * adjust_angle;
+	wall->ray_dir.y = wall->dir.y + wall->camera.y * adjust_angle;
+}
+
+void get_collision(t_cub *data, t_wall *wall, double angle, int px_x) //or a double pointer for wall?
 {
 	t_collision	cur;
 
@@ -120,13 +137,8 @@ void get_collision(t_cub *data, t_wall *wall, double angle) //or a double pointe
 	//FILE *file1 = fopen("output1.txt", "a");
 	// FILE *file2 = fopen("output2.txt", "a");
 	// FILE *file3 = fopen("output3.txt", "a");
-	wall->map.x = (int)data->texture.play.x;
-	wall->map.y = (int)data->texture.play.y;
-	printf("wall starting position are x and y %f and %f\n", wall->map.x, wall->map.y);
-	//calculate the direction of the ray on x and y axis
-	wall->ray_dir.x = cos(angle); //check if 0
-	wall->ray_dir.y = sin(angle);//check if 0 
-	printf("wall direction angles are x and y %f and %f\n", wall->ray_dir.x, wall->ray_dir.y);
+	set_wall(data, wall, angle, px_x);
+	printf("wall direction angles are x and y %f and %f\n", wall->dir.x, wall->dir.y);
 	set_hori(data, &cur, wall);
 	set_vert(data, &cur, wall);
 	printf("checking hori %f and vert %f\n", cur.hori.dot, cur.vert.dot);
@@ -156,8 +168,10 @@ double	get_angle(double angle, int i)
 	double	cur;
 	double	adjust_angle;
 
-	adjust_angle = 2 * (double)i / (double)WIDTH - 1 ;
+	adjust_angle = 2 * (double)i / (double)WIDTH - 1;
+	// adjust_angle = 1 - 2 * (double)i / (double)WIDTH;
 	cur = angle + 30 * adjust_angle; //the range of the camera view is -1 to 1 and this translates it to that
+	printf("angle atm is %f\n", cur);
 	return (cur * CONVERT);
 }
 
@@ -178,19 +192,19 @@ void ft_draw_map(t_cub *data)
 	{
 		angle = get_angle(data->texture.play.angle, px_x); // get the cur angle until you go through all of them (depends on the width)
 		printf("cur angle is %f\n", angle); //check if it being 0 creates issues
-		get_collision(data, &cur, angle); //get the closest wall grid coordinates dpeending on which way the player is facing
+		get_collision(data, &cur, angle, px_x); //get the closest wall grid coordinates dpeending on which way the player is facing
 		if (cur.distance == 0)
 			cur.distance = EPSILON;
 		cur.height = (int)(HEIGHT / cur.distance);
-		fprintf(file5, "CUR HEIGHT %d: %f\n", px_x, cur.height);
+		fprintf(file5, "CUR HEIGHT %d: %d\n", px_x, cur.height);
 		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
 		cur.end = HEIGHT / 2 + cur.height / 2; // get where the wall ends
 		// if (cur.start < 0)
 		// 	cur.start = 0;
 		// if (cur.end >= HEIGHT)
 		// 	cur.end = HEIGHT - 1;
-		fprintf(file3, " start %d: %f\n", px_x, cur.start);
-		fprintf(file4, "end  %d: %f\n", px_x, cur.end);
+		fprintf(file3, " start %d: %d\n", px_x, cur.start);
+		fprintf(file4, "end  %d: %d\n", px_x, cur.end);
 		px_y = 0; //technically a y or a pixel of the slice
 		while (px_y < HEIGHT)
 		{

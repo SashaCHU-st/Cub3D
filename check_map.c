@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/12 00:24:39 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/12 01:08:00 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,22 @@ int	checking_map(t_textures *textures, char *line, int number)
 				if(line[i] == 'N')
 				{
 					textures->sides = 'N';
-					textures->play.angle = 90;
+					textures->play.angle = 270;
 				}
 				if(line[i] == 'S')
 				{
 					textures->sides = 'S';
-					textures->play.angle = 270;
+					textures->play.angle = 90;
 				}
 				if(line[i] == 'W')
 				{
 					textures->sides = 'W';
-					textures->play.angle = 180;
+					textures->play.angle = 360;
 				}
 				if(line[i] == 'E')
 				{
 					textures->sides = 'E';
-					textures->play.angle = 360;
+					textures->play.angle = 180;
 				}
 				textures->play.x = i + 0.5; //can this be > width/height?
 				textures->play.y = number + 0.5;
