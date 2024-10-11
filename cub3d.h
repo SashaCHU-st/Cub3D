@@ -28,15 +28,21 @@
 # define THREESIX 360 * CONVERT
 
 
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+} t_vector;
+
 typedef struct s_wall
 {
-	double     x;
-    double     y;
+	t_vector	map;
+	t_vector	ray_dir;
     double  distance;
     double  height;
 	double  start;
 	double  end;
-	double	offset;
+	char	side;	
 } t_wall;
 
 typedef struct s_playa
@@ -44,21 +50,23 @@ typedef struct s_playa
     double x;
     double y;
     double  angle;
-    double  dir_ray;
-    double  min_ray;
-    double  max_ray;
+    // double  dir_ray;
+    // double  min_ray;
+    // double  max_ray;
 } t_playa;
-
 
 typedef struct s_intersection
 {
-    double x;
-    double y;
-    double v;
-    double h;
-    double dist;
+    double dot;
+    double step;
 } t_intersection;
 
+typedef struct s_collision
+{
+	t_intersection hori;
+	t_intersection vert;
+	t_vector iterate;
+}	t_collision;
 
 typedef struct s_textures
 {
