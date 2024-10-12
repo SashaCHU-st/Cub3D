@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/12 14:12:34 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/12 16:21:34 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,8 @@ void ft_draw_map(t_cub *data)
 			if (px_y >= (int) cur.start && px_y <= (int)cur.end)// in th midddle hve to be the length of the wall*64
 			{
 				fprintf(file,"x => %d, y =>%d\n", px_x, px_y);
-				mlx_put_pixel(data->image, px_x, px_y, COL_WALL);
+				//mlx_put_pixel(data->image, px_x, px_y, COL_WALL);
+				mlx_put_pixel(data->image, px_x, px_y, data->texture.so_side);
 			}
 			else if(px_y <=cur.start)
 			{
@@ -408,6 +409,10 @@ int	main(int argc, char **argv)
 			return (print_err_int("Error: Failed to init MLX."));
 		// mlx_loop_hook(param.mlx, ft_randomize, &param);
 		// mlx_key_hook(param.mlx, &ft_hook, &param);
+		// param.texture.north = mlx_texture_to_image(param.mlx,param.texture.no_side);
+		// param.texture.south = mlx_texture_to_image(param.mlx,param.texture.so_side);
+		// param.texture.west = mlx_texture_to_image(param.mlx,param.texture.we_side);
+		// param.texture.east = mlx_texture_to_image(param.mlx,param.texture.ea_side);
 		ft_draw_map(&param);
 		mlx_loop(param.mlx);
 		mlx_terminate(param.mlx);

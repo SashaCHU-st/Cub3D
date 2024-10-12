@@ -101,6 +101,14 @@ typedef struct s_textures
 	int		ceiling;
 	int		floor;
 	int		length;
+	mlx_texture_t *no_side;
+	mlx_texture_t *so_side;
+	mlx_texture_t *we_side;
+	mlx_texture_t *ea_side;
+	mlx_image_t		*north;
+	mlx_image_t		*south;
+	mlx_image_t		*west;
+	mlx_image_t		*east;
 	t_playa	play;
 } t_textures;
 
