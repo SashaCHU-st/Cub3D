@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/10 13:04:03 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:03:00 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,7 +360,6 @@ int	print_err_int(char *str)
 int	main(int argc, char **argv)
 {
 	t_cub param;
-	int i = 0;
 
 	param = (t_cub){0};
 
@@ -412,11 +411,7 @@ int	main(int argc, char **argv)
 		ft_draw_map(&param);
 		mlx_loop(param.mlx);
 		mlx_terminate(param.mlx);
-		free_map(&textures);
-		i = 7;
-		while (i > -1)
-			free(param.map[i--]);
-		free(param.map);
+		free_map(&param.texture);
 // 		while (i < param.texture.how_many_lines)
 // 		{
 // 			free(param.texture.map[i]);

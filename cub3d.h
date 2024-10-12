@@ -27,11 +27,6 @@
 # define TWOSEVEN 270 * CONVERT
 # define THREESIX 360 * CONVERT
 
-typedef struct s_vector
-{
-	double	x;
-	double	y;
-} t_vector;
 
 typedef struct s_vector
 {
