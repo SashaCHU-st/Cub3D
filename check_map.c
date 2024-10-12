@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
 /*   Updated: 2024/10/10 12:19:51 by aheinane         ###   ########.fr       */
@@ -24,8 +24,8 @@ void	all_found(t_textures *textures)
 int	checking_map(t_textures *textures, char *line, int number)
 {
 	int i = 0;
-	(void)textures;
-	(void)number;
+	// (void)textures;
+	// (void)number;
 	while (line[i])
 	{
 		if (line[i] != '1' && line[i] != '0' && line[i] != ' ' && line[i] != '\n' && line[i] != '\t' )
@@ -33,15 +33,29 @@ int	checking_map(t_textures *textures, char *line, int number)
 			if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
 			{
 				if(line[i] == 'N')
+				{
 					textures->sides = 'N';
+					textures->play.angle = 270;
+				}
 				if(line[i] == 'S')
+				{
 					textures->sides = 'S';
+					textures->play.angle = 90;
+				}
 				if(line[i] == 'W')
+				{
 					textures->sides = 'W';
+					textures->play.angle = 360;
+				}
 				if(line[i] == 'E')
+				{
 					textures->sides = 'E';
-				textures->play.x = i*32;
-				textures->play.y = number*32;
+					textures->play.angle = 180;
+				}
+				textures->play.x = i + 0.5; //can this be > width/height?
+				textures->play.y = number + 0.5;
+				printf("I(%d) =>%f\n", i, i + 0.5);
+				printf("number(%d) =>%f\n", number, number + 0.5);
 				textures->player_found++;
 				if (textures->player_found > 1 || textures->player_found == 0)
 					error_fun(textures);

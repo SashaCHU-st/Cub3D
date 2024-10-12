@@ -8,18 +8,18 @@
 # include <unistd.h>
 # include <errno.h>
 # include <math.h>
-#include "get_next_line.h"
+# include "get_next_line.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
 
-# define WIDTH 512 
-# define HEIGHT 512
+# define WIDTH 1080 
+# define HEIGHT 1080
 # define COL_WALL 0xffff64d9
 # define COL_BACK 0x9c0164
-# define ANGL_INCREM 60/ WIDTH
-//# define ANGL_INCREM 60 / WIDTH
+# define ANGL_INCREM 60 / WIDTH
 # define CONVERT M_PI / 180
-#define EPSILON 0.0001
+# define EPSILON 0.0001
+# define PLANE tan(THIRTY)
 
 
 # define THIRTY 30 * CONVERT
@@ -27,15 +27,29 @@
 # define TWOSEVEN 270 * CONVERT
 # define THREESIX 360 * CONVERT
 
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+} t_vector;
+
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+} t_vector;
 
 typedef struct s_wall
 {
-	double     x;
-    double     y;
+	t_vector	map;
+	t_vector	dir;
+	t_vector	ray_dir;
+	t_vector	camera;
     double  distance;
-    double  height;
-	double  start;
-	double  end;
+    int  height;
+	int  start;
+	int  end;
+	char	side;	
 } t_wall;
 
 typedef struct s_playa
@@ -43,21 +57,23 @@ typedef struct s_playa
     double x;
     double y;
     double  angle;
-    double  dir_ray;
-    double  min_ray;
-    double  max_ray;
+    // double  dir_ray;
+    // double  min_ray;
+    // double  max_ray;
 } t_playa;
-
 
 typedef struct s_intersection
 {
-    double x;
-    double y;
-    double v;
-    double h;
-    double dist;
+    double dot;
+    double step;
 } t_intersection;
 
+typedef struct s_collision
+{
+	t_intersection hori;
+	t_intersection vert;
+	t_vector iterate;
+}	t_collision;
 
 typedef struct s_textures
 {
@@ -97,10 +113,7 @@ typedef struct s_cub
 {	
 	mlx_t   *mlx;
     mlx_image_t *image;
-	int 	**map;
-	size_t size;
-    t_playa play;
-	t_textures *texture;
+	t_textures texture;
 } t_cub;
 // void open_close_file(char **argv);
 

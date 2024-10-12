@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
 /*   Updated: 2024/10/10 13:38:32 by aheinane         ###   ########.fr       */
@@ -164,6 +164,7 @@ void open_second(int fd, char **argv, t_textures *textures)
 		error_fun(textures);
 	if(textures->player_found == 0)
 		error_fun(textures);
+
 	if_new_line_in_middle(textures);
 	replacing_spaces_with_one(textures);
 	textures->map[textures->map_index] = NULL;
@@ -188,4 +189,5 @@ void open_close_file(char **argv, t_textures *textures)
 	open_first(fd, argv, textures);
 	count_lines(argv,textures,fd);
 	open_second(fd, argv, textures);
+
 }

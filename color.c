@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
 /*   Updated: 2024/10/10 12:18:43 by aheinane         ###   ########.fr       */
@@ -89,7 +89,6 @@ void	parse_floor_color(const char *color_string, t_textures *textures, bool is_f
 			textures->floor_g = values[1];
 			textures->floor_b = values[2];
 			textures->floor = get_rgba(values[0], values[1], values[2]);
-
 		}
 		else
 		{
