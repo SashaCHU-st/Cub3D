@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/12 17:17:15 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/12 18:55:21 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,39 +277,56 @@ void ft_draw_map(void *param)
 
 void	ft_move_up(t_cub *data)
 {
-	t_collision move;
 	t_vector	angle;
 
 	angle.x = cos(data->texture.play.angle * CONVERT);
 	angle.y = sin(data->texture.play.angle * CONVERT);
-	// if (angle.x== 0)
-	// 	move.iterate.x = 1e30; //to avoid dividing by 0
-	// else
-	// 	move.iterate.x = fabs(1 / angle.x); //to get the first x coordinate
-	// printf("iterate delta is %f\n", cur->iterate.x);
-	if (angle.x < 0) //the angle goes left
-		move.hori.step = -1;
-	else
-		move.hori.step = 1;
-	// if (angle.y == 0)
-	// 	move.iterate.y = 1e30; //to avoid dividing by 0
-	// else
-	// 	move.iterate.y = fabs(1 / angle.x); //to get the first x coordinate
-	// printf("iterate delta is %f\n", cur->iterate.x);
-	if (angle.y < 0) //the angle goes left
-		move.vert.step = -1;
-	else
-		move.vert.step = 1;
-	printf("initial %d and %d\n", (int)data->texture.play.x, (int)data->texture.play.y);
-	printf("should be %d and %d\n", (int)(data->texture.play.x + move.hori.step), (int)(data->texture.play.y + move.vert.step));
-	printf("check coord %d\n",check_coord((int)(data->texture.play.x + move.hori.step), (int)(data->texture.play.y + move.vert.step), data));
-	if (check_coord((int)(data->texture.play.x + move.hori.step), (int)(data->texture.play.y + move.vert.step), data) == 0)
+	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), (int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
 	{
-		printf("condition met\n");
-		data->texture.play.x += move.hori.step;
-		data->texture.play.y += move.vert.step;
+		data->texture.play.x += 0.5 * angle.x;
+		data->texture.play.y += 0.5 * angle.y;
 	}
-	printf("updated %d and %d\n", (int)data->texture.play.x, (int)data->texture.play.y);
+}
+
+void	ft_move_down(t_cub *data)
+{
+	t_vector	angle;
+
+	angle.x = cos(data->texture.play.angle * CONVERT);
+	angle.y = sin(data->texture.play.angle * CONVERT);
+	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)), (int)(data->texture.play.y - (0.5 * angle.y)), data) == 0)
+	{
+		data->texture.play.x -= 0.5 * angle.x;
+		data->texture.play.y -= 0.5 * angle.y;
+	}
+}
+
+void	ft_move_left(t_cub *data)
+{
+	t_vector	angle;
+
+	angle.x = sin(data->texture.play.angle * CONVERT);
+	angle.y = cos(data->texture.play.angle * CONVERT);
+	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
+	(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
+	{
+		data->texture.play.x += 0.5 * angle.x;
+		data->texture.play.y += 0.5 * angle.y;
+	}
+}
+
+void	ft_move_right(t_cub *data)
+{
+	t_vector	angle;
+
+	angle.x = sin(data->texture.play.angle * CONVERT);
+	angle.y = cos(data->texture.play.angle * CONVERT);
+	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)), \
+	(int)(data->texture.play.y - (0.5 * angle.y)), data) == 0)
+	{
+		data->texture.play.x -= 0.5 * angle.x;
+		data->texture.play.y -= 0.5 * angle.y;
+	}
 }
 
 void ft_hook(mlx_key_data_t keydata, void *param)
@@ -317,24 +334,16 @@ void ft_hook(mlx_key_data_t keydata, void *param)
 	t_cub *data;
 
 	data = (t_cub *)param;
-	printf("entered ft_hook\n");
 	if (keydata.key == MLX_KEY_ESCAPE)
 		mlx_close_window(data->mlx);
-	// if ((mlx_is_key_down(data->mlx, MLX_KEY_UP) || mlx_is_key_down(data->mlx, MLX_KEY_W)))
 	if (keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W)
 		ft_move_up(data);
-	// if ((mlx_is_key_down(data->mlx, MLX_KEY_DOWN) || mlx_is_key_down(data->mlx, MLX_KEY_S)) && data->map[(int)data->play.x][(int)data->play.y + 1] != 1)
-	// {
-	// 	mlx_put_pixel(data->image, (data->play.x * 32) + (64/ 2), (data->play.y * 32) + (64/ 2), COL_BACK);
-	// 	data->play.y += 1;
-	// 	mlx_put_pixel(data->image, (data->play.x * 32) + (64/ 2), (data->play.y * 32) + (64/ 2), COL_WALL);
-	// }
-	// if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-	// 	image->instances[0].y += 5;
-	// if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-	// 	image->instances[0].x -= 5;
-	// if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-	// 	image->instances[0].x += 5;
+	if (keydata.key == MLX_KEY_DOWN || keydata.key == MLX_KEY_S)
+		ft_move_down(data);
+	if (keydata.key == MLX_KEY_A)
+		ft_move_left(data);
+	if (keydata.key == MLX_KEY_D)
+		ft_move_right(data);		
 }
 
 // -----------------------------------------------------------------------------
