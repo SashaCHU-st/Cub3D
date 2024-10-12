@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/12 02:05:52 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/10 13:04:03 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,9 +356,6 @@ int	print_err_int(char *str)
 // 		}
 // 	}
 
-// 	return (map);
-// }
-
 
 int	main(int argc, char **argv)
 {
@@ -366,6 +363,23 @@ int	main(int argc, char **argv)
 	int i = 0;
 
 	param = (t_cub){0};
+
+// 	param.map = malloc(sizeof(int *) * 8);
+// 	if (!param.map)
+// 		return (1);
+// 	while (i < 8)
+// 	{
+// 		param.map[i] = malloc(sizeof(int) * 8);
+// 		if (!param.map[i])
+// 		{
+// 			while (i != -1)
+// 				free(param.map[i--]);
+// 			free(param.map);
+// 			return (1);
+// 		}
+// 		param.map[i] = set_map (i, param.map[i]);
+// 		i++;
+// 	}
 	param.texture = (t_textures){0};
 	param.texture.play = (t_playa){0};
 	// printf("check if set: param %zu, text %d, play %f\n", param.size, param.texture.found, param.texture.play.angle);
@@ -398,18 +412,23 @@ int	main(int argc, char **argv)
 		ft_draw_map(&param);
 		mlx_loop(param.mlx);
 		mlx_terminate(param.mlx);
-		while (i < param.texture.how_many_lines)
-		{
-			free(param.texture.map[i]);
-			i++;
-		}
-		free(param.texture.map);
-		free(param.texture.no);
-		free(param.texture.so);
-		free(param.texture.ea);
-		free(param.texture.we);
-		free(param.texture.floor_color);
-		free(param.texture.ceiling_color);
+		free_map(&textures);
+		i = 7;
+		while (i > -1)
+			free(param.map[i--]);
+		free(param.map);
+// 		while (i < param.texture.how_many_lines)
+// 		{
+// 			free(param.texture.map[i]);
+// 			i++;
+// 		}
+// 		free(param.texture.map);
+// 		free(param.texture.no);
+// 		free(param.texture.so);
+// 		free(param.texture.ea);
+// 		free(param.texture.we);
+// 		free(param.texture.floor_color);
+// 		free(param.texture.ceiling_color);
 	}
 	else
 		return (print_err_int("Error: Please provide only a valid *.cub file."));

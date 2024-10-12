@@ -1,6 +1,6 @@
 *.o
 */*.o
-./cub3d
+./cub3D
 a.out
 .vscode/
 ./cub3d
