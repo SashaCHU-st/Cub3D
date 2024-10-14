@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/14 14:32:57 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:02:57 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,6 +396,10 @@ void ft_hook(mlx_key_data_t keydata, void *param)
 		ft_move_left(data);
 	if (keydata.key == MLX_KEY_D)
 		ft_move_right(data);		
+	if (keydata.key == MLX_KEY_LEFT)
+		data->texture.play.angle -= 15;
+	if (keydata.key == MLX_KEY_RIGHT)
+		data->texture.play.angle += 15;
 }
 
 // -----------------------------------------------------------------------------
