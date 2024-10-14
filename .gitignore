@@ -1,9 +1,8 @@
 *.o
 */*.o
-./cub3D
 a.out
 .vscode/
-./cub3d
+./cub3D
 .a.out
 test1.c
 test.c
