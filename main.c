@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/14 14:32:57 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:56:20 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,7 @@ void ft_draw_map(t_cub *data)
 	// FILE *file3 = fopen("output3.txt", "a");
 	// FILE *file4 = fopen("output4.txt", "a");
 	// FILE *file5 = fopen("output5.txt", "a");
+	//uint32_t		*pixels;
 	unsigned int from_texture; 
 	cur = (t_wall){0};
 	while (px_x < WIDTH)
