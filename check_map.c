@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/10 12:19:51 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:49:11 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	checking_map(t_textures *textures, char *line, int number)
 				}
 				textures->play.x = i + 0.5; //can this be > width/height?
 				textures->play.y = number + 0.5;
-				printf("I(%d) =>%f\n", i, i + 0.5);
-				printf("number(%d) =>%f\n", number, number + 0.5);
+				// printf("I(%d) =>%f\n", i, i + 0.5);
+				// printf("number(%d) =>%f\n", number, number + 0.5);
 				textures->player_found++;
 				if (textures->player_found > 1 || textures->player_found == 0)
 					error_fun(textures);
