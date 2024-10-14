@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/12 16:21:34 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:32:57 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int   check_coord(int x, int y, t_cub *data)
 		return (1);
     if (data->texture.map[y][x] == '1')
 	{
-		printf("wall found at %d and %d\n", x, y);
+	//	printf("wall found at %d and %d\n", x, y);
 		return (1);
 	}
 	else
 	{
-		printf("no wall\n");
+	//	printf("no wall\n");
 	 	return (0);
 	}
 }	
@@ -57,7 +57,7 @@ void set_hori(t_cub *data, t_collision *cur, t_wall *wall)
 		cur->iterate.x = 1e30; //to avoid dividing by 0
 	else
 		cur->iterate.x = fabs(1 / wall->ray_dir.x); //to get the first x coordinate
-	printf("iterate delta is %f\n", cur->iterate.x);
+	//printf("iterate delta is %f\n", cur->iterate.x);
 	if (wall->ray_dir.x < 0) //the angle goes left
 	{
 		cur->hori.step = -1;
@@ -68,7 +68,7 @@ void set_hori(t_cub *data, t_collision *cur, t_wall *wall)
 		cur->hori.step = 1;
 		cur->hori.dot = (-data->texture.play.x + wall->map.x + 1) * cur->iterate.x;
 	}
-	printf("dot is %f\n", cur->hori.dot);
+//	printf("dot is %f\n", cur->hori.dot);
 }
 
 void set_vert(t_cub *data, t_collision *cur, t_wall *wall)
@@ -91,7 +91,7 @@ void set_vert(t_cub *data, t_collision *cur, t_wall *wall)
 
 void	do_dda(t_cub *data, t_collision *cur, t_wall *wall)
 {
-	printf("cur coordinates are %d and %d\n", (int)wall->map.x, (int)wall->map.y);
+	//printf("cur coordinates are %d and %d\n", (int)wall->map.x, (int)wall->map.y);
 	while (!(check_coord((int)wall->map.x, (int)wall->map.y, data)))
 	{
 		if (cur->hori.dot < cur->vert.dot)
@@ -106,7 +106,7 @@ void	do_dda(t_cub *data, t_collision *cur, t_wall *wall)
 			wall->map.y += cur->vert.step;
 			wall->side = 'v';
 		}
-		printf("cur coordinates are %d and %d\n", (int)wall->map.x, (int)wall->map.y);
+	//	printf("cur coordinates are %d and %d\n", (int)wall->map.x, (int)wall->map.y);
 	}
 }
 
@@ -117,7 +117,7 @@ void	set_wall(t_cub *data, t_wall *wall, double angle, int i)
 	adjust_angle = 2 * (double)i / (double)WIDTH - 1;
 	wall->map.x = (int)data->texture.play.x;
 	wall->map.y = (int)data->texture.play.y;
-	printf("wall starting position are x and y %f and %f\n", wall->map.x, wall->map.y);
+	//printf("wall starting position are x and y %f and %f\n", wall->map.x, wall->map.y);
 	//calculate the direction of the ray on x and y axis
 	wall->dir.x = cos(angle); //check if 0
 	wall->dir.y = sin(angle);//check if 0
@@ -138,10 +138,10 @@ void get_collision(t_cub *data, t_wall *wall, double angle, int px_x) //or a dou
 	// FILE *file2 = fopen("output2.txt", "a");
 	// FILE *file3 = fopen("output3.txt", "a");
 	set_wall(data, wall, angle, px_x);
-	printf("wall direction angles are x and y %f and %f\n", wall->dir.x, wall->dir.y);
+//	printf("wall direction angles are x and y %f and %f\n", wall->dir.x, wall->dir.y);
 	set_hori(data, &cur, wall);
 	set_vert(data, &cur, wall);
-	printf("checking hori %f and vert %f\n", cur.hori.dot, cur.vert.dot);
+	//printf("checking hori %f and vert %f\n", cur.hori.dot, cur.vert.dot);
 	do_dda(data, &cur, wall);
 	//account for the fishbowl effect
 	if (wall->side == 'h')
@@ -158,7 +158,7 @@ void get_collision(t_cub *data, t_wall *wall, double angle, int px_x) //or a dou
 		else
 			wall->distance = (wall->map.y - data->texture.play.y + (1 - cur.vert.step) / 2) / wall->ray_dir.y;
 	}
-	printf("WALL DISTANCE FOR ANGLE %f IS %f\n", angle, wall->distance);
+	//printf("WALL DISTANCE FOR ANGLE %f IS %f\n", angle, wall->distance);
 //	fclose(file);
 }
 
@@ -171,8 +171,59 @@ double	get_angle(double angle, int i)
 	adjust_angle = 2 * (double)i / (double)WIDTH - 1;
 	// adjust_angle = 1 - 2 * (double)i / (double)WIDTH;
 	cur = angle + (30 * CONVERT) * adjust_angle; //the range of the camera view is -1 to 1 and this translates it to that
-	printf("angle atm is %f\n", cur);
+	//printf("angle atm is %f\n", cur);
 	return (cur * CONVERT);
+}
+
+
+void drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
+{
+	if(px_y <=cur.start)
+	{
+		// fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
+		mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
+	}
+	if(px_y >= cur.end)
+	{
+		// fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
+		mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
+	}
+}
+
+unsigned int get_wall_color(t_wall cur, double angle)
+{
+	if(cur.side == 'v')
+	{
+		if(angle > 0*CONVERT && angle < 180 *CONVERT)
+		{
+			//printf("NORTH\n");// green
+			return(COL_WALL_NORTH);// orange
+			//return(data->texture.no_side);
+		}
+		else
+		{
+		//	printf("SOUTH\n");
+			return(COL_WALL_SOUTH);//green
+			//return(data->texture.so_side);
+		}
+		
+	}
+	if(cur.side == 'h')
+	{
+		if(angle > 90*CONVERT && angle < 270 *CONVERT)
+		{
+		///	printf("WEST\n");
+			return(COL_WALL_WEST);// light blue
+		//return(data->texture.we_side);
+		}
+		else
+		{
+			///printf("EAST \n");
+			return (COL_WALL_EAST); //pink
+			//return(data->texture.ea_side);
+		}
+	}
+	 return (0xFFFFFFFF); 
 }
 
 void ft_draw_map(t_cub *data)
@@ -181,12 +232,12 @@ void ft_draw_map(t_cub *data)
 	t_wall cur;
 	int px_x = 0;
 	int px_y;
-	FILE *file = fopen("output.txt", "a");
-	FILE *file2 = fopen("output2.txt", "a");
-	FILE *file3 = fopen("output3.txt", "a");
-	FILE *file4 = fopen("output4.txt", "a");
-	FILE *file5 = fopen("output5.txt", "a");
-	
+	// FILE *file = fopen("output.txt", "a");
+	// FILE *file2 = fopen("output2.txt", "a");
+	// FILE *file3 = fopen("output3.txt", "a");
+	// FILE *file4 = fopen("output4.txt", "a");
+	// FILE *file5 = fopen("output5.txt", "a");
+	unsigned int from_texture; 
 	cur = (t_wall){0};
 	while (px_x < WIDTH)
 	{
@@ -196,43 +247,33 @@ void ft_draw_map(t_cub *data)
 		if (cur.distance == 0)
 			cur.distance = EPSILON;
 		cur.height = (int)(HEIGHT / cur.distance);
-		fprintf(file5, "CUR HEIGHT %d: %d\n", px_x, cur.height);
+		// fprintf(file5, "CUR HEIGHT %d: %d\n", px_x, cur.height);
 		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
 		cur.end = HEIGHT / 2 + cur.height / 2; // get where the wall ends
 		// if (cur.start < 0)
 		// 	cur.start = 0;
 		// if (cur.end >= HEIGHT)
 		// 	cur.end = HEIGHT - 1;
-		fprintf(file3, " start %d: %d\n", px_x, cur.start);
-		fprintf(file4, "end  %d: %d\n", px_x, cur.end);
+		// fprintf(file3, " start %d: %d\n", px_x, cur.start);
+		// fprintf(file4, "end  %d: %d\n", px_x, cur.end);
 		px_y = 0; //technically a y or a pixel of the slice
 		while (px_y < HEIGHT)
 		{
 			if (px_y >= (int) cur.start && px_y <= (int)cur.end)// in th midddle hve to be the length of the wall*64
 			{
-				fprintf(file,"x => %d, y =>%d\n", px_x, px_y);
-				//mlx_put_pixel(data->image, px_x, px_y, COL_WALL);
-				mlx_put_pixel(data->image, px_x, px_y, data->texture.so_side);
+				from_texture = get_wall_color(cur,angle);
+				mlx_put_pixel(data->image, px_x, px_y, from_texture);
 			}
-			else if(px_y <=cur.start)
-			{
-				fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
-				mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
-			}
-			else if(px_y >= cur.end)
-			{
-				fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
-				mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
-			}
+			drawing_ceil_floor(px_y, px_x,data, cur);
 			px_y++;
 		}
 		px_x++;
 	}
-	fclose(file2);
-	fclose(file);
-	fclose(file3);
-	fclose(file4);
-	fclose(file5);
+	// fclose(file2);
+	// fclose(file);
+	// fclose(file3);
+	// fclose(file4);
+	// fclose(file5);
 }
 
 // 	int	c_2 = 0;
