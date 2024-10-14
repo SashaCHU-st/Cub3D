@@ -14,7 +14,14 @@
 
 # define WIDTH 1080 
 # define HEIGHT 1080
-# define COL_WALL 0xffff64d9
+
+# define COL_WALL_SOUTH 0xFFB34B28// green
+# define COL_WALL_NORTH 0xFF8A2BE2 // orange
+# define COL_WALL_EAST 0xFF6A5ACD// pink
+# define COL_WALL_WEST 0xFFFFC0CB // light blue
+
+//# define COL_WALL_EAST 0xFF6A5AC
+//# define COL_WALL_SOUTH 0xFF00FF7F
 # define COL_BACK 0x9c0164
 # define ANGL_INCREM 60 / WIDTH
 # define CONVERT M_PI / 180
@@ -101,6 +108,10 @@ typedef struct s_textures
 	int		ceiling;
 	int		floor;
 	int		length;
+	mlx_texture_t *no_side;
+	mlx_texture_t *so_side;
+	mlx_texture_t *we_side;
+	mlx_texture_t *ea_side;
 	t_playa	play;
 } t_textures;
 

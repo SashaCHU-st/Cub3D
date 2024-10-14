@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:11:07 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/10 12:22:33 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/12 15:55:22 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ void ea(t_textures *textures, char *line)
 		else
 			error_fun(textures);
 	}
+	// if(textures->ea)
+	// {
+	// 	textures->ea_side = mlx_load_png(textures->ea);
+	// 	if(!textures->ea_side)
+	// 		error_fun(textures);
+	// }
 }
 
 
@@ -81,6 +87,12 @@ void we(t_textures *textures, char *line)
 		else
 			error_fun(textures);
 	}
+	// if(textures->we)
+	// {
+	// 	textures->we_side = mlx_load_png(textures->we);
+	// 	if(!textures->we_side)
+	// 		error_fun(textures);
+	// }
 }
 
 
@@ -117,6 +129,12 @@ void so(t_textures *textures, char *line)
 		else
 			error_fun(textures);
 	}
+	// if(textures->so)
+	// {
+	// 	textures->so_side = mlx_load_png(textures->so);
+	// 	if(!textures->so_side)
+	// 		error_fun(textures);
+	// }
 }
 
 void no(t_textures *textures, char *line)
@@ -152,6 +170,14 @@ void no(t_textures *textures, char *line)
 		else
 			error_fun(textures);
 	}
+	// if(textures->no)
+	// {
+	// 	printf("textures->no %s\n", textures->no);
+	// 	textures->no_side = mlx_load_png(textures->no);
+	// 	if(!textures->no_side)
+	// 		error_fun(textures);
+	// }
+		
 }
 
 

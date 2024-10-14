@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:15 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/10 13:21:33 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/14 10:38:12 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,26 @@ void free_map(t_textures *textures)
 	{
 		free(textures->ceiling_color);
 		textures->ceiling_color = NULL;
+	}
+	if (textures->so_side)
+	{
+		free(textures->so_side);
+		textures->so_side = NULL;
+	}
+	if (textures->we_side)
+	{
+		free(textures->we_side);
+		textures->we_side = NULL;
+	}
+	if (textures->ea_side)
+	{
+		free(textures->ea_side);
+		textures->ea_side = NULL;
+	}
+	if (textures->no_side)
+	{
+		free(textures->no_side);
+		textures->no_side = NULL;
 	}
 }
 

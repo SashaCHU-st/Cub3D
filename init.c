@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:05:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/07 09:18:21 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/14 10:36:58 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,9 @@ void	init(t_textures *textures)
 	textures->ceiling = 0;
 	textures->floor = 0;
 	textures->length = 0;
+	textures->no_side = NULL;
+	textures->so_side = NULL;
+	textures->we_side = NULL;
+	textures->ea_side = NULL;
 	//textures->sides = NULL;
 }
