@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:15:35 by aheinane          #+#    #+#             */
-/*   Updated: 2024/09/26 10:33:29 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:59:27 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
 char	*ft_strcpy(char *dest, const char *src)
 {
 	size_t	i;
@@ -46,4 +47,10 @@ char	*avoid_whitespace(char *str)
 		end--;
 	*(end + 1) = '\0';
 	return (str);
+}
+
+int	print_err_int(char *str)
+{
+	printf("%s\n", str);
+	return (EXIT_FAILURE);
 }

@@ -123,44 +123,61 @@ typedef struct s_cub
 } t_cub;
 // void open_close_file(char **argv);
 
-void 	open_close_file(char **argv, t_textures *textures);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-void	checking_textures(t_textures *textures, char *line);
-char	*ft_strdup(const char *src);
-char	*avoid_whitespace(char *str);
-int		check_space(char ch);
-void	checking_color(t_textures *textures, char *line);
-void	init(t_textures *textures);
-char	*ft_strcpy(char *dest, const char *src);
-char	**ft_split(char const *s, char c);
-void	parse_floor_color(const char *color_string, t_textures *textures, bool is_floor);
-int		ft_atoi(const char *str);
-int		parse_color_values(t_textures *textures,const char *color_string, int *values);
-void	no(t_textures *textures, char *line);
-void	so(t_textures *textures, char *line);
-void	ea(t_textures *textures, char *line);
-void	we(t_textures *textures, char *line);
-void	error_fun(t_textures *textures);
-int		ft_isdigit(int c);
-int		check_if_png(char *str);
-void	all_found(t_textures *textures);\
-void	count_lines(char **argv, t_textures *textures, int fd);
-void	closing(t_textures *textures,char *line, int fd);
-int		map_closed(t_textures *textures);
-int		map_closed(t_textures *textures);
-void	if_new_line_in_middle(t_textures *textures);
-char	*ft_strtrim(char *s1, char *set);
-void	replacing_spaces_with_one(t_textures *textures);
-//void replacing_spaces_with_one_or_two(t_textures *textures);
-int		map_closed(t_textures *textures);
-void	*ft_memset(void *b, int c, size_t len);
-void	replacing_nl_with_zero(t_textures *textures);
-void	free_map(t_textures *textures);
-int		checking_map(t_textures *textures, char *line, int number);
-int		some_rubish_fun(t_textures *textures);
 
-int		flood_fill(char **map, int rows, int cols, int x, int y);
-void	print_map(t_textures *textures);
-int		check_args(char *str);
-uint32_t get_rgba(int r, int g, int b);
+//collision.c
+void 		set_hori(t_cub *data, t_collision *cur, t_wall *wall);
+void 		set_vert(t_cub *data, t_collision *cur, t_wall *wall);
+void		do_dda(t_cub *data, t_collision *cur, t_wall *wall);
+double		set_wall_angle(t_cub *data, t_wall *wall, int i);
+double		get_collision(t_cub *data, t_wall *wall, int px_x);
+void 		open_close_file(char **argv, t_textures *textures);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+void		checking_textures(t_textures *textures, char *line);
+char		*ft_strdup(const char *src); //libft?
+//movement.c
+void		ft_move_up(t_cub *data);
+void		ft_move_down(t_cub *data);
+void		ft_move_left(t_cub *data);
+void		ft_move_right(t_cub *data);
+void 		ft_hook(mlx_key_data_t keydata, void *param);
+//utils.c
+char		*avoid_whitespace(char *str);
+int			print_err_int(char *str);
+int			check_space(char ch);
+char		*ft_strcpy(char *dest, const char *src); //dont we have libft for this?
+//utils2.c
+uint32_t	get_rgba(int r, int g, int b);
+int   		check_coord(int x, int y, t_cub *data);
+
+void		checking_color(t_textures *textures, char *line);
+char		**ft_split(char const *s, char c); //libft?
+void		parse_floor_color(const char *color_string, t_textures *textures, bool is_floor);
+int			ft_atoi(const char *str);
+int			parse_color_values(t_textures *textures,const char *color_string, int *values);
+void		no(t_textures *textures, char *line);
+void		so(t_textures *textures, char *line);
+void		ea(t_textures *textures, char *line);
+void		we(t_textures *textures, char *line);
+void		error_fun(t_textures *textures);
+int			ft_isdigit(int c);
+int			check_if_png(char *str);
+void		all_found(t_textures *textures);\
+void		count_lines(char **argv, t_textures *textures, int fd);
+void		closing(t_textures *textures,char *line, int fd);
+int			map_closed(t_textures *textures);
+int			map_closed(t_textures *textures);
+void		if_new_line_in_middle(t_textures *textures);
+char		*ft_strtrim(char *s1, char *set);
+void		replacing_spaces_with_one(t_textures *textures);
+//void replacing_spaces_with_one_or_two(t_textures *textures);
+int			map_closed(t_textures *textures);
+void		*ft_memset(void *b, int c, size_t len);
+void		replacing_nl_with_zero(t_textures *textures);
+void		free_map(t_textures *textures);
+int			checking_map(t_textures *textures, char *line, int number);
+int			some_rubish_fun(t_textures *textures);
+
+int			flood_fill(char **map, int rows, int cols, int x, int y);
+void		print_map(t_textures *textures);
+int			check_args(char *str);
 #endif

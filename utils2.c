@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   if_png.c                                           :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 20:18:35 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/14 20:18:42 by mspasic          ###   ########.fr       */
+/*   Created: 2024/10/14 19:27:42 by mspasic           #+#    #+#             */
+/*   Updated: 2024/10/14 20:08:25 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_if_png(char *str)
+uint32_t	get_rgba(int r, int g, int b)
 {
-	int	i;
+	return (((uint32_t)r << 24) | ((uint32_t)g << 16) | \
+		((uint32_t)b << 8) | 255);
+}
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	if (i == 0)
-		return (0);
-	if (str[i - 1] == 'g' && str[i - 2] == 'n' && \
-		str[i - 3] == 'p' && str[i - 4] == '.' && \
-		i - 4 != 0)
+int	check_coord(int x, int y, t_cub *data)
+{
+	if (data->texture.map[y][x] == '1')
 		return (1);
 	else
 		return (0);
-}
+}	
