@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/15 16:01:56 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:45:37 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ void ft_draw_map(void *param)
 				mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
 				y_o += (double)from_texture->height/cur.height;
 			}
-			drawing_ceil_floor(px_y, px_x,data, cur);
+			else
+				drawing_ceil_floor(px_y, px_x,data, cur);
 			px_y++;
 		}
 		px_x++;
