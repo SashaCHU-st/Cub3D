@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/15 16:45:37 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:58:51 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,49 +88,101 @@ double get_lll(mlx_texture_t *from_texture, t_wall *cur)
 	return(x);
 }
 
+// void ft_draw_map(void *param)
+
+// {
+// 	t_cub *data;
+
+// 	data = (t_cub *)param;
+// 	double	angle;
+// 	t_wall cur;
+// 	int px_x = 0;
+// 	int px_y;
+// 	mlx_texture_t *from_texture;
+// 	uint32_t		*pixels;
+// 	double x_o;
+// 	double y_o;
+// 	int		tex_y;
+// 	cur = (t_wall){0};
+// 	while (px_x < WIDTH)
+// 	{
+// 		angle = get_collision(data, &cur, px_x); //get the closest wall grid coordinates (horizontal or vertical collision) depending on which way the player is facing
+// 		if (cur.distance == 0)
+// 			cur.distance = EPSILON;
+// 		cur.height = (int)(HEIGHT / cur.distance);
+// 		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
+// 		cur.end = HEIGHT / 2 + cur.height / 2; // get where the wall ends
+// 		px_y = 0; //technically a y or a pixel of the slice
+// 		while (px_y < HEIGHT)
+// 		{
+// 			if (px_y >= (int) cur.start && px_y <= (int)cur.end)
+// 			{
+// 				from_texture = get_wall_color(cur, angle, data);
+// 				pixels = (uint32_t *)from_texture->pixels;
+// 				x_o = get_lll(from_texture, &cur);
+// 				y_o = ((cur.end - HEIGHT/2) + (cur.height/2)) * (double)from_texture->height/cur.height;
+// 				if(y_o < 0)
+// 					y_o = 0;
+// 				tex_y = (int)y_o *from_texture->width + (int)x_o;
+// 				if(tex_y < 0)
+// 					return;
+// 				mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
+// 				y_o += (double)from_texture->height/cur.height;
+// 			}
+// 			else
+// 				drawing_ceil_floor(px_y, px_x,data, cur);
+// 			px_y++;
+// 		}
+// 		px_x++;
+// 	}
+// }
 void ft_draw_map(void *param)
-
 {
-	t_cub *data;
-
-	data = (t_cub *)param;
-	double	angle;
+	t_cub *data = (t_cub *)param;
+	double angle;
 	t_wall cur;
 	int px_x = 0;
 	int px_y;
 	mlx_texture_t *from_texture;
-	uint32_t		*pixels;
+	uint32_t *pixels;
 	double x_o;
+	double y_o_step;
 	double y_o;
-	int		tex_y;
-	cur = (t_wall){0};
+	unsigned int tex_y;
+
 	while (px_x < WIDTH)
 	{
-		angle = get_collision(data, &cur, px_x); //get the closest wall grid coordinates (horizontal or vertical collision) depending on which way the player is facing
+		angle = get_collision(data, &cur, px_x);
 		if (cur.distance == 0)
 			cur.distance = EPSILON;
+		
 		cur.height = (int)(HEIGHT / cur.distance);
-		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
-		cur.end = HEIGHT / 2 + cur.height / 2; // get where the wall ends
-		px_y = 0; //technically a y or a pixel of the slice
+		cur.start = HEIGHT / 2 - cur.height / 2;
+		cur.end = HEIGHT / 2 + cur.height / 2;
+		
+		from_texture = get_wall_color(cur, angle, data);
+		pixels = (uint32_t *)from_texture->pixels;
+		x_o = get_lll(from_texture, &cur);
+		
+		y_o_step = (double)from_texture->height / cur.height;
+		y_o = 0;
+
+		px_y = 0;
 		while (px_y < HEIGHT)
 		{
-			if (px_y >= (int) cur.start && px_y <= (int)cur.end)
+			if (px_y >= cur.start && px_y <= cur.end)
 			{
-				from_texture = get_wall_color(cur, angle, data);
-				pixels = (uint32_t *)from_texture->pixels;
-				x_o = get_lll(from_texture, &cur);
-				y_o = ((cur.end - HEIGHT/2) + (cur.height/2)) * (double)from_texture->height/cur.height;
-				if(y_o < 0)
-					y_o = 0;
-				tex_y = (int)y_o *from_texture->width + (int)x_o;
-				if(tex_y < 0)
-					return;
-				mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
-				y_o += (double)from_texture->height/cur.height;
+				tex_y = ((int)y_o) * from_texture->width + (int)x_o;
+				if (tex_y >= 0 && tex_y < from_texture->width * from_texture->height)
+				{
+					mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
+				}
+				y_o += y_o_step;
 			}
 			else
-				drawing_ceil_floor(px_y, px_x,data, cur);
+			{
+				drawing_ceil_floor(px_y, px_x, data, cur);
+			}
 			px_y++;
 		}
 		px_x++;
