@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/14 14:56:20 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/15 09:34:44 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,205 @@ double	get_angle(double angle, int i)
 	return (cur * CONVERT);
 }
 
+// double get_lll(mlx_texture_t *texture, t_wall *cur)
+// {
+// 	double x;
+// 	if(cur->side == 'h')
+// 	{
+// 		x = (int)fmodf(cur->ray_dir.y * texture->width, texture->width);
+// 	}
+// 	else
+// 		x = (int)fmodf(cur->ray_dir.x*texture->width, texture->width);
+// 	return(x);
+// }
+
+
+// void ft_draw_map(void *param)
+
+// {
+// 	t_cub *data;
+
+// 	data = (t_cub *)param;
+// 	double	angle;
+// 	t_wall cur;
+// 	int px_x = 0;
+// 	int px_y;
+// 	uint32_t		*pixels;
+// 	mlx_texture_t *from_texture;
+// 	double			x_o;
+// 	double			y_o;
+// 	int				tex_y;
+// 	cur = (t_wall){0};
+// 	while (px_x < WIDTH)
+// 	{
+// 		angle = get_angle(data->texture.play.angle, px_x); // get the cur angle until you go through all of them (depends on the width)
+// 		// printf("cur angle is %f\n", angle);
+// 		get_collision(data, &cur, angle, px_x); //get the closest wall grid coordinates (horizontal or vertical collision) depending on which way the player is facing
+// 		if (cur.distance == 0)
+// 			cur.distance = EPSILON;
+// 		cur.height = (int)(HEIGHT / cur.distance);
+// 		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
+// 		cur.end = HEIGHT / 2 + cur.height / 2; // get where the wall ends
+// 		px_y = 0; //technically a y or a pixel of the slice
+// 		while (px_y < HEIGHT)
+// 		{
+// 			if (px_y >= (int) cur.start && px_y <= (int)cur.end)
+// 			{
+// 				from_texture = get_wall_color(cur,angle, data);
+// 				pixels = (uint32_t *)from_texture->pixels;
+// 				x_o = get_lll(from_texture,&cur );
+// 				y_o = ((int)cur.start - HEIGHT/2) + (((int)cur.end-(int)cur.start)/2) * (double)from_texture->height/((int)cur.end- (int)cur.start);
+// 				if (y_o < 0)
+// 					y_o = 0;
+// 				tex_y = (int)y_o*from_texture->width + (int)x_o;
+// 				if (tex_y < 0)
+// 					return ;
+// 				mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
+// 				y_o += (double)from_texture->height/((int)cur.end- (int)cur.start);
+// 			}
+// 			drawing_ceil_floor(px_y, px_x,data, cur);
+// 			px_y++;
+// 		}
+// 		px_x++;
+// 	}
+// }
+
+
+///////////////////////////////////SOMEHOW WORKING WITH TEXTURES BUT NOT CORRECT
+
+// void drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
+// {
+// 	if(px_y <=cur.start)
+// 	{
+// 		// fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
+// 		mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
+// 	}
+// 	if(px_y >= cur.end)
+// 	{
+// 		// fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
+// 		mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
+// 	}
+// }
+
+// mlx_texture_t *get_wall_color(t_wall cur, double angle, t_cub *data)
+// {
+// 	if(cur.side == 'v')
+// 	{
+// 		if(angle > 0*CONVERT && angle < 180 *CONVERT)
+// 		{
+// 			//printf("NORTH\n");// green
+// 			//return(COL_WALL_NORTH);// orange
+// 			return(data->texture.no_side);
+// 		}
+// 		else
+// 		{
+// 		//	printf("SOUTH\n");
+// 			//return(COL_WALL_SOUTH);//green
+// 		return(data->texture.so_side);
+// 		}
+		
+// 	}
+// 	if(cur.side == 'h')
+// 	{
+// 		if(angle > 90*CONVERT && angle < 270 *CONVERT)
+// 		{
+// 		///	printf("WEST\n");
+// 			//return(COL_WALL_WEST);// light blue
+// 			return(data->texture.we_side);
+// 		}
+// 		else
+// 		{
+// 			///printf("EAST \n");
+// 			//return (COL_WALL_EAST); //pink
+// 			return(data->texture.ea_side);
+// 		}
+// 	}
+// 	return(NULL);
+// }
+
+
+// int	norm_color(int c)
+// {
+// 	unsigned char	bytes[4];
+// 	int				reversed;
+// 	unsigned char	reversed_bytes[4];
+
+// 	ft_memcpy(bytes, &c, sizeof(int));
+// 	reversed_bytes[0] = bytes[3];
+// 	reversed_bytes[1] = bytes[2];
+// 	reversed_bytes[2] = bytes[1];
+// 	reversed_bytes[3] = bytes[0];
+// 	ft_memcpy(&reversed, reversed_bytes, sizeof(int));
+// 	return (reversed);
+// }
+
+
+
+// double get_lll(mlx_texture_t *texture, t_wall *cur)
+// {
+// 	double x;
+// 	if (cur->side == 'v')
+// 	{
+// 		x = fmodf(cur->ray_dir.y * texture->width, texture->width);
+// 	}
+// 	else
+// 	{
+// 		x = fmodf(cur->ray_dir.x * texture->width, texture->width);
+// 	}
+// 	return x;
+// }
+
+// void ft_draw_map(void *param)
+// {
+// 	t_cub *data = (t_cub *)param;
+// 	double angle;
+// 	t_wall cur;
+// 	int px_x = 0;
+// 	uint32_t *pixels;
+// 	mlx_texture_t *from_texture;
+// 	double x_o, y_o;
+// unsigned int tex_y;
+
+// 	while (px_x < WIDTH)
+// 	{
+// 		angle = get_angle(data->texture.play.angle, px_x);
+// 		get_collision(data, &cur, angle, px_x); // Ensure this correctly sets hit points and distances
+// 		if (cur.distance == 0)
+// 			cur.distance = EPSILON;
+
+// 		cur.height = (int)(HEIGHT / cur.distance);
+// 		cur.start = HEIGHT / 2 - cur.height / 2;
+// 		cur.end = HEIGHT / 2 + cur.height / 2;
+
+// 		for (int px_y = 0; px_y < HEIGHT; px_y++)
+// 		{
+// 			if (px_y >= cur.start && px_y <= cur.end)
+// 			{
+// 				from_texture = get_wall_color(cur, angle, data);
+// 				if (!from_texture)
+// 					continue;
+
+// 				pixels = (uint32_t *)from_texture->pixels;
+// 				x_o = get_lll(from_texture, &cur);
+// 				y_o = (px_y - cur.start) * (double)from_texture->height / cur.height;
+// 				if (y_o < 0) 
+// 					y_o = 0;
+// 				if (y_o >= from_texture->height) 
+// 					y_o = from_texture->height - 1;
+// 				tex_y = (int)y_o * from_texture->width + (int)x_o;
+// 				if (tex_y < 0 || tex_y >= from_texture->width * from_texture->height)
+// 					continue;
+// 				mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
+// 			}
+
+// 			drawing_ceil_floor(px_y, px_x, data, cur); // Draw ceiling and floor if necessary
+// 		}
+// 		px_x++;
+// 	}
+// }
+
+
+///////////////////////////////////////////////WORKING WITH COLORS
 
 void drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
 {
@@ -233,11 +432,6 @@ void ft_draw_map(void *param)
 	t_wall cur;
 	int px_x = 0;
 	int px_y;
-	// FILE *file = fopen("output.txt", "a");
-	// FILE *file2 = fopen("output2.txt", "a");
-	// FILE *file3 = fopen("output3.txt", "a");
-	// FILE *file4 = fopen("output4.txt", "a");
-	// FILE *file5 = fopen("output5.txt", "a");
 	//uint32_t		*pixels;
 	unsigned int from_texture; 
 	cur = (t_wall){0};
@@ -249,11 +443,8 @@ void ft_draw_map(void *param)
 		if (cur.distance == 0)
 			cur.distance = EPSILON;
 		cur.height = (int)(HEIGHT / cur.distance);
-		// fprintf(file5, "CUR HEIGHT %d: %d\n", px_x, cur.height);
 		cur.start = HEIGHT / 2 - cur.height / 2; //get where the wall starts
 		cur.end = HEIGHT / 2 + cur.height / 2; // get where the wall ends
-		// fprintf(file3, " start %d: %d\n", px_x, cur.start);
-		// fprintf(file4, "end  %d: %d\n", px_x, cur.end);
 		px_y = 0; //technically a y or a pixel of the slice
 		while (px_y < HEIGHT)
 		{
@@ -261,124 +452,11 @@ void ft_draw_map(void *param)
 			{
 				from_texture = get_wall_color(cur,angle);
 				mlx_put_pixel(data->image, px_x, px_y, from_texture);
-// =======
-// 				// fprintf(file,"x => %d, y =>%d\n", px_x, px_y);
-// 				mlx_put_pixel(data->image, px_x, px_y, COL_WALL);
-// 			}
-// 			else if(px_y <=cur.start)
-// 			{
-// 				// fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
-// 				mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
-// 			}
-// 			else if(px_y >= cur.end)
-// 			{
-// 				// fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
-// 				mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
-// >>>>>>> main
 			}
 			drawing_ceil_floor(px_y, px_x,data, cur);
 			px_y++;
 		}
 		px_x++;
-	}
-	// fclose(file2);
-	// fclose(file);
-	// fclose(file3);
-	// fclose(file4);
-	// fclose(file5);
-}
-
-// 	int	c_2 = 0;
-// 	double	x;
-// 	double y = 0;
-
-// 	while(y < data->image->height)
-// 	{
-// 		x = 0;
-// 		while (x < data->image->width)
-// 		{
-// 			if (data->map[c][c_2] == 1)
-// 				draw_sqr(x, y, COL_WALL, data);
-// 			else
-// 				draw_sqr(x, y, COL_BACK, data);
-// 			x = x + 32;
-// 			c_2++;
-// 			if (c_2 == 8)
-// 			{
-// 				c_2 = 0;
-// 				c++;
-// 			}
-// 		}
-// 		y = y + 32;
-// 	}
-	// mlx_put_pixel(data->image, (data->play.x * 32) + (64/ 2), (data->play.y * 32) + (64/ 2), COL_WALL);
-	// printf("check %d and %d and %d\n", param->map[1][4], image->width, image->height);
-	// for (double i = 0; i < image->width; ++i)
-	// {
-	// 	for (double y = 0; y < image->height; ++y)
-	// 	{
-	// 		double color = ft_pixel(
-	// 			rand() % 0xFF, // R
-	// 			rand() % 0xFF, // G
-	// 			rand() % 0xFF, // B
-	// 			rand() % 0xFF  // A
-	// 		);
-	// 		mlx_put_pixel(image, i, y, color);
-	// 	}
-	// }	
-// }
-
-void	ft_move_up(t_cub *data)
-{
-	t_vector	angle;
-
-	angle.x = cos(data->texture.play.angle * CONVERT);
-	angle.y = sin(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), (int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
-	{
-		data->texture.play.x += 0.5 * angle.x;
-		data->texture.play.y += 0.5 * angle.y;
-	}
-}
-
-void	ft_move_down(t_cub *data)
-{
-	t_vector	angle;
-
-	angle.x = cos(data->texture.play.angle * CONVERT);
-	angle.y = sin(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)), (int)(data->texture.play.y - (0.5 * angle.y)), data) == 0)
-	{
-		data->texture.play.x -= 0.5 * angle.x;
-		data->texture.play.y -= 0.5 * angle.y;
-	}
-}
-
-void	ft_move_left(t_cub *data)
-{
-	t_vector	angle;
-
-	angle.x = sin(data->texture.play.angle * CONVERT);
-	angle.y = cos(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
-	(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
-	{
-		data->texture.play.x += 0.5 * angle.x;
-		data->texture.play.y += 0.5 * angle.y;
-	}
-}
-
-void	ft_move_right(t_cub *data)
-{
-	t_vector	angle;
-
-	angle.x = sin(data->texture.play.angle * CONVERT);
-	angle.y = cos(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)), \
-	(int)(data->texture.play.y - (0.5 * angle.y)), data) == 0)
-	{
-		data->texture.play.x -= 0.5 * angle.x;
-		data->texture.play.y -= 0.5 * angle.y;
 	}
 }
 
@@ -433,70 +511,14 @@ int	print_err_int(char *str)
 	return (EXIT_FAILURE);
 }
 
-// int *set_map(int i, int *map)
-// {
-// 	int j = 0;
-
-// 	if (i == 0 || i == 7)
-// 	{
-// 		while (j < 8)
-// 			map[j++] = 1;
-// 	}
-// 	else
-// 	{
-// 		while(j < 8)
-// 		{
-// 			if (j == 0 || j == 7)
-// 				map[j] = 1;
-// 			else
-// 				map[j] = 0;
-// 			j++;
-// 		}
-// 	}
-
 
 int	main(int argc, char **argv)
 {
 	t_cub param;
 
 	param = (t_cub){0};
-
-// 	param.map = malloc(sizeof(int *) * 8);
-// 	if (!param.map)
-// 		return (1);
-// 	while (i < 8)
-// 	{
-// 		param.map[i] = malloc(sizeof(int) * 8);
-// 		if (!param.map[i])
-// 		{
-// 			while (i != -1)
-// 				free(param.map[i--]);
-// 			free(param.map);
-// 			return (1);
-// 		}
-// 		param.map[i] = set_map (i, param.map[i]);
-// 		i++;
-// 	}
 	param.texture = (t_textures){0};
 	param.texture.play = (t_playa){0};
-	// printf("check if set: param %zu, text %d, play %f\n", param.size, param.texture.found, param.texture.play.angle);
-	// param.map = malloc(sizeof(int *) * 8);
-	// if (!param.map)
-	// 	return (1);
-	// while (i < 8)
-	// {
-	// 	param.map[i] = malloc(sizeof(int) * 8);
-	// 	if (!param.map[i])
-	// 	{
-	// 		while (i != -1)
-	// 			free(param.map[i--]);
-	// 		free(param.map);
-	// 		return (1);
-	// 	}
-	// 	param.map[i] = set_map (i, param.map[i]);
-	// 	i++;
-	// }
-	// printf("map space check %d\n", param.map[3][3]);
 	if (argc == 2)
 	{
 		if (check_args(argv[1]))
@@ -504,32 +526,11 @@ int	main(int argc, char **argv)
 		open_close_file(argv, &param.texture);
 		if (initialise_mlx(&param))
 			return (print_err_int("Error: Failed to init MLX."));
-// <<<<<<< textures
-// 		// mlx_loop_hook(param.mlx, ft_randomize, &param);
-// 		// mlx_key_hook(param.mlx, &ft_hook, &param);
-// 		// param.texture.north = mlx_texture_to_image(param.mlx,param.texture.no_side);
-// 		// param.texture.south = mlx_texture_to_image(param.mlx,param.texture.so_side);
-// 		// param.texture.west = mlx_texture_to_image(param.mlx,param.texture.we_side);
-// 		// param.texture.east = mlx_texture_to_image(param.mlx,param.texture.ea_side);
-// 		ft_draw_map(&param);
-// =======
 		mlx_key_hook(param.mlx, &ft_hook, &param);
 		mlx_loop_hook(param.mlx, &ft_draw_map, &param);
 		mlx_loop(param.mlx);
 		mlx_terminate(param.mlx);
 		free_map(&param.texture);
-// 		while (i < param.texture.how_many_lines)
-// 		{
-// 			free(param.texture.map[i]);
-// 			i++;
-// 		}
-// 		free(param.texture.map);
-// 		free(param.texture.no);
-// 		free(param.texture.so);
-// 		free(param.texture.ea);
-// 		free(param.texture.we);
-// 		free(param.texture.floor_color);
-// 		free(param.texture.ceiling_color);
 	}
 	else
 		return (print_err_int("Error: Please provide only a valid *.cub file."));

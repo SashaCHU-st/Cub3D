@@ -163,4 +163,12 @@ int		flood_fill(char **map, int rows, int cols, int x, int y);
 void	print_map(t_textures *textures);
 int		check_args(char *str);
 uint32_t get_rgba(int r, int g, int b);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
+
+
+void	ft_move_up(t_cub *data);
+void	ft_move_down(t_cub *data);
+void	ft_move_left(t_cub *data);
+void	ft_move_right(t_cub *data);
+int   check_coord(int x, int y, t_cub *data);
 #endif

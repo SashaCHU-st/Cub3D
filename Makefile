@@ -20,6 +20,7 @@ SRCS = main.c \
 		map_closed.c \
 		map_last.c \
 		if_png.c \
+		movement.c \
 
 
 		# open.c \
@@ -28,7 +29,8 @@ SRCS = main.c \
 
 OBJ = $(SRCS:.c=.o)
 
-CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS =  -Wall -Wextra -Werror 
+#-fsanitize=address -g
 
 MLX42FLAGS = -lglfw -lm
 
