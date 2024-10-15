@@ -6,13 +6,13 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/15 13:11:27 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:41:25 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-////////////////////////////////CDRWAING COLORS
+
 void drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
 {
 	if(px_y <=cur.start)
@@ -31,8 +31,6 @@ unsigned int get_wall_color(t_wall cur, double angle)
 {
 	if(cur.side == 'v')
 	{
-		// printf("angle %f\n", angle);
-		// printf("180 %f\n",180 *CONVERT);
 		if(angle > 0*CONVERT && angle < 180 *CONVERT)
 		{
 			//printf("NORTH\n");// green
@@ -80,7 +78,6 @@ void ft_draw_map(void *param)
 	cur = (t_wall){0};
 	while (px_x < WIDTH)
 	{
-
 		angle = get_collision(data, &cur, px_x); //get the closest wall grid coordinates (horizontal or vertical collision) depending on which way the player is facing
 		if (cur.distance == 0)
 			cur.distance = EPSILON;
@@ -101,6 +98,7 @@ void ft_draw_map(void *param)
 		px_x++;
 	}
 }
+
 
 
 int	initialise_mlx(t_cub *data)

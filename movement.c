@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:21:55 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/15 12:54:09 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:22:50 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,7 @@ void ft_hook(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_D)
 		ft_move_right(data);		
 	if (keydata.key == MLX_KEY_LEFT)
-	{
 		data->texture.play.angle -= 15;
-		if (data->texture.play.angle < 0)
-			data->texture.play.angle += 360;
-		printf("ANGLE %f\n", data->texture.play.angle);
-	}
 	if (keydata.key == MLX_KEY_RIGHT)
-	{
 		data->texture.play.angle += 15;
-		if (data->texture.play.angle >= 360)
-				data->texture.play.angle -=360; 
-		printf("ANGLE %f\n", data->texture.play.angle);
-	}
-
-
 }
