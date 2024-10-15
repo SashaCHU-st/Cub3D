@@ -176,6 +176,7 @@ void		replacing_nl_with_zero(t_textures *textures);
 void		free_map(t_textures *textures);
 int			checking_map(t_textures *textures, char *line, int number);
 int			some_rubish_fun(t_textures *textures);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 int			flood_fill(char **map, int rows, int cols, int x, int y);
 void		print_map(t_textures *textures);

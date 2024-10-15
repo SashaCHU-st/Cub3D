@@ -25,7 +25,8 @@ SRCS = main.c \
 
 OBJ = $(SRCS:.c=.o)
 
-CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g #remember to remove extra flags
+CFLAGS =  -Wall -Wextra -Werror 
+#-fsanitize=address -g #remember to remove extra flags
 
 MLX42FLAGS = -lglfw -lm
 

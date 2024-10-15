@@ -6,12 +6,27 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/15 10:41:25 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:01:56 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+
+int	norm_color(int c)
+{
+	unsigned char	bytes[4];
+	int				reversed;
+	unsigned char	reversed_bytes[4];
+
+	ft_memcpy(bytes, &c, sizeof(int));
+	reversed_bytes[0] = bytes[3];
+	reversed_bytes[1] = bytes[2];
+	reversed_bytes[2] = bytes[1];
+	reversed_bytes[3] = bytes[0];
+	ft_memcpy(&reversed, reversed_bytes, sizeof(int));
+	return (reversed);
+}
 
 void drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
 {
@@ -27,21 +42,21 @@ void drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
 	}
 }
 
-unsigned int get_wall_color(t_wall cur, double angle)
+mlx_texture_t *get_wall_color(t_wall cur, double angle, t_cub *data)
 {
 	if(cur.side == 'v')
 	{
 		if(angle > 0*CONVERT && angle < 180 *CONVERT)
 		{
 			//printf("NORTH\n");// green
-			return(COL_WALL_NORTH);// orange
-			//return(data->texture.no_side);
+			//return(COL_WALL_NORTH);// orange
+			return(data->texture.no_side);
 		}
 		else
 		{
 		//	printf("SOUTH\n");
-			return(COL_WALL_SOUTH);//green
-			//return(data->texture.so_side);
+			//return(COL_WALL_SOUTH);//green
+			return(data->texture.so_side);
 		}
 		
 	}
@@ -50,19 +65,28 @@ unsigned int get_wall_color(t_wall cur, double angle)
 		if(angle > 90*CONVERT && angle < 270 *CONVERT)
 		{
 		///	printf("WEST\n");
-			return(COL_WALL_WEST);// light blue
-		//return(data->texture.we_side);
+			//return(COL_WALL_WEST);// light blue
+			return(data->texture.we_side);
 		}
 		else
 		{
 			///printf("EAST \n");
-			return (COL_WALL_EAST); //pink
-			//return(data->texture.ea_side);
+			//return (COL_WALL_EAST); //pink
+			return(data->texture.ea_side);
 		}
 	}
-	 return (0xFFFFFFFF); 
+	return (NULL);
 }
 
+double get_lll(mlx_texture_t *from_texture, t_wall *cur)
+{
+	double x;
+	if(cur->side == 'v')
+		x = (int)fmodf(cur->ray_dir.x * from_texture->width, from_texture->width);
+	else
+		x = (int)fmodf(cur->ray_dir.y * from_texture->width, from_texture->width);
+	return(x);
+}
 
 void ft_draw_map(void *param)
 
@@ -74,7 +98,11 @@ void ft_draw_map(void *param)
 	t_wall cur;
 	int px_x = 0;
 	int px_y;
-	unsigned int from_texture; 
+	mlx_texture_t *from_texture;
+	uint32_t		*pixels;
+	double x_o;
+	double y_o;
+	int		tex_y;
 	cur = (t_wall){0};
 	while (px_x < WIDTH)
 	{
@@ -89,8 +117,17 @@ void ft_draw_map(void *param)
 		{
 			if (px_y >= (int) cur.start && px_y <= (int)cur.end)
 			{
-				from_texture = get_wall_color(cur, angle);
-				mlx_put_pixel(data->image, px_x, px_y, from_texture);
+				from_texture = get_wall_color(cur, angle, data);
+				pixels = (uint32_t *)from_texture->pixels;
+				x_o = get_lll(from_texture, &cur);
+				y_o = ((cur.end - HEIGHT/2) + (cur.height/2)) * (double)from_texture->height/cur.height;
+				if(y_o < 0)
+					y_o = 0;
+				tex_y = (int)y_o *from_texture->width + (int)x_o;
+				if(tex_y < 0)
+					return;
+				mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
+				y_o += (double)from_texture->height/cur.height;
 			}
 			drawing_ceil_floor(px_y, px_x,data, cur);
 			px_y++;
