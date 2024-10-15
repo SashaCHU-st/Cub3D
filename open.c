@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/14 10:29:25 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:58:46 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,13 +189,12 @@ void open_close_file(char **argv, t_textures *textures)
 	open_first(fd, argv, textures);
 	count_lines(argv,textures,fd);
 	open_second(fd, argv, textures);
-
 	//printf("1\n");
 	textures->no_side = mlx_load_png(textures->no);
 	if(!textures->no_side)
 		error_fun(textures);
 	//printf("2\n");
-	textures->so_side = mlx_load_png(textures->so);
+	textures->so_side = mlx_load_png(textures->so); //also free the previous pngs
 	if(!textures->so_side)
 		error_fun(textures);
 //	printf("3\n");
@@ -203,7 +202,7 @@ void open_close_file(char **argv, t_textures *textures)
 	if(!textures->we_side)
 		error_fun(textures);
 //	printf("4\n");
-	textures->so_side = mlx_load_png(textures->so);
-	if(!textures->so_side)
+	textures->ea_side = mlx_load_png(textures->ea);
+	if(!textures->ea_side)
 		error_fun(textures);
 }
