@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:21:55 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/15 14:05:10 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:22:58 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_move_down(t_cub *data)
 	}
 }
 
-void	ft_move_left(t_cub *data)
+void	ft_move_right(t_cub *data)
 {
 	t_vector	angle;
 
@@ -52,7 +52,7 @@ void	ft_move_left(t_cub *data)
 	}
 }
 
-void	ft_move_right(t_cub *data)
+void	ft_move_left(t_cub *data)
 {
 	t_vector	angle;
 
