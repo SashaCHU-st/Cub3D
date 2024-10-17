@@ -49,6 +49,7 @@ typedef struct s_wall
 	t_vector	camera;
     double  distance;
     double  height;
+	double	hit;
 	int  start;
 	int  end;
 	char	side;	

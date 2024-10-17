@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/14 18:58:46 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/18 00:07:54 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void open_close_file(char **argv, t_textures *textures)
 	count_lines(argv,textures,fd);
 	open_second(fd, argv, textures);
 	//printf("1\n");
-	textures->no_side = mlx_load_png(textures->no);
+	textures->no_side = mlx_load_png(textures->no);  //NEEDS A CHECK FOR TEXTURE DIMENSIONS they need to be all the same (e.g. 64 x 64)
 	if(!textures->no_side)
 		error_fun(textures);
 	//printf("2\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/16 13:29:06 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/18 02:16:56 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,24 @@ mlx_texture_t *get_wall_color(t_wall cur, double angle, t_cub *data)
 
 double get_lll(mlx_texture_t *from_texture, t_wall *cur)
 {
-	double x;
-	if(cur->side == 'v')
-		x = (int)fmodf(cur->ray_dir.x * from_texture->width, from_texture->width);
-	else
-		x = (int)fmodf(cur->ray_dir.y * from_texture->width, from_texture->width);
+	int	x;
+
+	printf("hit %f\n", cur->hit);
+	x = (int)(cur->hit * (double)from_texture->width);
+	printf("1 checking x of the texture %d\n", x);
+	// if (x < 0 || x >= 64)
+	// 	printf("this shouldnt have happened\n");
+	if((cur->side == 'v' && cur->ray_dir.y < 0) || (cur->side = 'h' && cur->ray_dir.x > 0))
+		// printf("this shouldnt have happened\n");
+		x = from_texture->width - x - 1; //correction based on ray direction and wall orientation
+	// if (x < 0)
+	// 	x = 0;
+	// if (x >= from_texture->width)
+	// 	x = from_texture->width - 1;
+			// x = (int)fmodf(cur->ray_dir.x * from_texture->width, from_texture->width);
+	// else
+		// x = (int)fmodf(cur->ray_dir.y * from_texture->width, from_texture->width);
+	// printf("2 checking x of the texture %d\n", x);
 	return(x);
 }
 
@@ -97,9 +110,10 @@ void ft_draw_map(void *param)
 	int px_y;
 	mlx_texture_t *from_texture;
 	uint32_t *pixels;
-	double x_o;
-	//double y_o_step;
-	double y_o;
+	int x_o;
+	double y_o_step;
+	double start_tex;
+	int y_o;
 	unsigned int tex_y;
 
 	while (px_x < WIDTH)
@@ -108,22 +122,30 @@ void ft_draw_map(void *param)
 		if (cur.distance == 0)
 			cur.distance = EPSILON;
 		cur.height = fabs((HEIGHT / cur.distance));
-		cur.start = HEIGHT / 2 - cur.height / 2;
-		cur.end = HEIGHT / 2 + cur.height / 2;
+		cur.start = fabs(HEIGHT / 2 - cur.height / 2);
+		cur.end = fabs(HEIGHT / 2 + cur.height / 2);
+		// printf("curdist %f\n", cur.height);
 		from_texture = get_wall_color(cur, angle, data);
 		pixels = (uint32_t *)from_texture->pixels;
-		x_o = get_lll(from_texture, &cur);	
-		///y_o_step = (double)from_texture->height / cur.height;
-		y_o = 0;
+		x_o = get_lll(from_texture, &cur);
+		if (cur.height == 0)
+			cur.height = EPSILON;	
+		y_o_step = ((double)from_texture->height / cur.height);
+		// printf("step is %f, cur.start is %d and end is %d\n", y_o_step, cur.start, cur.end);
 		px_y = 0;
+		start_tex = (cur.start - HEIGHT / 2 + cur.height / 2) * y_o_step;
+		// printf("start is %f from %f\n", start_tex, (cur.start - HEIGHT / 2 + cur.height / 2) );
+		y_o = (int)(start_tex) & (from_texture->height - 1);
 		while (px_y < HEIGHT)
 		{
 			if (px_y >= cur.start && px_y <= cur.end)
 			{
-				tex_y = (int)y_o * from_texture->width + (int)x_o;
-				if (tex_y >= 0 && tex_y < from_texture->width * from_texture->height)
+				y_o = (int)(start_tex) & (from_texture->height - 1);
+				start_tex += y_o_step;
+				tex_y = (int)(y_o * from_texture->width + x_o);
+				if (tex_y < from_texture->width * from_texture->height)
 					mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
-				y_o += (double)from_texture->height / cur.height;
+				// y_o += (double)from_texture->height / cur.height;
 			}
 			else
 				drawing_ceil_floor(px_y, px_x, data, cur);
