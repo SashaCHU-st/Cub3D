@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:15 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/14 20:17:33 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/15 13:39:45 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,13 @@ void free_map(t_textures *textures)
 		textures->ceiling_color = NULL;
 	}
 	if (textures->so_side)
-	{
-		free(textures->so_side);
-		textures->so_side = NULL;
-	}
+		mlx_delete_texture(textures->so_side);
 	if (textures->we_side)
-	{
-		free(textures->we_side);
-		textures->we_side = NULL;
-	}
+		mlx_delete_texture(textures->we_side);
 	if (textures->ea_side)
-	{
-		free(textures->ea_side);
-		textures->ea_side = NULL;
-	}
+		mlx_delete_texture(textures->ea_side);
 	if (textures->no_side)
-	{
-		free(textures->no_side);
-		textures->no_side = NULL;
-	}
+		mlx_delete_texture(textures->no_side);
 }
 
 
