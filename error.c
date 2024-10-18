@@ -63,25 +63,13 @@ void free_map(t_textures *textures)
 		textures->ceiling_color = NULL;
 	}
 	if (textures->so_side)
-	{
 		mlx_delete_texture(textures->so_side);
-		textures->so_side = NULL;
-	}
 	if (textures->we_side)
-	{
 		mlx_delete_texture(textures->we_side);
-		textures->we_side = NULL;
-	}
 	if (textures->ea_side)
-	{
 		mlx_delete_texture(textures->ea_side);
-		textures->ea_side = NULL;
-	}
 	if (textures->no_side)
-	{
 		mlx_delete_texture(textures->no_side);
-		textures->no_side = NULL;
-	}
 }
 
 

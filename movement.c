@@ -31,24 +31,10 @@ void	ft_move_down(t_cub *data)
 
 	angle.x = cos(data->texture.play.angle * CONVERT);
 	angle.y = sin(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)), (int)(data->texture.play.y - (0.5 * angle.y)), data) == 0)
+	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)), (int)(data->texture.play.y - (0.5 * angle.y)), data) == 0 )
 	{
 		data->texture.play.x -= 0.5 * angle.x;
 		data->texture.play.y -= 0.5 * angle.y;
-	}
-}
-
-void	ft_move_left(t_cub *data)
-{
-	t_vector	angle;
-
-	angle.x = sin(data->texture.play.angle * CONVERT);
-	angle.y = cos(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
-	(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
-	{
-		data->texture.play.x += 0.5 * angle.x;
-		data->texture.play.y += 0.5 * angle.y;
 	}
 }
 
@@ -56,13 +42,25 @@ void	ft_move_right(t_cub *data)
 {
 	t_vector	angle;
 
-	angle.x = sin(data->texture.play.angle * CONVERT);
-	angle.y = cos(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)), \
-	(int)(data->texture.play.y - (0.5 * angle.y)), data) == 0)
+	angle.x = cos((data->texture.play.angle + 90) * CONVERT);
+	angle.y = sin((data->texture.play.angle + 90) * CONVERT);
+	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), (int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
 	{
-		data->texture.play.x -= 0.5 * angle.x;
-		data->texture.play.y -= 0.5 * angle.y;
+		data->texture.play.x += 0.5 * angle.x;
+		data->texture.play.y += 0.5 * angle.y;
+	}
+}
+
+void	ft_move_left(t_cub *data)
+{
+	t_vector	angle;
+
+	angle.x = cos((data->texture.play.angle - 90) * CONVERT);
+	angle.y = sin((data->texture.play.angle - 90) * CONVERT);
+	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), (int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
+	{
+		data->texture.play.x += 0.5 * angle.x;
+		data->texture.play.y += 0.5 * angle.y;
 	}
 }
 
@@ -82,7 +80,15 @@ void ft_hook(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_D)
 		ft_move_right(data);		
 	if (keydata.key == MLX_KEY_LEFT)
+	{
 		data->texture.play.angle -= 15;
+		if (data->texture.play.angle < 0)
+			data->texture.play.angle += 360;
+	}
 	if (keydata.key == MLX_KEY_RIGHT)
+	{
 		data->texture.play.angle += 15;
+		if (data->texture.play.angle >= 360)
+			data->texture.play.angle -= 360;
+	}
 }

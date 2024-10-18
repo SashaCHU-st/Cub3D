@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:28:46 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/14 19:58:44 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/18 12:52:47 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ double	get_collision(t_cub *data, t_wall *wall, int px_x)
 			wall->distance = (wall->map.x - data->texture.play.x + (1 - cur.hori.step) / 2) / EPSILON;
 		else
 			wall->distance = (wall->map.x - data->texture.play.x + (1 - cur.hori.step) / 2) / wall->ray_dir.x;
+		wall->hit = data->texture.play.y + wall->distance * wall->ray_dir.y; //y coordinate where the wall was hit
 	}
 	else
 	{
@@ -126,6 +127,11 @@ double	get_collision(t_cub *data, t_wall *wall, int px_x)
 			wall->distance = (wall->map.y - data->texture.play.y + (1 - cur.vert.step) / 2) / EPSILON;
 		else
 			wall->distance = (wall->map.y - data->texture.play.y + (1 - cur.vert.step) / 2) / wall->ray_dir.y;
+		wall->hit = data->texture.play.x + wall->distance * wall->ray_dir.x; //x coordinate where the wall was hit
 	}
+	//printf("found distance at %f\n", wall->distance);
+	if (wall->hit < 0 || wall->hit > 1) //to ensure x is between 0 and 1; normalizing
+		wall->hit -= floor(wall->hit);
+	// printf("hit is %f\n", wall->hit);
 	return (angle);
 }
