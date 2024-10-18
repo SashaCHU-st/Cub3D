@@ -21,7 +21,8 @@ SRCS = main.c \
 		movement.c \
 		if_png.c \
 		utils.c \
-		utils2.c
+		utils2.c \
+		checking_textures_first.c \
 
 OBJ = $(SRCS:.c=.o)
 

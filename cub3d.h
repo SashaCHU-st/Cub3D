@@ -60,9 +60,6 @@ typedef struct s_playa
     double x;
     double y;
     double  angle;
-    // double  dir_ray;
-    // double  min_ray;
-    // double  max_ray;
 } t_playa;
 
 typedef struct s_intersection
@@ -170,16 +167,22 @@ int			map_closed(t_textures *textures);
 void		if_new_line_in_middle(t_textures *textures);
 char		*ft_strtrim(char *s1, char *set);
 void		replacing_spaces_with_one(t_textures *textures);
-//void replacing_spaces_with_one_or_two(t_textures *textures);
 int			map_closed(t_textures *textures);
 void		*ft_memset(void *b, int c, size_t len);
 void		replacing_nl_with_zero(t_textures *textures);
 void		free_map(t_textures *textures);
 int			checking_map(t_textures *textures, char *line, int number);
-int			some_rubish_fun(t_textures *textures);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
+void		*ft_memcpy(void *dst, const void *src, size_t n);
+int			check_args(char *str);
 
+///checkin_textures_first.c
+void if_all_6_found(t_textures *textures, int fd);
+void checking_validity(t_textures *textures, int fd );
+void	count_lines(char **argv, t_textures *textures, int fd);
+void checking_the_info( t_textures *textures, int i);
+void open_first(int fd, char **argv, t_textures *textures);
+
+int			some_rubish_fun(t_textures *textures);
 int			flood_fill(char **map, int rows, int cols, int x, int y);
 void		print_map(t_textures *textures);
-int			check_args(char *str);
 #endif

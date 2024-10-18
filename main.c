@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/18 10:57:14 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:20:39 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ double get_lll(mlx_texture_t *from_texture, t_wall *cur)
 {
 	int	x;
 
-	printf("hit %f\n", cur->hit);
+	//printf("hit %f\n", cur->hit);
 	x = (int)(cur->hit * (double)from_texture->width);
-	printf("1 checking x of the texture %d\n", x);
+//	printf("1 checking x of the texture %d\n", x);
 	// if (x < 0 || x >= 64)
 	// 	printf("this shouldnt have happened\n");
 	if((cur->side == 'v' && cur->ray_dir.y < 0) || (cur->side = 'h' && cur->ray_dir.x > 0))
@@ -125,8 +125,8 @@ void ft_draw_map(void *param)
 					mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
 				// y_o += (double)from_texture->height / cur.height;
 			}
-			else
-				drawing_ceil_floor(px_y, px_x, data, cur);
+			//else
+			drawing_ceil_floor(px_y, px_x, data, cur);
 			px_y++;
 		}
 		px_x++;

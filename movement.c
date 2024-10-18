@@ -6,14 +6,11 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:21:55 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/18 10:45:49 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:49:36 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-
-
 
 
 void	ft_move_up(t_cub *data)
@@ -41,7 +38,6 @@ void	ft_move_down(t_cub *data)
 		data->texture.play.y -= 0.5 * angle.y;
 	}
 }
-
 
 void	ft_move_right(t_cub *data)
 {
@@ -89,13 +85,11 @@ void ft_hook(mlx_key_data_t keydata, void *param)
 		data->texture.play.angle -= 15;
 		if (data->texture.play.angle < 0)
 			data->texture.play.angle += 360;
-		printf("ANGLE %f\n", data->texture.play.angle);
 	}
 	if (keydata.key == MLX_KEY_RIGHT)
 	{
 		data->texture.play.angle += 15;
 		if (data->texture.play.angle >= 360)
 			data->texture.play.angle -= 360;
-		printf("ANGLE %f\n", data->texture.play.angle);
 	}
 }
