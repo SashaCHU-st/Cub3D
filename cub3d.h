@@ -185,4 +185,11 @@ void open_first(int fd, char **argv, t_textures *textures);
 int			some_rubish_fun(t_textures *textures);
 int			flood_fill(char **map, int rows, int cols, int x, int y);
 void		print_map(t_textures *textures);
+// =======
+// int			some_rubish_fun(t_textures *textures);
+
+// int			flood_fill(char **map, int rows, int cols, int x, int y);
+// void		print_map(t_textures *textures);
+// int			check_args(char *str);
+// >>>>>>> main
 #endif

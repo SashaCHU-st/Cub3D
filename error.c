@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:15 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/15 14:11:19 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:39:45 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void free_map(t_textures *textures)
 		mlx_delete_texture(textures->we_side);
 	if (textures->ea_side)
 		mlx_delete_texture(textures->ea_side);
-
 	if (textures->no_side)
 		mlx_delete_texture(textures->no_side);
 }

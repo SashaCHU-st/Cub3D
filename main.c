@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/18 12:20:39 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:45:00 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
 
 
 int	norm_color(int c)
@@ -118,12 +119,31 @@ void ft_draw_map(void *param)
 		{
 			if (px_y >= cur.start && px_y <= cur.end)
 			{
+
 				y_o = (int)(start_tex) & (from_texture->height - 1);
 				start_tex += y_o_step;
 				tex_y = (int)(y_o * from_texture->width + x_o);
 				if (tex_y < from_texture->width * from_texture->height)
 					mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
 				// y_o += (double)from_texture->height / cur.height;
+// =======
+// 				from_texture = get_wall_color(cur, angle);
+// 				mlx_put_pixel(data->image, px_x, px_y, from_texture);
+// // =======
+// // 				// fprintf(file,"x => %d, y =>%d\n", px_x, px_y);
+// // 				mlx_put_pixel(data->image, px_x, px_y, COL_WALL);
+// // 			}
+// // 			else if(px_y <=cur.start)
+// // 			{
+// // 				// fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
+// // 				mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
+// // 			}
+// // 			else if(px_y >= cur.end)
+// // 			{
+// // 				// fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
+// // 				mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
+// // >>>>>>> main
+// >>>>>>> main
 			}
 			//else
 			drawing_ceil_floor(px_y, px_x, data, cur);
