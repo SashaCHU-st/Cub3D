@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/18 02:16:56 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/18 10:57:14 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,10 @@ int	norm_color(int c)
 void drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
 {
 	if(px_y <=cur.start)
-	{
-		// fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
 		mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
-	}
 	if(px_y >= cur.end)
-	{
-		// fprintf(file2,"x => %d, y =>%d\n", px_x, px_y);
+
 		mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
-	}
 }
 
 mlx_texture_t *get_wall_color(t_wall cur, double angle, t_cub *data)
@@ -47,33 +42,16 @@ mlx_texture_t *get_wall_color(t_wall cur, double angle, t_cub *data)
 	if(cur.side == 'v')
 	{
 		if(angle > 0*CONVERT && angle < 180 *CONVERT)
-		{
-			//printf("NORTH\n");// green
-			//return(COL_WALL_NORTH);// orange
 			return(data->texture.no_side);
-		}
 		else
-		{
-		//	printf("SOUTH\n");
-			//return(COL_WALL_SOUTH);//green
 			return(data->texture.so_side);
-		}
-		
 	}
 	if(cur.side == 'h')
 	{
 		if(angle > 90*CONVERT && angle < 270 *CONVERT)
-		{
-		///	printf("WEST\n");
-			//return(COL_WALL_WEST);// light blue
 			return(data->texture.we_side);
-		}
 		else
-		{
-			///printf("EAST \n");
-			//return (COL_WALL_EAST); //pink
 			return(data->texture.ea_side);
-		}
 	}
 	return (NULL);
 }
@@ -154,67 +132,6 @@ void ft_draw_map(void *param)
 		px_x++;
 	}
 }
-// void ft_draw_map(void *param)
-// {
-// 	t_cub *data = (t_cub *)param;
-// 	double angle;
-// 	t_wall cur;
-// 	int px_x = 0;
-// 	int px_y;
-// 	mlx_texture_t *from_texture;
-// 	uint32_t *pixels;
-// 	double x_o;
-// 	double y_o;
-// 	unsigned int tex_y;
-
-// 	while (px_x < WIDTH) {
-// 		angle = get_collision(data, &cur, px_x); // Perform collision detection
-// 		if (cur.distance <= 0) {
-// 			printf("Distance is zero or negative for px_x: %d\n", px_x);
-// 			px_x++;
-// 			continue; // Skip rendering if distance is invalid
-// 		}
-
-// 		cur.height = (int)(HEIGHT / cur.distance);
-// 		cur.start = HEIGHT / 2 - cur.height / 2;
-// 		cur.end = HEIGHT / 2 + cur.height / 2;
-
-// 		// Debugging output
-// 		printf("Rendering Column: %d, Height: %f, Start: %d, End: %d\n", 
-// 			px_x, cur.height, cur.start, cur.end);
-
-// 		from_texture = get_wall_color(cur, angle, data);
-// 		pixels = (uint32_t *)from_texture->pixels;
-// 		x_o = get_lll(from_texture, &cur);
-
-// 		// Reset y_o before rendering
-// 		y_o = 0;
-// 		px_y = 0;
-
-// 		while (px_y < HEIGHT) {
-// 			if (px_y >= cur.start && px_y <= cur.end) {
-// 				tex_y = (int)y_o * from_texture->width + (int)x_o;
-
-// 				// Debugging for texture coordinates
-// 				if (tex_y < 0 || tex_y >= from_texture->width * from_texture->height) {
-// 					printf("Invalid texture coordinate: %d for px_x: %d, px_y: %d\n", tex_y, px_x, px_y);
-// 					y_o += (double)from_texture->height / cur.height;
-// 					px_y++;
-// 					continue; // Skip invalid texture coordinates
-// 				}
-
-// 				mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
-// 				y_o += (double)from_texture->height / cur.height; // Move to the next texture row
-// 			} else {
-// 				drawing_ceil_floor(px_y, px_x, data, cur); // Draw ceiling/floor
-// 			}
-// 			px_y++;
-// 		}
-// 		px_x++;
-// 	}
-// }
-
-
 
 
 int	initialise_mlx(t_cub *data)
