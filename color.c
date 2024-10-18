@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/14 20:16:13 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/18 17:09:46 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,17 @@ int	is_valid_number(const char *str)
 	return (1);
 }
 
+void	free_color(int j, char	**colors)
+{
+	j = 0;
+	while (colors[j] != NULL)
+	{
+		free(colors[j]);
+		j++;
+	}
+	free(colors);
+}
+
 int	parse_color_values(t_textures *textures, const char *color_string, \
 	int *values)
 {
@@ -39,6 +50,7 @@ int	parse_color_values(t_textures *textures, const char *color_string, \
 	int		i;
 	int		j;
 
+	j = 0;
 	i = 0;
 	colors = ft_split(color_string, ',');
 	if (!colors)
@@ -53,24 +65,12 @@ int	parse_color_values(t_textures *textures, const char *color_string, \
 		}
 		else
 		{
-			j = 0;
-			while (colors[j] != NULL)
-			{
-				free(colors[j]);
-				j++;
-			}
-			free(colors);
+			free_color(j, colors);
 			error_fun(textures);
 		}
 		i++;
 	}
-	j = 0;
-	while (colors[j] != NULL)
-	{
-		free(colors[j]);
-		j++;
-	}
-	free(colors);
+	free_color(j, colors);
 	if (i == 3)
 		return (1);
 	else

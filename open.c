@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/18 00:07:54 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/18 17:12:45 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,12 @@ void map_started_fun (int map_started, int i, t_textures *textures, int fd)
 	if (map_started)
 	{
 		if (textures->line[i] =='\n')
-			closing(textures,textures->line, fd);
+			closing(textures, fd);
 		if (textures->line[i] != '\n')
 		{
 			textures->map_valid = checking_map(textures, textures->line, textures->map_index);
 			if (!textures->map_valid)
-				closing(textures,textures->line, fd);
+				closing(textures, fd);
 			if (textures->map_index > textures->how_many_lines)
 			{
 				error_fun(textures);

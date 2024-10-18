@@ -109,6 +109,7 @@ typedef struct s_textures
 	int		ceiling;
 	int		floor;
 	int		length;
+	int		*found_flag;
 	mlx_texture_t *no_side;
 	mlx_texture_t *so_side;
 	mlx_texture_t *we_side;
@@ -164,7 +165,7 @@ int			ft_isdigit(int c);
 int			check_if_png(char *str);
 void		all_found(t_textures *textures);\
 void		count_lines(char **argv, t_textures *textures, int fd);
-void		closing(t_textures *textures,char *line, int fd);
+void		closing(t_textures *textures, int fd);
 int			map_closed(t_textures *textures);
 int			map_closed(t_textures *textures);
 void		if_new_line_in_middle(t_textures *textures);
