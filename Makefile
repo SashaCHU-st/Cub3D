@@ -21,7 +21,9 @@ SRCS = main.c \
 		movement.c \
 		if_png.c \
 		utils.c \
-		utils2.c
+		utils2.c \
+		vert_and_hori.c \
+		drawing_wall.c \
 
 OBJ = $(SRCS:.c=.o)
 

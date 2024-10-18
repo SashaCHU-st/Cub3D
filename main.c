@@ -6,57 +6,13 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/18 16:58:35 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:53:20 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-int	norm_color(int c)
-{
-	unsigned char	bytes[4];
-	int				reversed;
-	unsigned char	reversed_bytes[4];
-
-	ft_memcpy(bytes, &c, sizeof(int));
-	reversed_bytes[0] = bytes[3];
-	reversed_bytes[1] = bytes[2];
-	reversed_bytes[2] = bytes[1];
-	reversed_bytes[3] = bytes[0];
-	ft_memcpy(&reversed, reversed_bytes, sizeof(int));
-	return (reversed);
-}
-
-void drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
-{
-	if(px_y <=cur.start)
-		mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
-	if(px_y >= cur.end)
-		mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
-}
-
-mlx_texture_t *get_wall_color(t_wall cur, double angle, t_cub *data)
-{
-	if(cur.side == 'v')
-	{
-		if(angle > 0*CONVERT && angle < 180 *CONVERT)
-			return(data->texture.no_side);
-		else
-			return(data->texture.so_side);
-		
-	}
-	if(cur.side == 'h')
-	{
-		if(angle > 90*CONVERT && angle < 270 *CONVERT)
-			return(data->texture.we_side);
-		else
-			return(data->texture.ea_side);
-	}
-	return (NULL);
-}
-
-double get_lll(mlx_texture_t *from_texture, t_wall *cur)
+double get_the_size(mlx_texture_t *from_texture, t_wall *cur)
 {
 	int	x;
 
@@ -65,6 +21,8 @@ double get_lll(mlx_texture_t *from_texture, t_wall *cur)
 		x = from_texture->width - x - 1;
 	return(x);
 }
+
+
 
 void ft_draw_map(void *param)
 {
@@ -89,17 +47,14 @@ void ft_draw_map(void *param)
 		cur.height = fabs((HEIGHT / cur.distance));
 		cur.start = fabs(HEIGHT / 2 - cur.height / 2);
 		cur.end = fabs(HEIGHT / 2 + cur.height / 2);
-		// printf("curdist %f\n", cur.height);
 		from_texture = get_wall_color(cur, angle, data);
 		pixels = (uint32_t *)from_texture->pixels;
-		x_o = get_lll(from_texture, &cur);
+		x_o = get_the_size(from_texture, &cur);
 		if (cur.height == 0)
 			cur.height = EPSILON;	
 		y_o_step = ((double)from_texture->height / cur.height);
-		// printf("step is %f, cur.start is %d and end is %d\n", y_o_step, cur.start, cur.end);
 		px_y = 0;
 		start_tex = (cur.start - HEIGHT / 2 + cur.height / 2) * y_o_step;
-		// printf("start is %f from %f\n", start_tex, (cur.start - HEIGHT / 2 + cur.height / 2) );
 		y_o = (int)(start_tex) & (from_texture->height - 1);
 		while (px_y < HEIGHT)
 		{
@@ -110,7 +65,6 @@ void ft_draw_map(void *param)
 				tex_y = (int)(y_o * from_texture->width + x_o);
 				if (tex_y < from_texture->width * from_texture->height)
 					mlx_put_pixel(data->image, px_x, px_y, norm_color(pixels[tex_y]));
-				// y_o += (double)from_texture->height / cur.height;
 			}
 			else
 				drawing_ceil_floor(px_y, px_x, data, cur);
