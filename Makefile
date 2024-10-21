@@ -27,6 +27,10 @@ SRCS = main.c \
 		color_parsing.c \
 		parsing_started.c \
 		finilizing_map.c \
+		tex_west.c \
+		tex_east.c \
+		tex_south.c \
+		tex_north.c \
 		
 
 OBJ = $(SRCS:.c=.o)
