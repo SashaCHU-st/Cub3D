@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:28:46 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/18 12:52:47 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:33:09 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,10 @@ double	set_wall_angle(t_cub *data, t_wall *wall, int i)
 	return (angle);
 }
 
+/*wall->hit: x or y coordinate where the wall was hit 
+depending on the grid line (h or v); needs to be
+between 0 and 1, so a check is needed to see if it 
+needs to be 'normalised'*/
 double	get_collision(t_cub *data, t_wall *wall, int px_x)
 {
 	t_collision	cur;
@@ -114,24 +118,10 @@ double	get_collision(t_cub *data, t_wall *wall, int px_x)
 	set_vert(data, &cur, wall);
 	do_dda(data, &cur, wall);
 	if (wall->side == 'h')
-	{
-		if (wall->ray_dir.x == 0)
-			wall->distance = (wall->map.x - data->texture.play.x + (1 - cur.hori.step) / 2) / EPSILON;
-		else
-			wall->distance = (wall->map.x - data->texture.play.x + (1 - cur.hori.step) / 2) / wall->ray_dir.x;
-		wall->hit = data->texture.play.y + wall->distance * wall->ray_dir.y; //y coordinate where the wall was hit
-	}
+		set_wall_dist(wall, data, cur.hori.step);
 	else
-	{
-		if (wall->ray_dir.y == 0)
-			wall->distance = (wall->map.y - data->texture.play.y + (1 - cur.vert.step) / 2) / EPSILON;
-		else
-			wall->distance = (wall->map.y - data->texture.play.y + (1 - cur.vert.step) / 2) / wall->ray_dir.y;
-		wall->hit = data->texture.play.x + wall->distance * wall->ray_dir.x; //x coordinate where the wall was hit
-	}
-	//printf("found distance at %f\n", wall->distance);
-	if (wall->hit < 0 || wall->hit > 1) //to ensure x is between 0 and 1; normalizing
+		set_wall_dist(wall, data, cur.vert.step);
+	if (wall->hit < 0 || wall->hit > 1)
 		wall->hit -= floor(wall->hit);
-	// printf("hit is %f\n", wall->hit);
 	return (angle);
 }

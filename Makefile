@@ -9,6 +9,7 @@ MLX42 = ./MLX42/build/libmlx42.a
 SRCS = main.c \
 		check_args.c \
 		collision.c \
+		draw_window.c \
 		open.c \
 		get_next_line.c \
 		get_next_line_utils.c \
@@ -20,6 +21,7 @@ SRCS = main.c \
 		map_last.c \
 		movement.c \
 		if_png.c \
+		slice.c \
 		utils.c \
 		utils2.c \
 		checking_textures_first.c \
