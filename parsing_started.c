@@ -6,33 +6,38 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:38:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 12:41:49 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:28:04 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	finilizing(int	map_started, t_textures *textures, int fd)
+void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 {
-	if (!map_started)
-		error_fun(textures);
-	if (textures->player_found == 0)
-		error_fun(textures);
-	if_new_line_in_middle(textures);
-	replacing_spaces_with_one(textures);
-	textures->map[textures->map_index] = NULL;
-	textures->how_many_lines = textures->map_index;
-	replacing_nl_with_zero(textures);
-	if (!map_closed(textures))
-		error_fun(textures);
-	if (textures->how_many_lines < 3)
+	if (map_started)
 	{
-		free(textures->line);
-		close(fd);
-		error_fun(textures);
+		if (textures->line[i] == '\n')
+			closing(textures, fd);
+		if (textures->line[i] != '\n')
+		{
+			textures->map_valid = checking_map(textures,
+					textures->line, textures->map_index);
+			if (!textures->map_valid)
+				closing(textures, fd);
+			if (textures->map_index > textures->how_many_lines)
+			{
+				error_fun(textures);
+			}
+			textures->map[textures->map_index] = ft_strdup(textures->line);
+			if (!textures->map[textures->map_index])
+			{
+				free(textures->line);
+				close(fd);
+				error_fun(textures);
+			}
+			textures->map_index++;
+		}
 	}
-	free(textures->line);
-	close(fd);
 }
 
 void	reading_lines(int fd, t_textures *textures, int i)
@@ -51,92 +56,65 @@ void	reading_lines(int fd, t_textures *textures, int i)
 	}
 }
 
-void if_map_not_started(	int	map_started, t_textures *textures, int i, int j)
+void	open_second(int fd, char **argv, t_textures *text)
 {
-	if (!map_started)
-	{
-		if (textures->line[i] == '1' || textures->line[i] == '0'
-			|| textures->line[i] == ' ')
-			map_started = 1;
-		j++;
-	}
-}
-
-void	open_second(int fd, char **argv, t_textures *textures)
-{
-	int	map_started;
 	int	i;
 	int	j;
 
-	map_started = 0;
 	i = 0;
 	j = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		error_fun(textures);
-	reading_lines(fd,textures, i);
-	while (textures->line != NULL)
+		error_fun(text);
+	reading_lines(fd, text, i);
+	while (text->line != NULL)
 	{
 		i = 0;
-		if (!map_started)
+		if (!text->map_started)
 		{
-			if (textures->line[i] == '1' || textures->line[i] == '0'
-				|| textures->line[i] == ' ')
-				map_started = 1;
+			if (text->line[i] == '1' || text->line[i] == '0'
+				|| text->line[i] == ' ')
+				text->map_started = 1;
 			j++;
 		}
-		map_started_fun(map_started, i, textures, fd);
-		free(textures->line);
-		textures->line = NULL;
-		textures->line = get_next_line(fd);
+		map_started_fun(text->map_started, i, text, fd);
+		free(text->line);
+		text->line = NULL;
+		text->line = get_next_line(fd);
 	}
-	finilizing(map_started, textures, fd);
+	finilizing(text->map_started, text, fd);
 }
 
-void	open_first(int fd, char **argv, t_textures *textures)
+int	if_is_map_started(const char *line)
 {
-	int	i;
+	if (line[0] == '1')
+		return (1);
+	else if (line[0] == '0')
+		return (1);
+	else if (line[0] == ' ')
+		return (1);
+	else
+		return (0);
+}
 
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		error_fun(textures);
-	textures->line = get_next_line(fd);
+int	count_map_lines(t_textures *textures, int fd)
+{
+	int	line_count;
+	int	map_started;
+
+	line_count = 0;
+	map_started = 0;
 	while (textures->line != NULL)
 	{
-		i = 0;
-		if (textures->line[i] == '\0' || textures->line[i] == '\n')
+		if (!map_started && if_is_map_started(textures->line))
+			map_started = 1;
+		if (map_started)
 		{
-			free(textures->line);
-			textures->line = get_next_line(fd);
-			continue ;
+			if (textures->line[0] != '\0' && textures->line[0] != '\n')
+				line_count++;
 		}
-		checking_the_info(textures, i);
 		free(textures->line);
-		textures->line = NULL;
 		textures->line = get_next_line(fd);
 	}
-	all_found(textures);
-	close (fd);
+	return (line_count);
 }
-
-// void	open_close_file(char **argv, t_textures *textures)
-// {
-// 	int	fd;
-
-// 	fd = 0;
-// 	open_first(fd, argv, textures);
-// 	count_lines(argv, textures, fd);
-// 	open_second(fd, argv, textures);
-// 	textures->no_side = mlx_load_png(textures->no); //NEEDS A CHECK FOR TEXTURE DIMENSIONS they need to be all the same (e.g. 64 x 64)
-// 	if (!textures->no_side)
-// 		error_fun(textures);
-// 	textures->so_side = mlx_load_png(textures->so);
-// 	if (!textures->so_side)
-// 		error_fun(textures);
-// 	textures->we_side = mlx_load_png(textures->we);
-// 	if (!textures->we_side)
-// 		error_fun(textures);
-// 	textures->ea_side = mlx_load_png(textures->ea);
-// 	if (!textures->ea_side)
-// 		error_fun(textures);
-// }

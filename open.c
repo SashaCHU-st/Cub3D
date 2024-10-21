@@ -6,48 +6,26 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 12:41:23 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:27:41 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	checking_validity(t_textures *textures, int fd )
+void	checking_validity(t_textures *textures, int fd)
 {
-	int	line_count;
-	int	map_started;
-	int	i;
-
-	i = 0;
-	map_started = 0;
-	line_count = 0;
 	if (textures->found == 6)
 	{
-		while (textures->line != NULL)
-		{
-			i = 0;
-			if (!map_started && (textures->line [i] == '1'
-					|| textures->line [i] == '0' || textures->line[i] == ' '))
-				map_started = 1;
-			if (map_started)
-			{
-				if (textures->line [i] != '\0' && textures->line [i] != '\n')
-					line_count++;
-			}
-			free(textures->line);
-			textures->line = NULL;
-			textures->line = get_next_line(fd);
-		}
-		textures->how_many_lines = line_count;
+		textures->how_many_lines = count_map_lines(textures, fd);
 	}
-	else if (textures->found != 6)
+	else
 	{
 		close(fd);
 		error_fun(textures);
 	}
 }
 
-void	count_lines(char **argv, t_textures *textures, int fd)
+void	scanning_map(char **argv, t_textures *textures, int fd)
 {
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
@@ -76,32 +54,30 @@ void	checking_the_info( t_textures *textures, int i)
 		error_fun(textures);
 }
 
-void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
+void	open_first(int fd, char **argv, t_textures *textures)
 {
-	if (map_started)
+	int	i;
+
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		error_fun(textures);
+	textures->line = get_next_line(fd);
+	while (textures->line != NULL)
 	{
-		if (textures->line[i] == '\n')
-			closing(textures, fd);
-		if (textures->line[i] != '\n')
+		i = 0;
+		if (textures->line[i] == '\0' || textures->line[i] == '\n')
 		{
-			textures->map_valid = checking_map(textures,
-					textures->line, textures->map_index);
-			if (!textures->map_valid)
-				closing(textures, fd);
-			if (textures->map_index > textures->how_many_lines)
-			{
-				error_fun(textures);
-			}
-			textures->map[textures->map_index] = ft_strdup(textures->line);
-			if (!textures->map[textures->map_index])
-			{
-				free(textures->line);
-				close(fd);
-				error_fun(textures);
-			}
-			textures->map_index++;
+			free(textures->line);
+			textures->line = get_next_line(fd);
+			continue ;
 		}
+		checking_the_info(textures, i);
+		free(textures->line);
+		textures->line = NULL;
+		textures->line = get_next_line(fd);
 	}
+	all_found(textures);
+	close (fd);
 }
 
 void	open_close_file(char **argv, t_textures *textures)
@@ -110,9 +86,9 @@ void	open_close_file(char **argv, t_textures *textures)
 
 	fd = 0;
 	open_first(fd, argv, textures);
-	count_lines(argv, textures, fd);
+	scanning_map(argv, textures, fd);
 	open_second(fd, argv, textures);
-	textures->no_side = mlx_load_png(textures->no); //NEEDS A CHECK FOR TEXTURE DIMENSIONS they need to be all the same (e.g. 64 x 64)
+	textures->no_side = mlx_load_png(textures->no);
 	if (!textures->no_side)
 		error_fun(textures);
 	textures->so_side = mlx_load_png(textures->so);

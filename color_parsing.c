@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:19:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 12:08:48 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:25:09 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,3 @@ void	checking_color(t_textures *textures, char *line)
 		parse_floor_color(textures->ceiling_color, textures, false);
 	}
 }
-

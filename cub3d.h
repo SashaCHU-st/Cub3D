@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 12:43:05 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:26:14 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_textures
 	int				len_next;
 	int				length;
 	int				*found_flag;
+	int				map_started;
 	mlx_texture_t	*no_side;
 	mlx_texture_t	*so_side;
 	mlx_texture_t	*we_side;
@@ -121,7 +122,6 @@ typedef struct s_cub
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_textures	texture;
-	
 }	t_cub;
 
 //check_args.c
@@ -193,18 +193,23 @@ void			ft_move_left(t_cub *data);
 void			ft_hook(mlx_key_data_t keydata, void *param);
 
 //open.c
-void			checking_validity(t_textures *textures, int fd );
-void			count_lines(char **argv, t_textures *textures, int fd);
+void			open_close_file(char **argv, t_textures *textures);
+void			open_first(int fd, char **argv, t_textures *textures);
 void			checking_the_info( t_textures *textures, int i);
+void			scanning_map(char **argv, t_textures *textures, int fd);
+void			checking_validity(t_textures *textures, int fd);
+
+//parsing_statered.c
+int				count_map_lines(t_textures *textures, int fd);
+int				if_is_map_started(const char *line);
+void			open_second(int fd, char **argv, t_textures *text);
+void			reading_lines(int fd, t_textures *textures, int i);
 void			map_started_fun(int map_started, int i,
 					t_textures *textures, int fd);
 
-//parsing_statered.c
-void			open_second(int fd, char **argv, t_textures *textures);
-void			open_first(int fd, char **argv, t_textures *textures);
-void			open_close_file(char **argv, t_textures *textures);
-void			finilizing(int	map_started, t_textures *textures, int fd);
-void			reading_lines(int fd, t_textures *textures, int i);
+//finilizing.c
+
+void			finilizing(int map_started, t_textures *textures, int fd);
 
 //textures.c
 void			ea(t_textures *textures, char *line);
