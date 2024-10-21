@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:27:42 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/21 12:51:16 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:32:50 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ uint32_t	get_rgba(int r, int g, int b)
 
 int	check_coord(int x, int y, t_cub *data)
 {
-	if (data->texture.map[y][x] == '1')
+	printf("RRRR %f\n", data->wall.distance);
+	if (data->texture.map[y][x] == '1' || data->wall.distance >= 0.7)
 		return (1);
 	else
 		return (0);

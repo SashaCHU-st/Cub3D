@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 13:26:14 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:02:53 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_cub
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_textures	texture;
+	t_wall		wall;
 }	t_cub;
 
 //check_args.c

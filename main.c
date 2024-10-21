@@ -6,28 +6,27 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 12:59:10 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:40:34 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double get_the_size(mlx_texture_t *from_texture, t_wall *cur)
+double	get_the_size(mlx_texture_t *from_texture, t_wall *cur)
 {
 	int	x;
 
 	x = (int)(cur->hit * (double)from_texture->width);
-	if((cur->side == 'v' && cur->ray_dir.y < 0) || (cur->side = 'h' && cur->ray_dir.x > 0))
+	if ((cur->side == 'v' && cur->ray_dir.y < 0)
+		|| (cur->side == 'h' && cur->ray_dir.x > 0))
 		x = from_texture->width - x - 1;
-	return(x);
+	return (x);
 }
 
-
-
-void ft_draw_map(void *param)
+void	ft_draw_map(void *param)
 {
-	t_cub *data = (t_cub *)param;
-	mlx_texture_t *from_texture;
+	t_cub	*data = (t_cub *)param;
+	mlx_texture_t*from_texture;
 	t_wall cur;
 	uint32_t *pixels;
 	double angle;
@@ -44,7 +43,6 @@ void ft_draw_map(void *param)
 		angle = get_collision(data, &cur, px_x);
 		if (cur.distance == 0)
 			cur.distance = EPSILON;
-		//printf("!!!!%f\n", cur.distance);
 		cur.height = fabs((HEIGHT / cur.distance));
 		cur.start = fabs(HEIGHT / 2 - cur.height / 2);
 		cur.end = fabs(HEIGHT / 2 + cur.height / 2);
@@ -77,32 +75,34 @@ void ft_draw_map(void *param)
 
 int	initialise_mlx(t_cub *data)
 {
-	if (!(data->mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true)))
+	data->mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
+	data->image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	if (!data->mlx)
 	{
 		perror(mlx_strerror(mlx_errno));
 		mlx_terminate(data->mlx);
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
-	if (!(data->image = mlx_new_image(data->mlx, WIDTH, HEIGHT)))
+	if (!data->image)
 	{
 		mlx_close_window(data->mlx);
 		perror(mlx_strerror(mlx_errno));
 		mlx_terminate(data->mlx);
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	if (mlx_image_to_window(data->mlx, data->image, 0, 0) == -1)
 	{
 		mlx_close_window(data->mlx);
 		perror(mlx_strerror(mlx_errno));
 		mlx_terminate(data->mlx);
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
 
 int	main(int argc, char **argv)
 {
-	t_cub param;
+	t_cub	param;
 
 	param = (t_cub){0};
 	param.texture = (t_textures){0};
@@ -121,6 +121,7 @@ int	main(int argc, char **argv)
 		free_map(&param.texture);
 	}
 	else
-		return (print_err_int("Error: Please provide only a valid *.cub file."));
+		return (print_err_int
+			("Error: Please provide only a valid *.cub file."));
 	return (EXIT_SUCCESS);
 }
