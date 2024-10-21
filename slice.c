@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   drawing_wall.c                                     :+:      :+:    :+:   */
+/*   slice.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 17:33:11 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 09:23:14 by aheinane         ###   ########.fr       */
+/*   Created: 2024/10/21 16:21:31 by mspasic           #+#    #+#             */
+/*   Updated: 2024/10/21 17:54:11 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,29 @@ int	norm_color(int c)
 	return (reversed);
 }
 
-void	drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
+void	drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall *cur)
 {
-	if (px_y <= cur.start)
+	if (px_y <= cur->start)
 		mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
-	if (px_y >= cur.end)
+	if (px_y >= cur->end)
 		mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
 }
 
-mlx_texture_t	*get_wall_color(t_wall cur, double angle, t_cub *data)
+void	slice(t_cub *data, t_vector_i px)
 {
-	if (cur.side == 'v')
+	uint32_t	*pixels;
+
+	pixels = (uint32_t *)data->ture.cur->pixels;
+	if (px.y >= data->cur.start && px.y <= data->cur.end)
 	{
-		if (angle > 0 * CONVERT && angle < 180 * CONVERT)
-			return (data->texture.no_side);
-		else
-			return (data->texture.so_side);
+		data->ture.tex.y = (int)(data->ture.start_tex) & \
+			(data->ture.cur->height - 1);
+		data->ture.start_tex += data->ture.step;
+		data->ture.i = (int)(data->ture.tex.y * data->ture.cur->width + \
+			data->ture.tex.x);
+		if (data->ture.i < data->ture.cur->width * data->ture.cur->height)
+			mlx_put_pixel(data->image, px.x, px.y, \
+				norm_color(pixels[data->ture.i]));
 	}
-	if (cur.side == 'h')
-	{
-		if (angle > 90 * CONVERT && angle < 270 * CONVERT)
-			return (data->texture.we_side);
-		else
-			return (data->texture.ea_side);
-	}
-	return (NULL);
+	drawing_ceil_floor(px.y, px.x, data, &data->cur);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 14:02:53 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:52:25 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,22 @@
 
 # define WIDTH 1080 
 # define HEIGHT 1080
-# define COL_BACK 0x9c0164
-# define ANGL_INCREM 60 / WIDTH
+
 # define CONVERT M_PI / 180
 # define EPSILON 0.0001
-# define PLANE tan(THIRTY)
-# define THIRTY 30 * CONVERT
-# define NINETY 90 * CONVERT
-# define TWOSEVEN 270 * CONVERT
-# define THREESIX 360 * CONVERT
+# define PLANE tan(30 * M_PI / 180)
 
 typedef struct s_vector
 {
 	double	x;
 	double	y;
 }	t_vector;
+
+typedef struct s_vector_i
+{
+	int	x;
+	int	y;
+}	t_vector_i;
 
 typedef struct s_wall
 {
@@ -74,6 +75,15 @@ typedef struct s_collision
 	t_intersection	vert;
 	t_vector		iterate;
 }	t_collision;
+
+typedef struct s_draw_tex
+{
+	mlx_texture_t	*cur;
+	t_vector_i		tex;
+	unsigned int	i;
+	double			start_tex;
+	double			step;
+}	t_draw_tex;
 
 typedef struct s_textures
 {
@@ -122,7 +132,8 @@ typedef struct s_cub
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_textures	texture;
-	t_wall		wall;
+	t_wall		cur;
+	t_draw_tex	ture;
 }	t_cub;
 
 //check_args.c
@@ -134,9 +145,10 @@ void			when_player_found(t_textures *textures, char *line, int i);
 int				checking_map(t_textures *textures, char *line, int n);
 
 ///collision.c
+void			set_hori(t_cub *data, t_collision *cur, t_wall *wall);
+void			set_vert(t_cub *data, t_collision *cur, t_wall *wall);
 void			do_dda(t_cub *data, t_collision *cur, t_wall *wall);
 double			set_wall_angle(t_cub *data, t_wall *wall, int i);
-void			checking_side(t_wall *wall, t_collision cur, t_cub *data);
 double			get_collision(t_cub *data, t_wall *wall, int px_x);
 
 //colr.c
@@ -152,11 +164,12 @@ void			parse_floor_color(const char *color_string,
 					t_textures *textures, bool is_floor);
 void			checking_color(t_textures *textures, char *line);
 
-///drawing_wall.c
-int				norm_color(int c);
-void			drawing_ceil_floor(int px_y, int px_x, t_cub *data,
-					t_wall cur );
-mlx_texture_t	*get_wall_color(t_wall cur, double angle, t_cub *data);
+//draw_window.c
+mlx_texture_t	*get_wall_color(t_wall *cur, double angle, t_cub *data);
+double			get_tex_x(mlx_texture_t *from_texture, t_wall *cur);
+void			set_draw_tex(t_cub *data, double angle);
+void			calc_wall(t_wall *cur);
+void			ft_draw_window(void *param);
 
 //error.c
 void			free_map_two(t_textures *textures);
@@ -165,13 +178,11 @@ void			free_map(t_textures *textures);
 void			error_fun(t_textures *textures);
 void			closing(t_textures *textures, int fd);
 
+//finilizing.c
+void			finilizing(int map_started, t_textures *textures, int fd);
+
 //if_png.c
 int				check_if_png(char *str);
-
-//main.c
-double			get_the_size(mlx_texture_t *from_texture, t_wall *cur);
-void			ft_draw_map(void *param);
-int				initialise_mlx(t_cub *data);
 
 //map_closed.c
 int				map_closed(t_textures *textures);
@@ -208,9 +219,11 @@ void			reading_lines(int fd, t_textures *textures, int i);
 void			map_started_fun(int map_started, int i,
 					t_textures *textures, int fd);
 
-//finilizing.c
-
-void			finilizing(int map_started, t_textures *textures, int fd);
+//slice.c
+int				norm_color(int c);
+void			drawing_ceil_floor(int px_y, int px_x, t_cub *data,
+					t_wall *cur);
+void			slice(t_cub *data, t_vector_i px);
 
 //textures.c
 void			ea(t_textures *textures, char *line);
@@ -228,10 +241,7 @@ int				print_err_int(char *str);
 //utils2.c
 uint32_t		get_rgba(int r, int g, int b);
 int				check_coord(int x, int y, t_cub *data);
-
-//vert_and_hori.c
-void			set_hori(t_cub *data, t_collision *cur, t_wall *wall);
-void			set_vert(t_cub *data, t_collision *cur, t_wall *wall);
+void			set_wall_dist(t_wall *wall, t_cub *data, double step);
 
 //from libft
 char			*ft_strdup(const char *src);

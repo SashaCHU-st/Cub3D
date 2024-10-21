@@ -22,9 +22,9 @@ SRCS = main.c \
 		if_png.c \
 		utils.c \
 		utils2.c \
-		vert_and_hori.c \
-		drawing_wall.c \
+		draw_window.c \
 		color_parsing.c \
+		slice.c \
 		parsing_started.c \
 		finilizing_map.c \
 		tex_west.c \

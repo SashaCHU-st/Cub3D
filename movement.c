@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:21:55 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/21 12:46:57 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:23:15 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_move_up(t_cub *data)
 
 	angle.x = cos(data->texture.play.angle * CONVERT);
 	angle.y = sin(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)),
+	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
 		(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
 	{
 		data->texture.play.x += 0.5 * angle.x;
@@ -32,7 +32,7 @@ void	ft_move_down(t_cub *data)
 
 	angle.x = cos(data->texture.play.angle * CONVERT);
 	angle.y = sin(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)),
+	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)), \
 		(int)(data->texture.play.y - (0.5 * angle.y)), data) == 0)
 	{
 		data->texture.play.x -= 0.5 * angle.x;
@@ -46,7 +46,7 @@ void	ft_move_right(t_cub *data)
 
 	angle.x = cos((data->texture.play.angle + 90) * CONVERT);
 	angle.y = sin((data->texture.play.angle + 90) * CONVERT);
-	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)),
+	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
 		(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
 	{
 		data->texture.play.x += 0.5 * angle.x;
@@ -60,7 +60,7 @@ void	ft_move_left(t_cub *data)
 
 	angle.x = cos((data->texture.play.angle - 90) * CONVERT);
 	angle.y = sin((data->texture.play.angle - 90) * CONVERT);
-	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)),
+	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
 		(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
 	{
 		data->texture.play.x += 0.5 * angle.x;
