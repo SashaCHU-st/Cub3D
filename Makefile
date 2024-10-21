@@ -24,6 +24,7 @@ SRCS = main.c \
 		utils2.c \
 		vert_and_hori.c \
 		drawing_wall.c \
+		color_parsing.c \
 
 OBJ = $(SRCS:.c=.o)
 

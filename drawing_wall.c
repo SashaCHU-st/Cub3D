@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:11 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/18 17:33:23 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 09:23:14 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,29 @@ int	norm_color(int c)
 	return (reversed);
 }
 
-void drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
+void	drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur )
 {
-	if(px_y <=cur.start)
+	if (px_y <= cur.start)
 		mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
-	if(px_y >= cur.end)
+	if (px_y >= cur.end)
 		mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
 }
 
-mlx_texture_t *get_wall_color(t_wall cur, double angle, t_cub *data)
+mlx_texture_t	*get_wall_color(t_wall cur, double angle, t_cub *data)
 {
-	if(cur.side == 'v')
+	if (cur.side == 'v')
 	{
-		if(angle > 0*CONVERT && angle < 180 *CONVERT)
-			return(data->texture.no_side);
+		if (angle > 0 * CONVERT && angle < 180 * CONVERT)
+			return (data->texture.no_side);
 		else
-			return(data->texture.so_side);
-		
+			return (data->texture.so_side);
 	}
-	if(cur.side == 'h')
+	if (cur.side == 'h')
 	{
-		if(angle > 90*CONVERT && angle < 270 *CONVERT)
-			return(data->texture.we_side);
+		if (angle > 90 * CONVERT && angle < 270 * CONVERT)
+			return (data->texture.we_side);
 		else
-			return(data->texture.ea_side);
+			return (data->texture.ea_side);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/18 17:09:46 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 09:21:15 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,16 @@ void	free_color(int j, char	**colors)
 	free(colors);
 }
 
-int	parse_color_values(t_textures *textures, const char *color_string, \
-	int *values)
+int	split_colors(char ***colors, const char *color_string)
 {
-	char	**colors;
-	int		i;
-	int		j;
-
-	j = 0;
-	i = 0;
-	colors = ft_split(color_string, ',');
-	if (!colors)
+	*colors = ft_split(color_string, ',');
+	if (!*colors)
 		return (0);
-	while (colors[i] != NULL)
-	{
-		if (is_valid_number(colors[i]))
-		{
-			values[i] = ft_atoi(colors[i]);
-			if (values[i] > 255 || values[i] < 0)
-				error_fun(textures);
-		}
-		else
-		{
-			free_color(j, colors);
-			error_fun(textures);
-		}
-		i++;
-	}
+	return (1);
+}
+
+int	valid_color(int i, int j, char **colors, t_textures *textures)
+{
 	free_color(j, colors);
 	if (i == 3)
 		return (1);
@@ -80,46 +63,30 @@ int	parse_color_values(t_textures *textures, const char *color_string, \
 	}
 }
 
-void	parse_floor_color(const char *color_string, t_textures *textures, \
-	bool is_floor)
+int	parse_color_values(t_textures *text, const char *color_string, int *values)
 {
-	int	values[3];
+	char	**colors;
+	int		i;
+	int		j;
 
-	if (parse_color_values(textures, color_string, values))
+	j = 0;
+	i = 0;
+	if (!split_colors(&colors, color_string))
+		return (0);
+	while (colors[i] != NULL)
 	{
-		if (is_floor)
+		if (is_valid_number(colors[i]))
 		{
-			textures->floor_r = values[0];
-			textures->floor_g = values[1];
-			textures->floor_b = values[2];
-			textures->floor = get_rgba(values[0], values[1], values[2]);
+			values[i] = ft_atoi(colors[i]);
+			if (values[i] > 255 || values[i] < 0)
+				error_fun(text);
 		}
 		else
 		{
-			textures->ceiling_r = values[0];
-			textures->ceiling_g = values[1];
-			textures->ceiling_b = values[2];
-			textures->ceiling = (textures->ceiling_r << 16) | \
-				(textures->ceiling_g << 8) | textures->ceiling_b;
-			textures->ceiling = get_rgba(values[0], values[1], values[2]);
+			free_color(j, colors);
+			error_fun(text);
 		}
+		i++;
 	}
-	else
-		error_fun(textures);
-}
-
-void	checking_color(t_textures *textures, char *line)
-{
-	if (ft_strncmp(line, "F", 1) == 0 && check_space(line[1]))
-	{
-		textures->found_f += 1;
-		textures->floor_color = ft_strdup(avoid_whitespace(line + 2));
-		parse_floor_color(textures->floor_color, textures, true);
-	}
-	else if (ft_strncmp(line, "C", 1) == 0 && check_space(line[1]))
-	{
-		textures->found_c += 1;
-		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));
-		parse_floor_color(textures->ceiling_color, textures, false);
-	}
+	return (valid_color(i, j, colors, text));
 }

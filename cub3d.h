@@ -53,14 +53,6 @@ typedef struct s_wall
 	int  start;
 	int  end;
 	char	side;
-	double angle;
-	int px_x;
-	int px_y;
-	int x_o;
-	double y_o_step;
-	double start_tex;
-	int y_o;
-	unsigned int tex_y;
 } t_wall;
 
 typedef struct s_playa
@@ -192,6 +184,11 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 int	norm_color(int c);
 void drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall cur );
 mlx_texture_t *get_wall_color(t_wall cur, double angle, t_cub *data);
+
+///color_parsing
+void	parse_floor_color(const char *color_string, t_textures *textures, \
+	bool is_floor);
+void	checking_color(t_textures *textures, char *line);
 
 
 int			flood_fill(char **map, int rows, int cols, int x, int y);

@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/18 17:53:20 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:54:58 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ double get_the_size(mlx_texture_t *from_texture, t_wall *cur)
 void ft_draw_map(void *param)
 {
 	t_cub *data = (t_cub *)param;
-	double angle;
+	mlx_texture_t *from_texture;
 	t_wall cur;
+	uint32_t *pixels;
+	double angle;
 	int px_x = 0;
 	int px_y;
-	mlx_texture_t *from_texture;
-	uint32_t *pixels;
 	int x_o;
 	double y_o_step;
 	double start_tex;
