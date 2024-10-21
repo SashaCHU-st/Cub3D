@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 11:51:41 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:42:04 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void ft_draw_map(void *param)
 		angle = get_collision(data, &cur, px_x);
 		if (cur.distance == 0)
 			cur.distance = EPSILON;
-		//printf("!!!!%f\n", cur.distance);
+		printf("!!!!%f\n", cur.distance);
 		cur.height = fabs((HEIGHT / cur.distance));
 		cur.start = fabs(HEIGHT / 2 - cur.height / 2);
 		cur.end = fabs(HEIGHT / 2 + cur.height / 2);

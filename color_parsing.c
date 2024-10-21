@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:19:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 10:03:30 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:08:48 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,18 @@ void	checking_color(t_textures *textures, char *line)
 	if (ft_strncmp(line, "F", 1) == 0 && check_space(line[1]))
 	{
 		textures->found_f += 1;
+		if (textures->floor_color)
+			free(textures->floor_color);
 		textures->floor_color = ft_strdup(avoid_whitespace(line + 2));
 		parse_floor_color(textures->floor_color, textures, true);
 	}
 	else if (ft_strncmp(line, "C", 1) == 0 && check_space(line[1]))
 	{
 		textures->found_c += 1;
+		if (textures->ceiling_color)
+			free(textures->ceiling_color);
 		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));
 		parse_floor_color(textures->ceiling_color, textures, false);
 	}
 }
+

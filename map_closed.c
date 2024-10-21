@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:05:10 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 10:59:53 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:09:33 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	check_sides_closed(t_textures *textures, int i)
 		return (0);
 	return (1);
 }
-
 
 int	check_row_closure(t_textures *textures, int i)
 {

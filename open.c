@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 09:44:25 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:41:23 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,26 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 			textures->map_index++;
 		}
 	}
+}
+
+void	open_close_file(char **argv, t_textures *textures)
+{
+	int	fd;
+
+	fd = 0;
+	open_first(fd, argv, textures);
+	count_lines(argv, textures, fd);
+	open_second(fd, argv, textures);
+	textures->no_side = mlx_load_png(textures->no); //NEEDS A CHECK FOR TEXTURE DIMENSIONS they need to be all the same (e.g. 64 x 64)
+	if (!textures->no_side)
+		error_fun(textures);
+	textures->so_side = mlx_load_png(textures->so);
+	if (!textures->so_side)
+		error_fun(textures);
+	textures->we_side = mlx_load_png(textures->we);
+	if (!textures->we_side)
+		error_fun(textures);
+	textures->ea_side = mlx_load_png(textures->ea);
+	if (!textures->ea_side)
+		error_fun(textures);
 }
