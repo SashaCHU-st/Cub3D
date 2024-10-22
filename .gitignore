@@ -1,3 +1,5 @@
+cub3D
+libft/libft.a
 *.o
 */*.o
 a.out
