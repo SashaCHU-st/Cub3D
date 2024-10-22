@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 19:24:06 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/22 15:36:51 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv)
 	param.texture.play = (t_playa){0};
 	param.cur = (t_wall){0};
 	param.ture = (t_draw_tex){0};
-	if (argc == 2)
+	if (argc >= 2)
 	{
 		if (check_args(argv[1]))
 			return (print_err_int("Error: Please provide a valid *.cub file."));
@@ -62,6 +62,7 @@ int	main(int argc, char **argv)
 		free_map(&param.texture);
 	}
 	else
-		return (print_err_int("Error: Please provide only a *.cub file."));
+		return (print_err_int("Error: Please provide a *.cub file as \
+			the first argument."));
 	return (EXIT_SUCCESS);
 }

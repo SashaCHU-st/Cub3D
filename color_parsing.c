@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:19:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 13:25:09 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:07:15 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	checking_color(t_textures *textures, char *line)
 		textures->found_f += 1;
 		if (textures->floor_color)
 			free(textures->floor_color);
-		textures->floor_color = ft_strdup(avoid_whitespace(line + 2));
+		textures->floor_color = ft_strdup(avoid_whitespace(line + 2)); //what if !textures->floor color
 		parse_floor_color(textures->floor_color, textures, true);
 	}
 	else if (ft_strncmp(line, "C", 1) == 0 && check_space(line[1]))
@@ -55,7 +55,7 @@ void	checking_color(t_textures *textures, char *line)
 		textures->found_c += 1;
 		if (textures->ceiling_color)
 			free(textures->ceiling_color);
-		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));
+		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));//what if !textures->ceiling color 
 		parse_floor_color(textures->ceiling_color, textures, false);
 	}
 }

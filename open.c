@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 13:27:41 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:13:30 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	scanning_map(char **argv, t_textures *textures, int fd)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error_fun(textures);
-	textures->line = get_next_line(fd);
+	textures->line = get_next_line(fd); //what if get_next returns NULL?
 	checking_validity(textures, fd);
 	close(fd);
 }

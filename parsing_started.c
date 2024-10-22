@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_started.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:38:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 13:28:04 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:16:19 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 			{
 				free(textures->line);
 				close(fd);
-				error_fun(textures);
+				error_fun(textures); //does it return from this?
 			}
 			textures->map_index++;
 		}
@@ -42,7 +42,7 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 
 void	reading_lines(int fd, t_textures *textures, int i)
 {
-	textures->line = get_next_line(fd);
+	textures->line = get_next_line(fd); //what if get_next returns NULL? 
 	textures->map = malloc(sizeof(char *) * (textures->how_many_lines + 1));
 	if (!textures->map)
 	{
