@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 09:21:15 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:21:58 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	valid_color(int i, int j, char **colors, t_textures *textures)
 		return (1);
 	else
 	{
+		printf("In color string not 3 values\n");
 		error_fun(textures);
 		return (0);
 	}
@@ -79,11 +80,15 @@ int	parse_color_values(t_textures *text, const char *color_string, int *values)
 		{
 			values[i] = ft_atoi(colors[i]);
 			if (values[i] > 255 || values[i] < 0)
+			{
+				printf("invalid number, accepted only form 0 to 255\n");
 				error_fun(text);
+			}
 		}
 		else
 		{
 			free_color(j, colors);
+			printf("Wrong color values\n");
 			error_fun(text);
 		}
 		i++;

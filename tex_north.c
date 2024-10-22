@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:46:14 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 13:53:17 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:36:55 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	checking_north_path(char *temp_no, t_textures *textures)
 	else
 	{
 		free(temp_no);
+		printf("Failed textures\n");
 		error_fun(textures);
 	}
 }
@@ -38,6 +39,7 @@ void	checking_perm_for_north(int permission,
 				if (check_space(temp_no[j]))
 				{
 					free(temp_no);
+					printf("Failed textures\n");
 					error_fun(textures);
 					return ;
 				}
@@ -50,6 +52,7 @@ void	checking_perm_for_north(int permission,
 	else
 	{
 		free(temp_no);
+		printf("Failed textures\n");
 		error_fun(textures);
 	}
 }
@@ -69,6 +72,7 @@ void	no(t_textures *textures, char *line)
 		temp_no = ft_strdup(avoid_whitespace(line + i));
 		if (!temp_no)
 		{
+			printf("Failed textures\n");
 			error_fun(textures);
 			return ;
 		}

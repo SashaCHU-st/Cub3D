@@ -31,6 +31,7 @@ SRCS = main.c \
 		tex_east.c \
 		tex_south.c \
 		tex_north.c \
+		uploading_textures.c \
 		
 
 OBJ = $(SRCS:.c=.o)

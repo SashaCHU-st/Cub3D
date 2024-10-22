@@ -54,5 +54,6 @@ NORMINETTE
 - FIX UP THE H.FILE AND DOUBLE CHECK IF YOU NEED ALL THE HEADERS
 - MAKE SURE THERE ARE NO .a FILES OR EXECUTABLES WHEN SUBMITTING
 - FINISH THE ERROR HANDLING (when ft_strduping)
-- add explicit messages to errors
-- add a limit to the length (and width?) of the map
++ add explicit messages to errors
++ add a limit to the length (and width?) of the map
+- norminnette

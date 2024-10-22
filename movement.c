@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:21:55 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/22 11:12:39 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/22 14:53:46 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_move_up(t_cub *data)
 	angle.y = sin(data->texture.play.angle * g_convert);
 	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
 		(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0 && \
-		data->cur.distance > 0.7)
+		data->cur.distance > 1)
 	{
 		data->texture.play.x += 0.5 * angle.x;
 		data->texture.play.y += 0.5 * angle.y;

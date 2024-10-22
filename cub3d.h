@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/22 11:05:50 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/22 16:50:39 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int				is_valid_number(const char *str);
 void			parse_floor_color(const char *color_string,
 					t_textures *textures, bool is_floor);
 void			checking_color(t_textures *textures, char *line);
+void			fails_malloc(t_textures *textures);
 
 //draw_window.c
 mlx_texture_t	*get_wall_color(t_wall *cur, double angle, t_cub *data);
@@ -209,6 +210,9 @@ void			open_first(int fd, char **argv, t_textures *textures);
 void			checking_the_info( t_textures *textures, int i);
 void			scanning_map(char **argv, t_textures *textures, int fd);
 void			checking_validity(t_textures *textures, int fd);
+
+//upploading_textures.c
+void			uploading_textures(t_textures *textures);
 
 //parsing_statered.c
 int				count_map_lines(t_textures *textures, int fd);

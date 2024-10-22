@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_started.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:38:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/22 15:16:19 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/22 16:44:34 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,12 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 
 void	reading_lines(int fd, t_textures *textures, int i)
 {
-	textures->line = get_next_line(fd); //what if get_next returns NULL? 
+	textures->line = get_next_line(fd); //what if get_next returns NULL?
+	if (!textures->line)
+	{
+		printf("Failed get_next_line\n");
+		error_fun(textures);
+	}
 	textures->map = malloc(sizeof(char *) * (textures->how_many_lines + 1));
 	if (!textures->map)
 	{
@@ -65,7 +70,10 @@ void	open_second(int fd, char **argv, t_textures *text)
 	j = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
+	{
+		printf("Failed to open\n");
 		error_fun(text);
+	}
 	reading_lines(fd, text, i);
 	while (text->line != NULL)
 	{
@@ -115,6 +123,11 @@ int	count_map_lines(t_textures *textures, int fd)
 		}
 		free(textures->line);
 		textures->line = get_next_line(fd);
+	}
+	if (line_count >= 50)
+	{
+		printf("Too big map\n");
+		error_fun(textures);
 	}
 	return (line_count);
 }
