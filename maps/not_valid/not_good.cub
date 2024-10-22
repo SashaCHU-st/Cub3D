@@ -1,10 +1,12 @@
-NO textures/no_wall.png
+NO    	textures/no_wall.png
 SO textures/so_wall.png
-WE textures/we_wall.png
+
 EA textures/ea_wall.png
 
 F 240, 192, 100
 C 204,255,229
+
+WE textures/we_wall.png
 
    
         

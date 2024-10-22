@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:05:10 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 12:09:33 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:19:35 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	check_row_closure(t_textures *textures, int i)
 		j = textures->len_current;
 		while (j < textures->len_next)
 		{
-			if (textures->map[i + 1][j] != '1')
+			if (textures->map[i + 1][j - 1] != '1')
 				return (0);
 			j++;
 		}
@@ -73,7 +73,7 @@ int	check_row_closure(t_textures *textures, int i)
 		j = textures->len_next;
 		while (j < textures->len_current)
 		{
-			if (textures->map[i][j] != '1')
+			if (textures->map[i][j - 1] != '1')
 				return (0);
 			j++;
 		}
