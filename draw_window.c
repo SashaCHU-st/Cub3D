@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:34:14 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/21 17:46:02 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/22 11:04:50 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ mlx_texture_t	*get_wall_color(t_wall *cur, double angle, t_cub *data)
 {
 	if (cur->side == 'v')
 	{
-		if (angle > 0 * CONVERT && angle < 180 * CONVERT)
+		if (angle > 0 * g_convert && angle < 180 * g_convert)
 			return (data->texture.no_side);
 		else
 			return (data->texture.so_side);
 	}
 	if (cur->side == 'h')
 	{
-		if (angle > 90 * CONVERT && angle < 270 * CONVERT)
+		if (angle > 90 * g_convert && angle < 270 * g_convert)
 			return (data->texture.we_side);
 		else
 			return (data->texture.ea_side);

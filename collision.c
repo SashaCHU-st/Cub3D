@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:28:46 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/21 19:32:29 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/22 11:04:50 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,14 @@ double	set_wall_angle(t_cub *data, t_wall *wall, int i)
 	double	angle;
 
 	adjust_angle = 2 * (double)i / (double)WIDTH - 1;
-	angle = (data->texture.play.angle + (30 * CONVERT) \
-		* adjust_angle) * CONVERT;
+	angle = (data->texture.play.angle + (30 * g_convert) \
+		* adjust_angle) * g_convert;
 	wall->map.x = (int)data->texture.play.x;
 	wall->map.y = (int)data->texture.play.y;
 	wall->dir.x = cos(angle);
 	wall->dir.y = sin(angle);
-	wall->camera.x = -(wall->dir.y) * PLANE;
-	wall->camera.y = wall->dir.x * PLANE;
+	wall->camera.x = -(wall->dir.y) * (tan(30 * M_PI / 180));
+	wall->camera.y = wall->dir.x * (tan(30 * M_PI / 180));
 	wall->ray_dir.x = wall->dir.x + wall->camera.x * adjust_angle;
 	wall->ray_dir.y = wall->dir.y + wall->camera.y * adjust_angle;
 	return (angle);

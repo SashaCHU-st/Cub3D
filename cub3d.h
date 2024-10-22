@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 19:52:25 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/22 11:05:50 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@
 
 # define WIDTH 1080 
 # define HEIGHT 1080
-
-# define CONVERT M_PI / 180
 # define EPSILON 0.0001
-# define PLANE tan(30 * M_PI / 180)
+
+const static double	g_convert = M_PI / 180;
 
 typedef struct s_vector
 {
