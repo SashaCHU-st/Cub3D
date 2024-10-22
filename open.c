@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/22 16:51:08 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:55:21 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ void	scanning_map(char **argv, t_textures *textures, int fd)
 {
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-	{
-		printf("Fail to open\n");
-		error_fun(textures);
-	}
+		failed_to_open(textures);
 	textures->line = get_next_line(fd); //what if get_next returns NULL?
 	if (!textures->line)
 		error_fun(textures);
@@ -67,10 +64,7 @@ void	open_first(int fd, char **argv, t_textures *textures)
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-	{
-		printf("Fails to open\n");
-		error_fun(textures);
-	}
+		failed_to_open(textures);
 	textures->line = get_next_line(fd);
 	while (textures->line != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/22 16:50:39 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:01:51 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ int				check_args(char *str);
 void			all_found(t_textures *textures);
 void			when_player_found(t_textures *textures, char *line, int i);
 int				checking_map(t_textures *textures, char *line, int n);
-
+void			no_player(t_textures *textures);
+void			more_then_one(t_textures *textures);
 ///collision.c
 void			set_hori(t_cub *data, t_collision *cur, t_wall *wall);
 void			set_vert(t_cub *data, t_collision *cur, t_wall *wall);
@@ -221,6 +222,7 @@ void			open_second(int fd, char **argv, t_textures *text);
 void			reading_lines(int fd, t_textures *textures, int i);
 void			map_started_fun(int map_started, int i,
 					t_textures *textures, int fd);
+void			failed_to_open(t_textures *text);
 
 //slice.c
 int				norm_color(int c);

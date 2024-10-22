@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:38:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/22 16:44:34 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:58:07 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 			{
 				free(textures->line);
 				close(fd);
-				error_fun(textures); //does it return from this?
+				error_fun(textures);
 			}
 			textures->map_index++;
 		}
@@ -61,6 +61,12 @@ void	reading_lines(int fd, t_textures *textures, int i)
 	}
 }
 
+void	failed_to_open(t_textures *text)
+{
+	printf("Failed to open\n");
+	error_fun(text);
+}
+
 void	open_second(int fd, char **argv, t_textures *text)
 {
 	int	i;
@@ -70,10 +76,7 @@ void	open_second(int fd, char **argv, t_textures *text)
 	j = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-	{
-		printf("Failed to open\n");
-		error_fun(text);
-	}
+		failed_to_open(text);
 	reading_lines(fd, text, i);
 	while (text->line != NULL)
 	{

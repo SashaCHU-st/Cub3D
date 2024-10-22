@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/22 16:42:07 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:01:57 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,18 @@ void	when_player_found(t_textures *textures, char *line, int i)
 	}
 }
 
+void	more_then_one(t_textures *textures)
+{
+	printf("More then one player\n");
+	error_fun(textures);
+}
+
+void	no_player(t_textures *textures)
+{
+	printf("No player\n");
+	error_fun(textures);
+}
+
 int	checking_map(t_textures *textures, char *line, int n)
 {
 	int	i;
@@ -72,16 +84,10 @@ int	checking_map(t_textures *textures, char *line, int n)
 				textures->play.y = n + 0.5;
 				textures->player_found++;
 				if (textures->player_found > 1 || textures->player_found == 0)
-				{
-					printf("More the one player\n");
-					error_fun(textures);
-				}
+					more_then_one(textures);
 			}
 			else
-			{
-				printf("No player\n");
-				error_fun(textures);
-			}
+				no_player(textures);
 		}
 		i++;
 	}
