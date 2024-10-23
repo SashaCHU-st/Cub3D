@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 09:58:11 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:52:53 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_textures
 	int				length;
 	int				*found_flag;
 	int				map_started;
+	int				permission;
 	mlx_texture_t	*no_side;
 	mlx_texture_t	*so_side;
 	mlx_texture_t	*we_side;
@@ -139,9 +140,9 @@ typedef struct s_cub
 int				check_args(char *str);
 
 //check_map.c
-void			all_found(t_textures *textures);
+void			all_found(t_textures *textures, int fd);
 void			when_player_found(t_textures *textures, char *line, int i);
-int				checking_map(t_textures *textures, char *line, int n);
+int				checking_map(t_textures *textures, char *line, int n, int fd);
 
 ///collision.c
 void			set_hori(t_cub *data, t_collision *cur, t_wall *wall);
@@ -150,18 +151,19 @@ void			do_dda(t_cub *data, t_collision *cur, t_wall *wall);
 double			set_wall_angle(t_cub *data, t_wall *wall, int i);
 double			get_collision(t_cub *data, t_wall *wall, int px_x);
 
-//colr.c
+//color.c
 int				parse_color_values(t_textures *text,
-					const char *color_string, int *values);
-int				valid_color(int i, int j, char **colors, t_textures *textures);
+					const char *color_string, int *values, int fd);
 int				split_colors(char ***colors, const char *color_string);
+int				process_and_validate_colors(char **colors, int *values, \
+					t_textures *text, int fd);
 void			free_color(int j, char	**colors);
 int				is_valid_number(const char *str);
 
 //color_parsing.c
-void			parse_floor_color(const char *color_string,
-					t_textures *textures, bool is_floor);
-void			checking_color(t_textures *textures, char *line);
+void			parse_floor_color(const char *color_string, t_textures *textures, \
+					bool is_floor, int fd);
+void			checking_color(t_textures *textures, char *line, int fd);
 
 //draw_window.c
 mlx_texture_t	*get_wall_color(t_wall *cur, double angle, t_cub *data);
@@ -179,7 +181,8 @@ void			closing(t_textures *textures, int fd);
 
 //finilizing.c
 void			finilizing(int map_started, t_textures *textures, int fd);
-void			wrong_info(t_textures *textures);
+void			wrong_info(t_textures *textures, int fd);
+
 //if_png.c
 int				check_if_png(char *str);
 
@@ -194,7 +197,6 @@ int				check_top_row_closed(t_textures *textures);
 void			replacing_nl_with_zero(t_textures *textures);
 void			for_last_one(t_textures *textures, int j);
 void			replacing_spaces_with_one(t_textures *textures);
-void			if_new_line_in_middle(t_textures *textures);
 
 //movement.c
 void			ft_move_up(t_cub *data);
@@ -206,7 +208,7 @@ void			ft_hook(mlx_key_data_t keydata, void *param);
 //open.c
 void			open_close_file(char **argv, t_textures *textures);
 void			open_first(int fd, char **argv, t_textures *textures);
-void			checking_the_info( t_textures *textures, int i);
+void			checking_the_info( t_textures *textures, int i, int fd);
 void			scanning_map(char **argv, t_textures *textures, int fd);
 void			checking_validity(t_textures *textures, int fd);
 
@@ -224,12 +226,15 @@ void			drawing_ceil_floor(int px_y, int px_x, t_cub *data,
 					t_wall *cur);
 void			slice(t_cub *data, t_vector_i px);
 
+
+void			ea(t_textures *textures, char *line, int fd);
+void			we(t_textures *textures, char *line, int fd);
+void			so(t_textures *textures, char *line, int fd);
+void			no(t_textures *textures, char *line, int fd);
+
+
 //textures.c
-void			ea(t_textures *textures, char *line);
-void			we(t_textures *textures, char *line);
-void			so(t_textures *textures, char *line);
-void			no(t_textures *textures, char *line);
-void			checking_textures(t_textures *textures, char *line);
+void			checking_textures(t_textures *textures, char *line, int fd);
 
 //utils.c
 char			*ft_strcpy(char *dest, const char *src);
@@ -243,20 +248,24 @@ int				check_coord(int x, int y, t_cub *data);
 void			set_wall_dist(t_wall *wall, t_cub *data, double step);
 
 //messages
-void			more_the_one_or_no(t_textures *textures);
-void			wrong_player(t_textures *textures);
-void			wrong_values_color(int j, char **colors, t_textures *text);
-void			malloc_fails(t_textures *textures);
-void			error_map_not_closed(t_textures *textures);
+void			more_the_one_or_no(t_textures *textures, int fd);
+void			wrong_player(t_textures *textures,int fd);
+void			wrong_values_color(int j, char **colors, t_textures *text, int fd);
+void			malloc_fails(t_textures *textures, int fd);
+void			error_map_not_closed(t_textures *textures, int fd);
 
 //messages2.c
 void			open_error(t_textures *text);
 void			error_map_not_valid(t_textures *textures, int fd);
 void			found_nl_in_map(t_textures *textures, int fd);
 void			failed_to_copy(t_textures *textures, int fd);
+void			wrong_values(t_textures *textures, int fd);
+
+//messages3.c
+void			color_out_of_range(int *values, int i, t_textures *text, int fd);
 
 //uploading_text.c
-void	uploading_text(t_textures *textures);
+void			uploading_text(t_textures *textures, int fd);
 
 //from libft
 char			*ft_strdup(const char *src);

@@ -6,13 +6,13 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:46:14 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 09:10:57 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:19:48 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	checking_north_path(char *temp_no, t_textures *textures)
+void	checking_north_path(char *temp_no, t_textures *textures, int fd)
 {
 	if (ft_strncmp(temp_no, "textures/", 9) == 0)
 	{
@@ -23,14 +23,14 @@ void	checking_north_path(char *temp_no, t_textures *textures)
 	{
 		free(temp_no);
 		printf("Wrong path\n");
-		error_fun(textures);
+		closing(textures, fd);
 	}
 }
 
-void	checking_perm_for_north(int permission,
-		char *temp_no, t_textures *textures, int j)
+void	checking_perm_for_north(char *temp_no, t_textures *textures,
+		int j, int fd)
 {
-	if (permission > 0)
+	if (textures->permission > 0)
 	{
 		if (check_if_png(temp_no))
 		{
@@ -40,28 +40,27 @@ void	checking_perm_for_north(int permission,
 				{
 					free(temp_no);
 					printf("Wrong textures element\n");
-					error_fun(textures);
+					closing(textures, fd);
 					return ;
 				}
 				j++;
 			}
-			checking_north_path(temp_no, textures);
+			checking_north_path(temp_no, textures, fd);
 		}
-		close(permission);
+		close(textures->permission);
 	}
 	else
 	{
 		free(temp_no);
 		printf("No permission\n");
-		error_fun(textures);
+		closing(textures, fd);
 	}
 }
 
-void	no(t_textures *textures, char *line)
+void	no(t_textures *textures, char *line, int fd)
 {
 	int		i;
 	int		j;
-	int		permission;
 	char	*temp_no;
 
 	j = 0;
@@ -73,10 +72,10 @@ void	no(t_textures *textures, char *line)
 		if (!temp_no)
 		{
 			printf("Strdup error/ malloc\n");
-			error_fun(textures);
+			closing(textures, fd);
 			return ;
 		}
-		permission = open(temp_no, O_RDONLY);
-		checking_perm_for_north(permission, temp_no, textures, j);
+		textures->permission = open(temp_no, O_RDONLY);
+		checking_perm_for_north(temp_no, textures, j, fd);
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 09:22:22 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:59:14 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	all_found(t_textures *textures)
+void	all_found(t_textures *textures, int fd)
 {
 	if (textures->found_no == 1 && textures->found_so == 1
 		&& textures->found_we == 1
@@ -26,7 +26,7 @@ void	all_found(t_textures *textures)
 	else
 	{
 		printf("Some element are missing\n");
-		error_fun(textures);
+		closing(textures, fd);
 	}
 }
 
@@ -54,7 +54,7 @@ void	when_player_found(t_textures *textures, char *line, int i)
 	}
 }
 
-int	checking_map(t_textures *textures, char *line, int n)
+int	checking_map(t_textures *textures, char *line, int n, int fd)
 {
 	int	i;
 
@@ -72,10 +72,10 @@ int	checking_map(t_textures *textures, char *line, int n)
 				textures->play.y = n + 0.5;
 				textures->player_found++;
 				if (textures->player_found > 1 || textures->player_found == 0)
-					more_the_one_or_no(textures);
+					more_the_one_or_no(textures, fd);
 			}
 			else
-				wrong_player(textures);
+				wrong_player(textures, fd);
 		}
 		i++;
 	}

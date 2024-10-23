@@ -6,13 +6,13 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:47:09 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 09:11:25 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:20:09 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	checking_south_path(char *temp_so, t_textures *textures)
+void	checking_south_path(char *temp_so, t_textures *textures, int fd)
 {
 	if (ft_strncmp(temp_so, "textures/", 9) == 0)
 	{
@@ -23,14 +23,14 @@ void	checking_south_path(char *temp_so, t_textures *textures)
 	{
 		free(temp_so);
 		printf("Wrong path\n");
-		error_fun(textures);
+		closing(textures, fd);
 	}
 }
 
-void	checking_perm_for_south(int permission,
-		char *temp_so, t_textures *textures, int j)
+void	checking_perm_for_south(char *temp_so, t_textures *textures,
+		int j, int fd)
 {
-	if (permission > 0)
+	if (textures->permission > 0)
 	{
 		if (check_if_png(temp_so))
 		{
@@ -40,28 +40,27 @@ void	checking_perm_for_south(int permission,
 				{
 					free(temp_so);
 					printf("Wrong textures element\n");
-					error_fun(textures);
+					closing(textures, fd);
 					return ;
 				}
 				j++;
 			}
-			checking_south_path(temp_so, textures);
+			checking_south_path(temp_so, textures, fd);
 		}
-		close(permission);
+		close(textures->permission);
 	}
 	else
 	{
 		free(temp_so);
 		printf("No permission\n");
-		error_fun(textures);
+		closing(textures, fd);
 	}
 }
 
-void	so(t_textures *textures, char *line)
+void	so(t_textures *textures, char *line, int fd)
 {
 	int		i;
 	int		j;
-	int		permission;
 	char	*temp_so;
 
 	i = 0;
@@ -73,10 +72,10 @@ void	so(t_textures *textures, char *line)
 		if (!temp_so)
 		{
 			printf("Strdup error/ malloc\n");
-			error_fun(textures);
+			closing(textures, fd);
 			return ;
 		}
-		permission = open(temp_so, O_RDONLY);
-		checking_perm_for_south(permission, temp_so, textures, j);
+		textures->permission = open(temp_so, O_RDONLY);
+		checking_perm_for_south(temp_so, textures, j, fd);
 	}
 }

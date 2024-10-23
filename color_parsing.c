@@ -6,18 +6,18 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:19:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 09:26:01 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:08:46 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 void	parse_floor_color(const char *color_string, t_textures *textures, \
-	bool is_floor)
+	bool is_floor, int fd)
 {
 	int	values[3];
 
-	if (parse_color_values(textures, color_string, values))
+	if (parse_color_values(textures, color_string, values, fd))
 	{
 		if (is_floor)
 		{
@@ -37,10 +37,10 @@ void	parse_floor_color(const char *color_string, t_textures *textures, \
 		}
 	}
 	else
-		error_fun(textures);
+		wrong_values(textures, fd);
 }
 
-void	checking_color(t_textures *textures, char *line)
+void	checking_color(t_textures *textures, char *line, int fd)
 {
 	if (ft_strncmp(line, "F", 1) == 0 && check_space(line[1]))
 	{
@@ -49,8 +49,8 @@ void	checking_color(t_textures *textures, char *line)
 			free(textures->floor_color);
 		textures->floor_color = ft_strdup(avoid_whitespace(line + 2));
 		if (!textures->floor_color)
-			malloc_fails(textures);
-		parse_floor_color(textures->floor_color, textures, true);
+			malloc_fails(textures, fd);
+		parse_floor_color(textures->floor_color, textures, true, fd);
 	}
 	else if (ft_strncmp(line, "C", 1) == 0 && check_space(line[1]))
 	{
@@ -59,7 +59,7 @@ void	checking_color(t_textures *textures, char *line)
 			free(textures->ceiling_color);
 		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));
 		if (!textures->ceiling_color)
-			malloc_fails(textures);
-		parse_floor_color(textures->ceiling_color, textures, false);
+			malloc_fails(textures, fd);
+		parse_floor_color(textures->ceiling_color, textures, false, fd);
 	}
 }

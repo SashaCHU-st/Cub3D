@@ -33,6 +33,7 @@ SRCS = main.c \
 		tex_north.c \
 		messages.c \
 		messages2.c \
+		messages3.c \
 		uploading_text.c \
 		
 

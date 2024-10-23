@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 09:23:43 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:55:38 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,43 +51,45 @@ int	split_colors(char ***colors, const char *color_string)
 	return (1);
 }
 
-int	valid_color(int i, int j, char **colors, t_textures *textures)
+int	process_and_validate_colors(char **colors, int *values,
+	t_textures *text, int fd)
 {
-	free_color(j, colors);
-	if (i == 3)
-		return (1);
-	else
-	{
-		printf("Not valid set of colors\n");
-		error_fun(textures);
-		return (0);
-	}
-}
+	int	i;
 
-int	parse_color_values(t_textures *text, const char *color_string, int *values)
-{
-	char	**colors;
-	int		i;
-	int		j;
-
-	j = 0;
 	i = 0;
-	if (!split_colors(&colors, color_string))
-		return (0);
 	while (colors[i] != NULL)
 	{
 		if (is_valid_number(colors[i]))
 		{
 			values[i] = ft_atoi(colors[i]);
-			if (values[i] > 255 || values[i] < 0)
-			{
-				printf("Values must be from 0 to 255\n");
-				error_fun(text);
-			}
+			color_out_of_range(values, i, text, fd);
 		}
 		else
-			wrong_values_color(j, colors, text);
+		{
+			wrong_values_color(i, colors, text, fd);
+			return (0);
+		}
 		i++;
 	}
-	return (valid_color(i, j, colors, text));
+	return (i);
+}
+
+int	parse_color_values(t_textures *text, const char *color_string,
+	int *values, int fd)
+{
+	char	**colors;
+	int		i;
+
+	if (!split_colors(&colors, color_string))
+		return (0);
+	i = process_and_validate_colors(colors, values, text, fd);
+	free_color(0, colors);
+	if (i == 3)
+		return (1);
+	else
+	{
+		printf("Not valid set of colors\n");
+		closing(text, fd);
+		return (0);
+	}
 }
