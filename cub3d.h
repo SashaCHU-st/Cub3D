@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 12:52:53 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:22:23 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,8 +161,8 @@ void			free_color(int j, char	**colors);
 int				is_valid_number(const char *str);
 
 //color_parsing.c
-void			parse_floor_color(const char *color_string, t_textures *textures, \
-					bool is_floor, int fd);
+void			parse_floor_color(const char *color_string,
+					t_textures *textures, bool is_floor, int fd);
 void			checking_color(t_textures *textures, char *line, int fd);
 
 //draw_window.c
@@ -226,12 +226,10 @@ void			drawing_ceil_floor(int px_y, int px_x, t_cub *data,
 					t_wall *cur);
 void			slice(t_cub *data, t_vector_i px);
 
-
 void			ea(t_textures *textures, char *line, int fd);
 void			we(t_textures *textures, char *line, int fd);
 void			so(t_textures *textures, char *line, int fd);
 void			no(t_textures *textures, char *line, int fd);
-
 
 //textures.c
 void			checking_textures(t_textures *textures, char *line, int fd);
@@ -249,8 +247,9 @@ void			set_wall_dist(t_wall *wall, t_cub *data, double step);
 
 //messages
 void			more_the_one_or_no(t_textures *textures, int fd);
-void			wrong_player(t_textures *textures,int fd);
-void			wrong_values_color(int j, char **colors, t_textures *text, int fd);
+void			wrong_player(t_textures *textures, int fd);
+void			wrong_values_color(int j, char **colors, t_textures *text,
+					int fd);
 void			malloc_fails(t_textures *textures, int fd);
 void			error_map_not_closed(t_textures *textures, int fd);
 
@@ -262,7 +261,8 @@ void			failed_to_copy(t_textures *textures, int fd);
 void			wrong_values(t_textures *textures, int fd);
 
 //messages3.c
-void			color_out_of_range(int *values, int i, t_textures *text, int fd);
+void			color_out_of_range(int *values, int i, t_textures *text,
+					int fd);
 
 //uploading_text.c
 void			uploading_text(t_textures *textures, int fd);
