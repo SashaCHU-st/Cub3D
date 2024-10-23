@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:47:09 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 14:44:27 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:27:28 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 void	checking_south_path(char *temp_so, t_textures *textures, int fd)
 {
 	if (ft_strncmp(temp_so, "textures/", 9) == 0)
-	{
 		textures->so = temp_so;
-		textures->found_so += 1;
-	}
 	else
 	{
 		free(temp_so);
@@ -64,6 +61,9 @@ void	so(t_textures *textures, char *line, int fd)
 	j = 0;
 	if (ft_strncmp(&line[i], "SO", 2) == 0 && check_space(line[i + 2]))
 	{
+		textures->found_so += 1;
+		if(textures->found_so >1)
+			closing(textures, fd, "More than one same texture found\n");
 		i += 2;
 		temp_so = ft_strdup(avoid_whitespace(line + i));
 		if (!temp_so)

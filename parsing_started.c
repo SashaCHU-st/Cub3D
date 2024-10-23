@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:38:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 14:58:44 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:01:52 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 	if (map_started)
 	{
 		if (textures->line[i] == '\n')
-			closing(textures, fd, "New line in map\n");
+			closing(textures, fd, "Cannot load map\n");
 		if (textures->line[i] != '\n')
 		{
 			textures->map_valid = checking_map(textures,

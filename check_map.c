@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 14:49:10 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:27:51 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	all_found(t_textures *textures, int fd)
 			+ textures->found_we + textures->found_ea
 			+ textures->found_c + textures->found_f;
 	else
-		closing(textures, fd, "Some element are missing\n");
+		closing(textures, fd, "Some elements are missing \n");
 }
 
 void	when_player_found(t_textures *textures, char *line, int i)
