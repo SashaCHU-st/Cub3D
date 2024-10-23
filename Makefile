@@ -31,6 +31,9 @@ SRCS = main.c \
 		tex_east.c \
 		tex_south.c \
 		tex_north.c \
+		messages.c \
+		messages2.c \
+		uploading_text.c \
 		
 
 OBJ = $(SRCS:.c=.o)

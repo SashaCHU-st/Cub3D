@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 08:57:38 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:23:43 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,7 @@ int	parse_color_values(t_textures *text, const char *color_string, int *values)
 			}
 		}
 		else
-		{
-			free_color(j, colors);
-			printf("Wrong values\n");
-			error_fun(text);
-		}
+			wrong_values_color(j, colors, text);
 		i++;
 	}
 	return (valid_color(i, j, colors, text));

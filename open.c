@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 09:05:26 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:48:36 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	scanning_map(char **argv, t_textures *textures, int fd)
 {
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		error_fun(textures);
-	textures->line = get_next_line(fd); //what if get_next returns NULL?
-	if(!textures->line)
+		open_error(textures);
+	textures->line = get_next_line(fd);
+	if (!textures->line)
 	{
 		printf("Error get_next_line\n");
 		error_fun(textures);
@@ -69,10 +69,7 @@ void	open_first(int fd, char **argv, t_textures *textures)
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-	{
-		printf("cannot open file\n");
-		error_fun(textures);
-	}
+		open_error(textures);
 	textures->line = get_next_line(fd);
 	while (textures->line != NULL)
 	{
@@ -100,28 +97,5 @@ void	open_close_file(char **argv, t_textures *textures)
 	open_first(fd, argv, textures);
 	scanning_map(argv, textures, fd);
 	open_second(fd, argv, textures);
-	textures->no_side = mlx_load_png(textures->no);
-	if (!textures->no_side)
-	{
-		printf("cannot upload texture\n");
-		error_fun(textures);
-	}
-	textures->so_side = mlx_load_png(textures->so);
-	if (!textures->so_side)
-	{
-		printf("cannot upload texture\n");
-		error_fun(textures);
-	}
-	textures->we_side = mlx_load_png(textures->we);
-	if (!textures->we_side)
-	{
-		printf("cannot upload texture\n");
-		error_fun(textures);
-	}
-	textures->ea_side = mlx_load_png(textures->ea);
-	if (!textures->ea_side)
-		{
-		printf("cannot upload texture\n");
-		error_fun(textures);
-	}
+	uploading_text(textures);
 }

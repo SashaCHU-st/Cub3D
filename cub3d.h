@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/22 11:05:50 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/23 09:58:11 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ void			closing(t_textures *textures, int fd);
 
 //finilizing.c
 void			finilizing(int map_started, t_textures *textures, int fd);
-
+void			wrong_info(t_textures *textures);
 //if_png.c
 int				check_if_png(char *str);
 
@@ -241,6 +241,22 @@ int				print_err_int(char *str);
 uint32_t		get_rgba(int r, int g, int b);
 int				check_coord(int x, int y, t_cub *data);
 void			set_wall_dist(t_wall *wall, t_cub *data, double step);
+
+//messages
+void			more_the_one_or_no(t_textures *textures);
+void			wrong_player(t_textures *textures);
+void			wrong_values_color(int j, char **colors, t_textures *text);
+void			malloc_fails(t_textures *textures);
+void			error_map_not_closed(t_textures *textures);
+
+//messages2.c
+void			open_error(t_textures *text);
+void			error_map_not_valid(t_textures *textures, int fd);
+void			found_nl_in_map(t_textures *textures, int fd);
+void			failed_to_copy(t_textures *textures, int fd);
+
+//uploading_text.c
+void	uploading_text(t_textures *textures);
 
 //from libft
 char			*ft_strdup(const char *src);

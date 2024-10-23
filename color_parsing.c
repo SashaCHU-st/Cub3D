@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:19:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 08:56:21 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:26:01 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,9 @@ void	checking_color(t_textures *textures, char *line)
 		textures->found_f += 1;
 		if (textures->floor_color)
 			free(textures->floor_color);
-		textures->floor_color = ft_strdup(avoid_whitespace(line + 2)); //what if !textures->floor color
-		if(!textures->floor_color)
-		{
-			printf("Malloc fails\n");
-			error_fun(textures);
-		}
+		textures->floor_color = ft_strdup(avoid_whitespace(line + 2));
+		if (!textures->floor_color)
+			malloc_fails(textures);
 		parse_floor_color(textures->floor_color, textures, true);
 	}
 	else if (ft_strncmp(line, "C", 1) == 0 && check_space(line[1]))
@@ -60,12 +57,9 @@ void	checking_color(t_textures *textures, char *line)
 		textures->found_c += 1;
 		if (textures->ceiling_color)
 			free(textures->ceiling_color);
-		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));//what if !textures->ceiling color
-		if(!textures->ceiling_color)
-		{
-			printf("Malloc fails\n");
-			error_fun(textures);
-		}
+		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));
+		if (!textures->ceiling_color)
+			malloc_fails(textures);
 		parse_floor_color(textures->ceiling_color, textures, false);
 	}
 }

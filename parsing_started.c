@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:38:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 09:08:46 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:56:49 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,13 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 	if (map_started)
 	{
 		if (textures->line[i] == '\n')
-		{
-			printf("New line in map\n");
-			closing(textures, fd);
-		}
+			found_nl_in_map(textures, fd);
 		if (textures->line[i] != '\n')
 		{
 			textures->map_valid = checking_map(textures,
 					textures->line, textures->map_index);
 			if (!textures->map_valid)
-			{
-				printf("Map not valid\n");
-				closing(textures, fd);
-			}
+				error_map_not_valid(textures, fd);
 			if (textures->map_index > textures->how_many_lines)
 			{
 				printf("Mistake in scaning map\n");
@@ -37,12 +31,7 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 			}
 			textures->map[textures->map_index] = ft_strdup(textures->line);
 			if (!textures->map[textures->map_index])
-			{
-				free(textures->line);
-				printf("Malloc fails\n");
-				close(fd);
-				error_fun(textures);
-			}
+				failed_to_copy(textures, fd);
 			textures->map_index++;
 		}
 	}
@@ -51,7 +40,7 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 void	reading_lines(int fd, t_textures *textures, int i)
 {
 	textures->line = get_next_line(fd);
-	if(!textures->line)
+	if (!textures->line)
 	{
 		close(fd);
 		printf("Malloc fails\n");
@@ -80,10 +69,7 @@ void	open_second(int fd, char **argv, t_textures *text)
 	j = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-	{
-		printf("Error to open file\n");
-		error_fun(text);
-	}
+		open_error(text);
 	reading_lines(fd, text, i);
 	while (text->line != NULL)
 	{
@@ -133,6 +119,11 @@ int	count_map_lines(t_textures *textures, int fd)
 		}
 		free(textures->line);
 		textures->line = get_next_line(fd);
+	}
+	if (line_count >= 50)
+	{
+		printf("Too many lines, more then 50 (we decided so :))\n");
+		error_fun(textures);
 	}
 	return (line_count);
 }
