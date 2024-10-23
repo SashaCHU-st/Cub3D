@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:48:38 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 11:19:27 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:45:10 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	checking_west_path(char *temp_we, t_textures *textures, int fd)
 	else
 	{
 		free(temp_we);
-		printf("Wrong path\n");
-		closing(textures, fd);
+		closing(textures, fd, "Wrong path\n");
 	}
 }
 
@@ -39,8 +38,7 @@ void	checking_perm_for_west(char *temp_we, t_textures *textures,
 				if (check_space(temp_we[j]))
 				{
 					free(temp_we);
-					printf("Wrong textures element\n");
-					closing(textures, fd);
+					closing(textures, fd, "Wrong textures element\n");
 					return ;
 				}
 				j++;
@@ -52,8 +50,7 @@ void	checking_perm_for_west(char *temp_we, t_textures *textures,
 	else
 	{
 		free(temp_we);
-		printf("No permission\n");
-		closing(textures, fd);
+		closing(textures, fd, "No permission\n");
 	}
 }
 
@@ -71,8 +68,7 @@ void	we(t_textures *textures, char *line, int fd)
 		temp_we = ft_strdup(avoid_whitespace(line + i));
 		if (!temp_we)
 		{
-			printf("Strdup error/ malloc\n");
-			closing(textures, fd);
+			closing(textures, fd, "Strdup error/ malloc\n");
 			return ;
 		}
 		textures->permission = open(temp_we, O_RDONLY);

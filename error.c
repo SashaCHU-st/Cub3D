@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:15 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/18 17:17:26 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:48:02 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,16 @@ void	free_map(t_textures *textures)
 	}
 }
 
-void	error_fun(t_textures *textures)
+void	error_fun(t_textures *textures, char *str)
 {
 	printf("Error\n");
+	printf("%s", str);
 	free_map(textures);
 	exit(1);
 }
 
-void	closing(t_textures *textures, int fd)
+void	closing(t_textures *textures, int fd, char *str)
 {
 	close(fd);
-	error_fun(textures);
+	error_fun(textures, str);
 }

@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 13:22:23 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:56:37 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,12 +176,11 @@ void			ft_draw_window(void *param);
 void			free_map_two(t_textures *textures);
 void			free_map_three(t_textures *textures);
 void			free_map(t_textures *textures);
-void			error_fun(t_textures *textures);
-void			closing(t_textures *textures, int fd);
+void			error_fun(t_textures *textures, char *str);
+void			closing(t_textures *textures, int fd, char *str);
 
 //finilizing.c
 void			finilizing(int map_started, t_textures *textures, int fd);
-void			wrong_info(t_textures *textures, int fd);
 
 //if_png.c
 int				check_if_png(char *str);
@@ -245,22 +244,10 @@ uint32_t		get_rgba(int r, int g, int b);
 int				check_coord(int x, int y, t_cub *data);
 void			set_wall_dist(t_wall *wall, t_cub *data, double step);
 
-//messages
-void			more_the_one_or_no(t_textures *textures, int fd);
-void			wrong_player(t_textures *textures, int fd);
+//messages.c
 void			wrong_values_color(int j, char **colors, t_textures *text,
 					int fd);
-void			malloc_fails(t_textures *textures, int fd);
-void			error_map_not_closed(t_textures *textures, int fd);
-
-//messages2.c
-void			open_error(t_textures *text);
-void			error_map_not_valid(t_textures *textures, int fd);
-void			found_nl_in_map(t_textures *textures, int fd);
 void			failed_to_copy(t_textures *textures, int fd);
-void			wrong_values(t_textures *textures, int fd);
-
-//messages3.c
 void			color_out_of_range(int *values, int i, t_textures *text,
 					int fd);
 

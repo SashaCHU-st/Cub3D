@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 10:59:14 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:49:10 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ void	all_found(t_textures *textures, int fd)
 			+ textures->found_we + textures->found_ea
 			+ textures->found_c + textures->found_f;
 	else
-	{
-		printf("Some element are missing\n");
-		closing(textures, fd);
-	}
+		closing(textures, fd, "Some element are missing\n");
 }
 
 void	when_player_found(t_textures *textures, char *line, int i)
@@ -72,10 +69,10 @@ int	checking_map(t_textures *textures, char *line, int n, int fd)
 				textures->play.y = n + 0.5;
 				textures->player_found++;
 				if (textures->player_found > 1 || textures->player_found == 0)
-					more_the_one_or_no(textures, fd);
+					closing(textures, fd, "No player or more then 1\n");
 			}
 			else
-				wrong_player(textures, fd);
+				closing(textures, fd, "Wrong Player\n");
 		}
 		i++;
 	}

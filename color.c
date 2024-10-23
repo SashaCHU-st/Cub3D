@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 12:55:38 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:58:03 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,6 @@ int	parse_color_values(t_textures *text, const char *color_string,
 	if (i == 3)
 		return (1);
 	else
-	{
-		printf("Not valid set of colors\n");
-		closing(text, fd);
-		return (0);
-	}
+		closing(text, fd, "Not valid set of colors\n");
+	return (0);
 }

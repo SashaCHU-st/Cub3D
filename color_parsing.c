@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:19:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 11:08:46 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:54:50 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	parse_floor_color(const char *color_string, t_textures *textures, \
 		}
 	}
 	else
-		wrong_values(textures, fd);
+		closing(textures, fd, "Wrong values\n");
 }
 
 void	checking_color(t_textures *textures, char *line, int fd)
@@ -49,7 +49,7 @@ void	checking_color(t_textures *textures, char *line, int fd)
 			free(textures->floor_color);
 		textures->floor_color = ft_strdup(avoid_whitespace(line + 2));
 		if (!textures->floor_color)
-			malloc_fails(textures, fd);
+			closing(textures, fd, "Malloc failed\n");
 		parse_floor_color(textures->floor_color, textures, true, fd);
 	}
 	else if (ft_strncmp(line, "C", 1) == 0 && check_space(line[1]))
@@ -59,7 +59,7 @@ void	checking_color(t_textures *textures, char *line, int fd)
 			free(textures->ceiling_color);
 		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));
 		if (!textures->ceiling_color)
-			malloc_fails(textures, fd);
+			closing(textures, fd, "Malloc failed\n");
 		parse_floor_color(textures->ceiling_color, textures, false, fd);
 	}
 }
