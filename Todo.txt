@@ -35,24 +35,24 @@ map:
 + if map closed
 + if it is empty in between => not valid
 + check if there is at least one player
-- limit for th map
-- few nl after the map
++ limit for th map
 
 arguments
 + if file not exist
 
 
 MAPPING
-- Draw the map according the map
-- Calcualte the distance to the the wall
-- rotate
-- move
++ Draw the map according the map
++ Calcualte the distance to the the wall
++ rotate
++ move
++ textures
 
 NORMINETTE
 - DELETE THIS file
 - DELETE THE FLAGS IN MAKEFILE
 - FIX UP THE H.FILE AND DOUBLE CHECK IF YOU NEED ALL THE HEADERS
 - MAKE SURE THERE ARE NO .a FILES OR EXECUTABLES WHEN SUBMITTING
-- FINISH THE ERROR HANDLING (when ft_strduping)
++ FINISH THE ERROR HANDLING (when ft_strduping)
 + add explicit messages to errors
 + add a limit to the length (and width?) of the map

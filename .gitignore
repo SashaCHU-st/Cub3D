@@ -11,3 +11,4 @@ test.c
 1.c
 /maps_mia
 output*.txt
+.gitignore
