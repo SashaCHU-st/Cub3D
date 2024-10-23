@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:47:55 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 13:53:28 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:10:11 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	checking_east_path(char *temp_ea, t_textures *textures)
 	else
 	{
 		free(temp_ea);
+		printf("Wrong path\n");
 		error_fun(textures);
 	}
 }
@@ -38,6 +39,7 @@ void	checking_perm_for_east(int permission,
 				if (check_space(temp_ea[j]))
 				{
 					free(temp_ea);
+					printf("Wrong textures element\n");
 					error_fun(textures);
 					return ;
 				}
@@ -50,6 +52,7 @@ void	checking_perm_for_east(int permission,
 	else
 	{
 		free(temp_ea);
+		printf("No permission\n");
 		error_fun(textures);
 	}
 }
@@ -69,6 +72,7 @@ void	ea(t_textures *textures, char *line)
 		temp_ea = ft_strdup(avoid_whitespace(line + i));
 		if (!temp_ea)
 		{
+			printf("Strdup error/ malloc\n");
 			error_fun(textures);
 			return ;
 		}

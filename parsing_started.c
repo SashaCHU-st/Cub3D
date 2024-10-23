@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_started.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:38:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/22 15:16:19 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/23 09:08:46 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,31 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 	if (map_started)
 	{
 		if (textures->line[i] == '\n')
+		{
+			printf("New line in map\n");
 			closing(textures, fd);
+		}
 		if (textures->line[i] != '\n')
 		{
 			textures->map_valid = checking_map(textures,
 					textures->line, textures->map_index);
 			if (!textures->map_valid)
+			{
+				printf("Map not valid\n");
 				closing(textures, fd);
+			}
 			if (textures->map_index > textures->how_many_lines)
 			{
+				printf("Mistake in scaning map\n");
 				error_fun(textures);
 			}
 			textures->map[textures->map_index] = ft_strdup(textures->line);
 			if (!textures->map[textures->map_index])
 			{
 				free(textures->line);
+				printf("Malloc fails\n");
 				close(fd);
-				error_fun(textures); //does it return from this?
+				error_fun(textures);
 			}
 			textures->map_index++;
 		}
@@ -42,11 +50,18 @@ void	map_started_fun(int map_started, int i, t_textures *textures, int fd)
 
 void	reading_lines(int fd, t_textures *textures, int i)
 {
-	textures->line = get_next_line(fd); //what if get_next returns NULL? 
+	textures->line = get_next_line(fd);
+	if(!textures->line)
+	{
+		close(fd);
+		printf("Malloc fails\n");
+		error_fun(textures);
+	}
 	textures->map = malloc(sizeof(char *) * (textures->how_many_lines + 1));
 	if (!textures->map)
 	{
 		close(fd);
+		printf("Malloc fails\n");
 		error_fun(textures);
 	}
 	while (i < textures->how_many_lines)
@@ -65,7 +80,10 @@ void	open_second(int fd, char **argv, t_textures *text)
 	j = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
+	{
+		printf("Error to open file\n");
 		error_fun(text);
+	}
 	reading_lines(fd, text, i);
 	while (text->line != NULL)
 	{

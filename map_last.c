@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:25:32 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/21 09:34:27 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 08:59:53 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ void	if_new_line_in_middle(t_textures *textures)
 	{
 		if (textures->map[i][0] == '\0' || (textures->map[i][0] == '\n'
 			&& textures->map[i][1] == '\0'))
-			error_fun(textures);
+			{
+				printf("Line in the middle\n");
+				error_fun(textures);
+			}
 		i++;
 	}
 }
