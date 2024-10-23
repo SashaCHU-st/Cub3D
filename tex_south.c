@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tex_south.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:47:09 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 15:27:28 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:36:27 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	so(t_textures *textures, char *line, int fd)
 	if (ft_strncmp(&line[i], "SO", 2) == 0 && check_space(line[i + 2]))
 	{
 		textures->found_so += 1;
-		if(textures->found_so >1)
+		if (textures->found_so > 1)
 			closing(textures, fd, "More than one same texture found\n");
 		i += 2;
 		temp_so = ft_strdup(avoid_whitespace(line + i));

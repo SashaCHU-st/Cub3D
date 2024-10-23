@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_started.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:38:18 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 15:01:52 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:38:53 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	open_second(int fd, char **argv, t_textures *text)
 	j = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		error_fun(text, "Error to open file\n");
+		error_fun(text, "Cannot open file\n");
 	reading_lines(fd, text, i);
 	while (text->line != NULL)
 	{

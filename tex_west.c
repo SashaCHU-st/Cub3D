@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tex_west.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:48:38 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 15:16:35 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:37:15 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ void	we(t_textures *textures, char *line, int fd)
 {
 	int		i;
 	int		j;
-	char	*temp_we = NULL;
+	char	*temp_we;
 
 	j = 0;
 	i = 0;
-	if (ft_strncmp(&line[i], "WE", 2) == 0 && check_space(line[i + 2]) && !temp_we )
+	if (ft_strncmp(&line[i], "WE", 2) == 0 && check_space(line[i + 2]))
 	{
 		textures->found_we += 1;
-		if(textures->found_we >1)
+		if (textures->found_we > 1)
 			closing(textures, fd, "More than one same texture found\n");
 		i += 2;
 		temp_we = ft_strdup(avoid_whitespace(line + i));

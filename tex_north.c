@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tex_north.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:46:14 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 15:27:23 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:36:19 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	no(t_textures *textures, char *line, int fd)
 	if (ft_strncmp(&line[i], "NO", 2) == 0 && check_space(line[i + 2]))
 	{
 		textures->found_no += 1;
-		if(textures->found_no >1)
+		if (textures->found_no > 1)
 			closing(textures, fd, "More than one same texture found\n");
 		i += 2;
 		temp_no = ft_strdup(avoid_whitespace(line + i));

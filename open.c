@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 15:24:05 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:38:30 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	scanning_map(char **argv, t_textures *textures, int fd)
 {
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		error_fun(textures, "Error to open file\n");
+		error_fun(textures, "Cannot open file\n");
 	textures->line = get_next_line(fd);
 	if (!textures->line)
 		closing(textures, fd, "get_next_line failed\n");
@@ -59,7 +59,7 @@ void	open_first(int fd, char **argv, t_textures *textures)
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		error_fun(textures, "Error to open file\n");
+		error_fun(textures, "Cannot open file\n");
 	textures->line = get_next_line(fd);
 	while (textures->line != NULL)
 	{
