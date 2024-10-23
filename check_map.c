@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 15:27:51 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:34:46 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	checking_map(t_textures *textures, char *line, int n, int fd)
 					closing(textures, fd, "No player or more then 1\n");
 			}
 			else
-				closing(textures, fd, "Wrong Player\n");
+				closing(textures, fd, "Invalid map element found\n");
 		}
 		i++;
 	}

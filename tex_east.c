@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:47:55 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 15:36:10 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/23 20:29:41 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ea(t_textures *textures, char *line, int fd)
 	{
 		textures->found_ea += 1;
 		if (textures->found_ea > 1)
-			closing(textures, fd, "More than one same texture found\n");
+			closing(textures, fd, "More than one same element found\n");
 		i += 2;
 		temp_ea = ft_strdup(avoid_whitespace(line + i));
 		if (!temp_ea)

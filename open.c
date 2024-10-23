@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 15:38:30 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/23 17:06:19 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	checking_the_info( t_textures *textures, int i, int fd)
 		checking_color(textures, textures->line, fd);
 	}
 	else
-		closing(textures, fd, "Some extra infor in the file\n");
+		closing(textures, fd, "Invalid info in the file\n");
 }
 
 void	open_first(int fd, char **argv, t_textures *textures)

@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 08:39:03 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/22 15:36:51 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/23 19:55:55 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main(int argc, char **argv)
 		free_map(&param.texture);
 	}
 	else
-		return (print_err_int("Error: Please provide a *.cub file as \
-			the first argument."));
+		return (print_err_int \
+			("Error: Please provide a *.cub file as the first argument."));
 	return (EXIT_SUCCESS);
 }

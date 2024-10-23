@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:19:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 15:35:39 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/23 20:30:48 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	checking_color(t_textures *textures, char *line, int fd)
 	{
 		textures->found_f += 1;
 		if (textures->found_f > 1)
-			closing(textures, fd, "More than one same texture found\n");
+			closing(textures, fd, "More than one same element found\n");
 		if (textures->floor_color)
 			free(textures->floor_color);
 		textures->floor_color = ft_strdup(avoid_whitespace(line + 2));
@@ -58,7 +58,7 @@ void	checking_color(t_textures *textures, char *line, int fd)
 	{
 		textures->found_c += 1;
 		if (textures->found_c > 1)
-			closing(textures, fd, "More than one same texture found\n");
+			closing(textures, fd, "More than one same element found\n");
 		if (textures->ceiling_color)
 			free(textures->ceiling_color);
 		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));
