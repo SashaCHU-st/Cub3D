@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:21:55 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/24 12:48:01 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:54:33 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	ft_move_left(t_cub *data)
 	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
 		(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
 	{
-		data->texture.play.x += 0.5 * angle.x;
-		data->texture.play.y += 0.5 * angle.y;
 		data->texture.play.x += 0.5 * angle.x;
 		data->texture.play.y += 0.5 * angle.y;
 	}

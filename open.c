@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:53:02 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/24 12:48:28 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:49:02 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,4 @@ void	open_close_file(char **argv, t_textures *textures)
 	scanning_map(argv, textures, fd);
 	open_second(fd, argv, textures);
 	uploading_text(textures, fd);
-}
-
-void open_close_file(char **argv, t_textures *textures)
-{
-
-	int		fd = 0;
-	open_first(fd, argv, textures);
-	count_lines(argv,textures,fd);
-	open_second(fd, argv, textures);
-	upload_files(textures);
 }
