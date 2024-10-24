@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   slice.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:21:31 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/21 17:54:11 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/24 09:15:06 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	norm_color(int c)
 void	drawing_ceil_floor(int px_y, int px_x, t_cub *data, t_wall *cur)
 {
 	if (px_y <= cur->start)
-		mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
-	if (px_y >= cur->end)
 		mlx_put_pixel(data->image, px_x, px_y, data->texture.ceiling);
+	if (px_y >= cur->end)
+		mlx_put_pixel(data->image, px_x, px_y, data->texture.floor);
 }
 
 void	slice(t_cub *data, t_vector_i px)

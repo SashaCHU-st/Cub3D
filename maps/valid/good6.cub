@@ -3,7 +3,7 @@ SO textures/so_wall.png
 WE textures/we_wall.png
 EA textures/ea_wall.png
 
-F 000241,100,0
+F 225,30,0
 C 225,30,0
 
 11111111
@@ -12,7 +12,7 @@ C 225,30,0
 10000001
 10000001
 10000001
-1000S001
+1000W001
 10000001
 10000001
 10000001

@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 14:58:03 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:00:18 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,39 +54,40 @@ int	split_colors(char ***colors, const char *color_string)
 int	process_and_validate_colors(char **colors, int *values,
 	t_textures *text, int fd)
 {
-	int	i;
+	int	how_many_colors;
 
-	i = 0;
-	while (colors[i] != NULL)
+	how_many_colors = 0;
+	while (colors[how_many_colors] != NULL)
 	{
-		if (is_valid_number(colors[i]))
+		if (how_many_colors >= 3)
+			closing(text, fd, "More then 3 elements in colors\n");
+		if (is_valid_number(colors[how_many_colors]))
 		{
-			values[i] = ft_atoi(colors[i]);
-			color_out_of_range(values, i, text, fd);
+			values[how_many_colors] = ft_atoi(colors[how_many_colors]);
+			color_out_of_range(values, how_many_colors, text, fd);
 		}
 		else
-		{
-			wrong_values_color(i, colors, text, fd);
-			return (0);
-		}
-		i++;
+			wrong_values_color(how_many_colors, colors, text, fd);
+		how_many_colors++;
 	}
-	return (i);
+	return (how_many_colors);
 }
 
 int	parse_color_values(t_textures *text, const char *color_string,
 	int *values, int fd)
 {
 	char	**colors;
-	int		i;
+	int		how_many_colors;
 
 	if (!split_colors(&colors, color_string))
 		return (0);
-	i = process_and_validate_colors(colors, values, text, fd);
-	free_color(0, colors);
-	if (i == 3)
+	how_many_colors = process_and_validate_colors(colors, values, text, fd);
+	free_color(how_many_colors, colors);
+	if (how_many_colors == 3)
 		return (1);
 	else
+	{
 		closing(text, fd, "Not valid set of colors\n");
-	return (0);
+		return (0);
+	}
 }
