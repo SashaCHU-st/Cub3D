@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:47:55 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 20:29:41 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:18:48 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	checking_perm_for_east(char *temp_ea, t_textures *textures,
 	else
 	{
 		free(temp_ea);
-		closing(textures, fd, "No permission\n");
+		closing(textures, fd, "Cannot open file\n");
 	}
 }
 

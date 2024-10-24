@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/23 14:56:37 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:12:16 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ void			color_out_of_range(int *values, int i, t_textures *text,
 
 //uploading_text.c
 void			uploading_text(t_textures *textures, int fd);
+int				check_text(mlx_texture_t * tex);
 
 //from libft
 char			*ft_strdup(const char *src);
