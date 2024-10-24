@@ -22,12 +22,22 @@ SRCS = main.c \
 		if_png.c \
 		utils.c \
 		utils2.c \
-		checking_textures_first.c \
+		draw_window.c \
+		color_parsing.c \
+		slice.c \
+		parsing_started.c \
+		finilizing_map.c \
+		tex_west.c \
+		tex_east.c \
+		tex_south.c \
+		tex_north.c \
+		messages.c \
+		uploading_text.c \
+		
 
 OBJ = $(SRCS:.c=.o)
 
-CFLAGS =  -Wall -Wextra -Werror 
-#-fsanitize=address -g #remember to remove extra flags
+CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g #remember to remove extra flags
 
 MLX42FLAGS = -lglfw -lm
 
@@ -58,4 +68,6 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+bonus: all
+
+.PHONY: all clean fclean re bonus

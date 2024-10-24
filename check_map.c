@@ -3,29 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 10:12:50 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/18 15:18:24 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:42:55 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	all_found(t_textures *textures)
+void	all_found(t_textures *textures, int fd)
 {
 	if (textures->found_no == 1 && textures->found_so == 1
-		&& textures->found_we == 1 && textures->found_we == 1
-		&& textures->found_ea == 1 && textures->found_f == 1
+		&& textures->found_we == 1
+		&& textures->found_we == 1
+		&& textures->found_ea == 1
+		&& textures->found_f == 1
 		&& textures->found_c == 1)
 		textures->found = textures->found_no + textures->found_so
-			+ textures->found_we + textures->found_ea + textures->found_c
-			+ textures->found_f;
+			+ textures->found_we + textures->found_ea
+			+ textures->found_c + textures->found_f;
 	else
-		error_fun(textures);
+		closing(textures, fd, "Some elements are missing \n");
 }
 
-void	north_or_south_player(t_textures *textures, char *line, int i)
+void	when_player_found(t_textures *textures, char *line, int i)
 {
 	if (line[i] == 'N')
 	{
@@ -37,10 +39,6 @@ void	north_or_south_player(t_textures *textures, char *line, int i)
 		textures->sides = 'S';
 		textures->play.angle = 90;
 	}
-}
-
-void	west_or_east_player(t_textures *textures, char *line, int i)
-{
 	if (line[i] == 'W')
 	{
 		textures->sides = 'W';
@@ -53,23 +51,7 @@ void	west_or_east_player(t_textures *textures, char *line, int i)
 	}
 }
 
-void	when_we_found_player(t_textures *textures, int n, char *line, int i)
-{
-	if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
-	{
-		north_or_south_player(textures, line, i);
-		west_or_east_player(textures, line, i);
-		textures->play.x = i + 0.5;
-		textures->play.y = n + 0.5;
-		textures->player_found++;
-		if (textures->player_found > 1 || textures->player_found == 0)
-			error_fun(textures);
-	}
-	else
-		error_fun(textures);
-}
-
-int	checking_map(t_textures *textures, char *line, int number)
+int	checking_map(t_textures *textures, char *line, int n, int fd)
 {
 	int	i;
 
@@ -78,7 +60,20 @@ int	checking_map(t_textures *textures, char *line, int number)
 	{
 		if (line[i] != '1' && line[i] != '0' && line[i] != ' '
 			&& line[i] != '\n' && line[i] != '\t' )
-			when_we_found_player(textures, number, line, i);
+		{
+			if (line[i] == 'N' || line[i] == 'S'
+				|| line[i] == 'E' || line[i] == 'W')
+			{
+				when_player_found(textures, line, i);
+				textures->play.x = i + 0.5;
+				textures->play.y = n + 0.5;
+				textures->player_found++;
+				if (textures->player_found > 1 || textures->player_found == 0)
+					closing(textures, fd, "No player or more then 1\n");
+			}
+			else
+				closing(textures, fd, "Invalid map element found\n");
+		}
 		i++;
 	}
 	return (1);
