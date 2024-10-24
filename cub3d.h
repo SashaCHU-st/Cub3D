@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/24 12:44:46 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/24 13:33:12 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <errno.h>
 # include <math.h>
 # include "get_next_line.h"
+# include "libft/libft.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
 # define WIDTH 1080 
@@ -253,13 +254,13 @@ void			color_out_of_range(int *values, int i, t_textures *text,
 
 //uploading_text.c
 void			uploading_text(t_textures *textures, int fd);
-int				check_text(mlx_texture_t * tex);
+int				check_text(mlx_texture_t *tex);
 
 //from libft
-char			*ft_strdup(const char *src);
-int				ft_strncmp(const char *s1, const char *s2, size_t n);
-char			**ft_split(char const *s, char c);
-int				ft_atoi(const char *str);
-int				ft_isdigit(int c);
-void			*ft_memcpy(void *dst, const void *src, size_t n);
+// char			*ft_strdup(const char *src);
+// int				ft_strncmp(const char *s1, const char *s2, size_t n);
+// char			**ft_split(char const *s, char c);
+// int				ft_atoi(const char *str);
+// int				ft_isdigit(int c);
+// void			*ft_memcpy(void *dst, const void *src, size_t n);
 #endif

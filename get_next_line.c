@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:17:19 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/14 20:18:09 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/24 13:39:23 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*next_spot(char *storage)
 		free(storage);
 		return (NULL);
 	}
-	next_spot = malloc(sizeof(char) * ft_strlen(storage) - i + 1);
+	next_spot = malloc(sizeof(char) * gnl_strlen(storage) - i + 1);
 	if (!next_spot)
 		return (free_function(&storage));
 	i++;
@@ -90,13 +90,13 @@ char	*ft_read(int fd, char *storage)
 	if (!buffer)
 		return (free_function(&storage));
 	how_many_bytes = 1;
-	while (how_many_bytes > 0 && !ft_strchr(storage, '\n'))
+	while (how_many_bytes > 0 && !gnl_strchr(storage, '\n'))
 	{
 		how_many_bytes = read (fd, buffer, BUFFER_SIZE);
 		if (how_many_bytes == -1)
 			return (free_function(&storage));
 		buffer[how_many_bytes] = '\0';
-		storage = ft_strjoin(storage, buffer);
+		storage = gnl_strjoin(storage, buffer);
 		if (!storage)
 			return (free_function(&storage));
 	}

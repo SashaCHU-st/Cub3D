@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 13:51:09 by aheinane          #+#    #+#             */
-/*   Updated: 2023/12/28 12:15:26 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:39:59 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *str)
+size_t	gnl_strlen(char *str)
 {
 	size_t	i;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*gnl_strjoin(char *s1, char *s2)
 {
 	char	*new;
 	size_t	i;
@@ -32,7 +32,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	new = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1));
+	new = malloc(sizeof(char) * ((gnl_strlen(s1) + gnl_strlen(s2)) + 1));
 	if (!new)
 	{
 		free_function(&s1);
@@ -51,7 +51,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (new);
 }
 
-char	*ft_strchr(char *s, int c)
+char	*gnl_strchr(char *s, int c)
 {
 	int	i;
 
