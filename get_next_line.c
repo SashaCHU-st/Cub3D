@@ -39,7 +39,7 @@ char	*next_spot(char *storage)
 		free(storage);
 		return (NULL);
 	}
-	next_spot = malloc(sizeof(char) * gnl_strlen(storage) - i + 1);
+	next_spot = malloc(sizeof(char) * gnl_strlen(storage) - i);
 	if (!next_spot)
 		return (free_function(&storage));
 	i++;
