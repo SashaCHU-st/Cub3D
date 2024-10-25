@@ -34,7 +34,7 @@ char	*next_spot(char *storage)
 	nextspot_index = 0;
 	while (storage[i] && storage[i] != '\n')
 		i++;
-	if (storage[i] == '\0')
+	if (storage[i] == '\0' || storage[i + 1] == '\0')
 	{
 		free(storage);
 		return (NULL);
