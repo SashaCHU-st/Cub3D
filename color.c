@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/28 11:28:04 by aheinane         ###   ########.fr       */
+/*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
+/*   Updated: 2024/10/28 11:37:04 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3d.h"
 
@@ -35,8 +34,6 @@ int	is_valid_number(const char *str)
 
 void	free_color(int j, char	**colors)
 {
-void	free_color(int j, char	**colors)
-{
 	j = 0;
 	while (colors[j] != NULL)
 	{
@@ -51,21 +48,13 @@ int	split_colors(char ***colors, const char *color_string)
 {
 	*colors = ft_split(color_string, ',');
 	if (!*colors)
-}
-
-int	split_colors(char ***colors, const char *color_string)
-{
-	*colors = ft_split(color_string, ',');
-	if (!*colors)
 		return (0);
-	return (1);
 	return (1);
 }
 
 int	process_and_validate_colors(char ***colors, int *values,
 	t_textures *text, int fd)
 {
-	int	how_many_colors;
 	int	how_many_colors;
 
 	how_many_colors = 0;

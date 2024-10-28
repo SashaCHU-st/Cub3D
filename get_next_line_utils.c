@@ -6,12 +6,11 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 13:51:09 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/28 11:30:12 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:40:40 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 char	*gnl_strchr(char *s, int c)
 {
 	int	i;

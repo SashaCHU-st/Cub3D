@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:17:19 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/28 11:30:33 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:39:16 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*next_spot(char *storage)
 	i = 0;
 	while (storage[i] && storage[i] != '\n')
 		i++;
-	if (storage[i] == '\0' || storage[i + 1] == '\0')
 	if (storage[i] == '\0' || storage[i + 1] == '\0')
 	{
 		free(storage);
@@ -92,13 +91,11 @@ char	*ft_read(int fd, char *storage)
 		return (free_function(&storage));
 	how_many_bytes = 1;
 	while (how_many_bytes > 0 && !gnl_strchr(storage, '\n'))
-	while (how_many_bytes > 0 && !gnl_strchr(storage, '\n'))
 	{
 		how_many_bytes = read (fd, buffer, BUFFER_SIZE);
 		if (how_many_bytes == -1)
 			return (free_function(&storage));
 		buffer[how_many_bytes] = '\0';
-		storage = gnl_strjoin(storage, buffer);
 		storage = gnl_strjoin(storage, buffer);
 		if (!storage)
 			return (free_function(&storage));
