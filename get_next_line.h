@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 13:52:59 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/28 08:30:22 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:31:19 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 
 char	*get_next_line(int fd);
 char	*ft_read(int fd, char *storage);
+size_t	gnl_strlen(char *str );
+char	*gnl_strjoin(char *s1, char *s2);
+char	*gnl_strchr(char *s, int c);
 size_t	gnl_strlen(char *str );
 char	*gnl_strjoin(char *s1, char *s2);
 char	*gnl_strchr(char *s, int c);

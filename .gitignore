@@ -1,11 +1,2 @@
-*.o
-*/*.o
-a.out
-.vscode/
-./cub3D
-.a.out
-test1.c
-test.c
-1.c
-/maps_mia
-output*.txt
+libft/libft.a
+cub3D

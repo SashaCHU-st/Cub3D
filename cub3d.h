@@ -6,7 +6,7 @@
 /*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:11:53 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/28 10:50:42 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:29:47 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <math.h>
 # include "get_next_line.h"
 # include "libft/libft.h"
+# include "libft/libft.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
 # define WIDTH 1080 
@@ -30,10 +31,19 @@
 
 const static double	g_convert = M_PI / 180;
 
+const static double	g_convert = M_PI / 180;
+
 typedef struct s_vector
 {
 	double	x;
 	double	y;
+}	t_vector;
+
+typedef struct s_vector_i
+{
+	int	x;
+	int	y;
+}	t_vector_i;
 }	t_vector;
 
 typedef struct s_vector_i
@@ -85,8 +95,57 @@ typedef struct s_draw_tex
 	double			step;
 }	t_draw_tex;
 
+typedef struct s_draw_tex
+{
+	mlx_texture_t	*cur;
+	t_vector_i		tex;
+	unsigned int	i;
+	double			start_tex;
+	double			step;
+}	t_draw_tex;
+
 typedef struct s_textures
 {
+	char			*line;
+	char			*no;
+	char			*so;
+	char			*we;
+	char			*ea;
+	int				found_no;
+	int				found_so;
+	int				found_we;
+	int				found_ea;
+	int				found_f;
+	int				found_c;
+	int				found;
+	char			sides;
+	char			*floor_color;
+	char			*ceiling_color;
+	int				floor_r;
+	int				floor_g;
+	int				floor_b;
+	int				ceiling_r;
+	int				ceiling_g;
+	int				ceiling_b;
+	int				map_valid;
+	int				how_many_lines;
+	int				player_found;
+	int				map_index;
+	char			**map;
+	int				ceiling;
+	int				floor;
+	int				len_current;
+	int				len_next;
+	int				length;
+	int				*found_flag;
+	int				map_started;
+	int				permission;
+	mlx_texture_t	*no_side;
+	mlx_texture_t	*so_side;
+	mlx_texture_t	*we_side;
+	mlx_texture_t	*ea_side;
+	t_playa			play;
+}	t_textures;
 	char			*line;
 	char			*no;
 	char			*so;
@@ -234,7 +293,47 @@ void			no(t_textures *textures, char *line, int fd);
 //textures.c
 void			checking_textures(t_textures *textures, char *line, int fd);
 
+void			ft_move_up(t_cub *data);
+void			ft_move_down(t_cub *data);
+void			ft_move_right(t_cub *data);
+void			ft_move_left(t_cub *data);
+void			ft_hook(mlx_key_data_t keydata, void *param);
+
+//open.c
+void			open_close_file(char **argv, t_textures *textures);
+void			open_first(int fd, char **argv, t_textures *textures);
+void			checking_the_info( t_textures *textures, int i, int fd);
+void			scanning_map(char **argv, t_textures *textures, int fd);
+void			checking_validity(t_textures *textures, int fd);
+
+//parsing_statered.c
+int				count_map_lines(t_textures *textures, int fd);
+int				if_is_map_started(const char *line);
+void			open_second(int fd, char **argv, t_textures *text);
+void			reading_lines(int fd, t_textures *textures, int i);
+void			map_started_fun(int map_started, int i,
+					t_textures *textures, int fd);
+
+//slice.c
+int				norm_color(int c);
+void			drawing_ceil_floor(int px_y, int px_x, t_cub *data,
+					t_wall *cur);
+void			slice(t_cub *data, t_vector_i px);
+
+void			ea(t_textures *textures, char *line, int fd);
+void			we(t_textures *textures, char *line, int fd);
+void			so(t_textures *textures, char *line, int fd);
+void			no(t_textures *textures, char *line, int fd);
+
+//textures.c
+void			checking_textures(t_textures *textures, char *line, int fd);
+
 //utils.c
+char			*ft_strcpy(char *dest, const char *src);
+int				check_space(char ch);
+char			*avoid_whitespace(char *str);
+int				print_err_int(char *str);
+
 char			*ft_strcpy(char *dest, const char *src);
 int				check_space(char ch);
 char			*avoid_whitespace(char *str);
@@ -251,6 +350,10 @@ void			wrong_values_color(int j, char **colors, t_textures *text,
 void			failed_to_copy(t_textures *textures, int fd);
 void			color_out_of_range(int values_i, t_textures *text,
 					int fd, char ***colors);
+
+//uploading_text.c
+void			uploading_text(t_textures *textures, int fd);
+int				check_text(mlx_texture_t *tex);
 
 //uploading_text.c
 void			uploading_text(t_textures *textures, int fd);
