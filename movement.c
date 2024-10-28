@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:21:55 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/14 19:22:50 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:54:33 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ void	ft_move_up(t_cub *data)
 {
 	t_vector	angle;
 
-	angle.x = cos(data->texture.play.angle * CONVERT);
-	angle.y = sin(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), (int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
+	angle.x = cos(data->texture.play.angle * g_convert);
+	angle.y = sin(data->texture.play.angle * g_convert);
+	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
+		(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0 && \
+		data->cur.distance > 0.7)
 	{
 		data->texture.play.x += 0.5 * angle.x;
 		data->texture.play.y += 0.5 * angle.y;
@@ -29,9 +31,10 @@ void	ft_move_down(t_cub *data)
 {
 	t_vector	angle;
 
-	angle.x = cos(data->texture.play.angle * CONVERT);
-	angle.y = sin(data->texture.play.angle * CONVERT);
-	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)), (int)(data->texture.play.y - (0.5 * angle.y)), data) == 0 )
+	angle.x = cos(data->texture.play.angle * g_convert);
+	angle.y = sin(data->texture.play.angle * g_convert);
+	if (check_coord((int)(data->texture.play.x - (0.5 * angle.x)), \
+		(int)(data->texture.play.y - (0.5 * angle.y)), data) == 0)
 	{
 		data->texture.play.x -= 0.5 * angle.x;
 		data->texture.play.y -= 0.5 * angle.y;
@@ -42,9 +45,10 @@ void	ft_move_right(t_cub *data)
 {
 	t_vector	angle;
 
-	angle.x = cos((data->texture.play.angle + 90) * CONVERT);
-	angle.y = sin((data->texture.play.angle + 90) * CONVERT);
-	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), (int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
+	angle.x = cos((data->texture.play.angle + 90) * g_convert);
+	angle.y = sin((data->texture.play.angle + 90) * g_convert);
+	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
+		(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
 	{
 		data->texture.play.x += 0.5 * angle.x;
 		data->texture.play.y += 0.5 * angle.y;
@@ -55,18 +59,19 @@ void	ft_move_left(t_cub *data)
 {
 	t_vector	angle;
 
-	angle.x = cos((data->texture.play.angle - 90) * CONVERT);
-	angle.y = sin((data->texture.play.angle - 90) * CONVERT);
-	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), (int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
+	angle.x = cos((data->texture.play.angle - 90) * g_convert);
+	angle.y = sin((data->texture.play.angle - 90) * g_convert);
+	if (check_coord((int)(data->texture.play.x + (0.5 * angle.x)), \
+		(int)(data->texture.play.y + (0.5 * angle.y)), data) == 0)
 	{
 		data->texture.play.x += 0.5 * angle.x;
 		data->texture.play.y += 0.5 * angle.y;
 	}
 }
 
-void ft_hook(mlx_key_data_t keydata, void *param)
+void	ft_hook(mlx_key_data_t keydata, void *param)
 {
-	t_cub *data;
+	t_cub	*data;
 
 	data = (t_cub *)param;
 	if (keydata.key == MLX_KEY_ESCAPE)
@@ -78,7 +83,7 @@ void ft_hook(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_A)
 		ft_move_left(data);
 	if (keydata.key == MLX_KEY_D)
-		ft_move_right(data);		
+		ft_move_right(data);
 	if (keydata.key == MLX_KEY_LEFT)
 	{
 		data->texture.play.angle -= 15;

@@ -47,21 +47,21 @@ BON = ft_lstnew_bonus.c \
 			ft_lstmap_bonus.c \
 		
 
-OBJ = ${SOURCES:.c=.o}
-BONUS_OBJ = ${BON:.c=.o}
+OBJ = $(SOURCES:.c=.o)
+BONUS_OBJ = $(BON:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	# ranlib $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 bonus: .bonus
 
-.bonus: ${BONUS_OBJ}
+.bonus: $(BONUS_OBJ)
 	ar rc $(NAME) $(BONUS_OBJ)
 	@touch .bonus
 

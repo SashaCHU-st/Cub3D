@@ -5,19 +5,19 @@ NO      textures/no_wall.png
 
 SO textures/so_wall.png
 
-F   69, 222, 199
+F   173, 216, 230
 
 EA textures/ea_wall.png
 
 
 
-C 235, 198, 52
+C 173, 216, 230
 
 11111111
 10000001
 10000001
 10000001
-1000S001
+1000W001
 10000001
 10000001
 10000001
