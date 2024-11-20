@@ -1,10 +1,8 @@
 NAME = cub3D
 
-LIBFT = ./libft/libft.a
+LIBFT = libft/libft.a
 
 MLX42 = ./MLX42/build/libmlx42.a
-
-# HEADER = ./cub3d.h
 
 SRCS = main.c \
 		check_args.c \
@@ -21,22 +19,31 @@ SRCS = main.c \
 		movement.c \
 		if_png.c \
 		utils.c \
-		utils2.c
+		utils2.c \
+		draw_window.c \
+		color_parsing.c \
+		slice.c \
+		parsing_started.c \
+		finilizing_map.c \
+		tex_west.c \
+		tex_east.c \
+		tex_south.c \
+		tex_north.c \
+		messages.c \
+		uploading_text.c \
+		
 
 OBJ = $(SRCS:.c=.o)
 
-CFLAGS =  -Wall -Wextra -Werror 
-#-fsanitize=address -g #remember to remove extra flags
+CFLAGS =  -Wall -Wextra -Werror
 
 MLX42FLAGS = -lglfw -lm
 
-all: ${NAME}
-
-${NAME}: $(LIBFT) $(MLX42) $(OBJ)
+$(NAME): $(MLX42) $(OBJ)
+	make -C libft	
 	cc $(CFLAGS) $(OBJ) $(LIBFT) $(MLX42) $(MLX42FLAGS) -o $(NAME)
 
-$(LIBFT):
-	make -C libft/
+all: $(NAME)
 
 $(MLX42):
 	cd MLX42 && cmake -B build
@@ -57,4 +64,6 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+bonus: all
+
+.PHONY: all clean fclean re bonus

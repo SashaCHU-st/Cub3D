@@ -6,7 +6,7 @@
 /*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:27:42 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/14 20:08:25 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:49:49 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,27 @@ int	check_coord(int x, int y, t_cub *data)
 	else
 		return (0);
 }	
+
+void	set_wall_dist(t_wall *wall, t_cub *data, double step)
+{
+	if (wall->side == 'h')
+	{
+		if (wall->ray_dir.x == 0)
+			wall->distance = (wall->map.x - data->texture.play.x \
+				+ (1 - step) / 2) / EPSILON;
+		else
+			wall->distance = (wall->map.x - data->texture.play.x \
+				+ (1 - step) / 2) / wall->ray_dir.x;
+		wall->hit = data->texture.play.y + wall->distance * wall->ray_dir.y;
+	}
+	else
+	{
+		if (wall->ray_dir.y == 0)
+			wall->distance = (wall->map.y - data->texture.play.y \
+				+ (1 - step) / 2) / EPSILON;
+		else
+			wall->distance = (wall->map.y - data->texture.play.y \
+				+ (1 - step) / 2) / wall->ray_dir.y;
+		wall->hit = data->texture.play.x + wall->distance * wall->ray_dir.x;
+	}
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:28:46 by mspasic           #+#    #+#             */
-/*   Updated: 2024/10/16 12:41:08 by aheinane         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:43:15 by mspasic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,23 @@ double	set_wall_angle(t_cub *data, t_wall *wall, int i)
 	double	angle;
 
 	adjust_angle = 2 * (double)i / (double)WIDTH - 1;
-	angle = (data->texture.play.angle + (30 * CONVERT) \
-		* adjust_angle) * CONVERT;
+	angle = (data->texture.play.angle + (30 * g_convert) \
+		* adjust_angle) * g_convert;
 	wall->map.x = (int)data->texture.play.x;
 	wall->map.y = (int)data->texture.play.y;
 	wall->dir.x = cos(angle);
 	wall->dir.y = sin(angle);
-	wall->camera.x = -(wall->dir.y) * PLANE;
-	wall->camera.y = wall->dir.x * PLANE;
+	wall->camera.x = -(wall->dir.y) * (tan(30 * M_PI / 180));
+	wall->camera.y = wall->dir.x * (tan(30 * M_PI / 180));
 	wall->ray_dir.x = wall->dir.x + wall->camera.x * adjust_angle;
 	wall->ray_dir.y = wall->dir.y + wall->camera.y * adjust_angle;
 	return (angle);
 }
 
+/*wall->hit: x or y coordinate where the wall was hit 
+depending on the grid line (h or v); needs to be
+between 0 and 1, so a check is needed to see if it 
+needs to be 'normalised'*/
 double	get_collision(t_cub *data, t_wall *wall, int px_x)
 {
 	t_collision	cur;
@@ -114,18 +118,10 @@ double	get_collision(t_cub *data, t_wall *wall, int px_x)
 	set_vert(data, &cur, wall);
 	do_dda(data, &cur, wall);
 	if (wall->side == 'h')
-	{
-		if (wall->ray_dir.x == 0)
-			wall->distance = (wall->map.x - data->texture.play.x + (1 - cur.hori.step) / 2) / EPSILON;
-		else
-			wall->distance = (wall->map.x - data->texture.play.x + (1 - cur.hori.step) / 2) / wall->ray_dir.x;
-	}
+		set_wall_dist(wall, data, cur.hori.step);
 	else
-	{
-		if (wall->ray_dir.y == 0)
-			wall->distance = (wall->map.y - data->texture.play.y + (1 - cur.vert.step) / 2) / EPSILON;
-		else
-			wall->distance = (wall->map.y - data->texture.play.y + (1 - cur.vert.step) / 2) / wall->ray_dir.y;
-	}
+		set_wall_dist(wall, data, cur.vert.step);
+	if (wall->hit < 0 || wall->hit > 1)
+		wall->hit -= floor(wall->hit);
 	return (angle);
 }

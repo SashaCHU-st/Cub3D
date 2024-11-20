@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:42:30 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/14 20:16:13 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/28 11:37:04 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,94 +32,67 @@ int	is_valid_number(const char *str)
 	return (1);
 }
 
-int	parse_color_values(t_textures *textures, const char *color_string, \
-	int *values)
+void	free_color(int j, char	**colors)
 {
-	char	**colors;
-	int		i;
-	int		j;
-
-	i = 0;
-	colors = ft_split(color_string, ',');
-	if (!colors)
-		return (0);
-	while (colors[i] != NULL)
-	{
-		if (is_valid_number(colors[i]))
-		{
-			values[i] = ft_atoi(colors[i]);
-			if (values[i] > 255 || values[i] < 0)
-				error_fun(textures);
-		}
-		else
-		{
-			j = 0;
-			while (colors[j] != NULL)
-			{
-				free(colors[j]);
-				j++;
-			}
-			free(colors);
-			error_fun(textures);
-		}
-		i++;
-	}
 	j = 0;
 	while (colors[j] != NULL)
 	{
 		free(colors[j]);
+		colors[j] = NULL;
 		j++;
 	}
 	free(colors);
-	if (i == 3)
+}
+
+int	split_colors(char ***colors, const char *color_string)
+{
+	*colors = ft_split(color_string, ',');
+	if (!*colors)
+		return (0);
+	return (1);
+}
+
+int	process_and_validate_colors(char ***colors, int *values,
+	t_textures *text, int fd)
+{
+	int	how_many_colors;
+
+	how_many_colors = 0;
+	while ((*colors)[how_many_colors] != NULL)
+	{
+		if (how_many_colors >= 3)
+		{
+			free_color(0, *colors);
+			*colors = NULL;
+			closing(text, fd, "More then 3 elements in colors\n");
+		}
+		if (is_valid_number((*colors)[how_many_colors]))
+		{
+			values[how_many_colors] = ft_atoi((*colors)[how_many_colors]);
+			color_out_of_range(values[how_many_colors], text, fd, colors);
+		}
+		else
+			wrong_values_color(how_many_colors, (*colors), text, fd);
+		how_many_colors++;
+	}
+	return (how_many_colors);
+}
+
+int	parse_color_values(t_textures *text, const char *color_string,
+	int *values, int fd)
+{
+	char	**colors;
+	int		how_many_colors;
+
+	if (!split_colors(&colors, color_string))
+		return (0);
+	how_many_colors = process_and_validate_colors(&colors, values, text, fd);
+	free_color(how_many_colors, colors);
+	if (how_many_colors == 3)
 		return (1);
 	else
 	{
-		error_fun(textures);
+		closing(text, fd, "Not valid set of colors\n");
 		return (0);
-	}
-}
-
-void	parse_floor_color(const char *color_string, t_textures *textures, \
-	bool is_floor)
-{
-	int	values[3];
-
-	if (parse_color_values(textures, color_string, values))
-	{
-		if (is_floor)
-		{
-			textures->floor_r = values[0];
-			textures->floor_g = values[1];
-			textures->floor_b = values[2];
-			textures->floor = get_rgba(values[0], values[1], values[2]);
-		}
-		else
-		{
-			textures->ceiling_r = values[0];
-			textures->ceiling_g = values[1];
-			textures->ceiling_b = values[2];
-			textures->ceiling = (textures->ceiling_r << 16) | \
-				(textures->ceiling_g << 8) | textures->ceiling_b;
-			textures->ceiling = get_rgba(values[0], values[1], values[2]);
-		}
-	}
-	else
-		error_fun(textures);
-}
-
-void	checking_color(t_textures *textures, char *line)
-{
-	if (ft_strncmp(line, "F", 1) == 0 && check_space(line[1]))
-	{
-		textures->found_f += 1;
-		textures->floor_color = ft_strdup(avoid_whitespace(line + 2));
-		parse_floor_color(textures->floor_color, textures, true);
-	}
-	else if (ft_strncmp(line, "C", 1) == 0 && check_space(line[1]))
-	{
-		textures->found_c += 1;
-		textures->ceiling_color = ft_strdup(avoid_whitespace(line + 2));
-		parse_floor_color(textures->ceiling_color, textures, false);
 	}
 }

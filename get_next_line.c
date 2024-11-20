@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mspasic <mspasic@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: aheinane <aheinane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:17:19 by aheinane          #+#    #+#             */
-/*   Updated: 2024/10/14 20:18:09 by mspasic          ###   ########.fr       */
+/*   Updated: 2024/10/28 11:39:16 by aheinane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,27 @@ char	*ft_exist(char *str)
 
 char	*next_spot(char *storage)
 {
-	char	*next_spot;
 	int		i;
 	int		nextspot_index;
+	char	*next_spot;
 
-	i = 0;
 	nextspot_index = 0;
+	i = 0;
 	while (storage[i] && storage[i] != '\n')
 		i++;
-	if (storage[i] == '\0')
+	if (storage[i] == '\0' || storage[i + 1] == '\0')
 	{
 		free(storage);
 		return (NULL);
 	}
-	next_spot = malloc(sizeof(char) * ft_strlen(storage) - i + 1);
+	next_spot = malloc(sizeof(char) * (gnl_strlen(storage) - i));
 	if (!next_spot)
 		return (free_function(&storage));
 	i++;
 	while (storage[i])
 		next_spot[nextspot_index++] = storage[i++];
 	next_spot[nextspot_index] = '\0';
-	free (storage);
+	free(storage);
 	return (next_spot);
 }
 
@@ -90,13 +90,13 @@ char	*ft_read(int fd, char *storage)
 	if (!buffer)
 		return (free_function(&storage));
 	how_many_bytes = 1;
-	while (how_many_bytes > 0 && !ft_strchr(storage, '\n'))
+	while (how_many_bytes > 0 && !gnl_strchr(storage, '\n'))
 	{
 		how_many_bytes = read (fd, buffer, BUFFER_SIZE);
 		if (how_many_bytes == -1)
 			return (free_function(&storage));
 		buffer[how_many_bytes] = '\0';
-		storage = ft_strjoin(storage, buffer);
+		storage = gnl_strjoin(storage, buffer);
 		if (!storage)
 			return (free_function(&storage));
 	}
