@@ -3,7 +3,7 @@ Cub3D is secong graphic project written in C and using MLX42 library.
 Built using the Ray-Casting technique
 ![Cub3d](https://github.com/user-attachments/assets/f15e3599-3d3d-4231-9715-a59b87f679f4)
 
-## Cub3DProgram Usage
+## Cub3D Program Usage
 1. Clone repository
 2. Move to directory
 ```bash
